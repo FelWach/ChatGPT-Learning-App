@@ -23,5 +23,11 @@
 _feature/frontend-{page or feature or both: page-feature}_
 
 #### .ENV
-Bitte speichert euch individuelle Variablen wie Port oder lokale Netzwerk IP (wenn localhost oder 10.0.2.2 nicht klappt) in die .env damit nicht bei jedem push die api calls gechanged werden müssen in dev
+Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei jedem push die api calls gechanged werden müssen in dev
+
+`OPENAI_API_KEY`
+
+`IP_ADDRESS` wenn localhost oder 10.0.2.2 nicht klappt
+
+`PORT`
 
