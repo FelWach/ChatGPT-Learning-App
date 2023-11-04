@@ -20,7 +20,8 @@
 > Bitte für jedes ToDo eigenen Branch und Pull request!
 
 #### Branch naming
-_feature/frontend-{page or feature or both: page-feature}_
+_feature/frontend/{page or feature or both: page-feature}_
+Example: _feature/frontend/login-page_
 
 #### .ENV
 Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei jedem push die api calls gechanged werden müssen in dev
