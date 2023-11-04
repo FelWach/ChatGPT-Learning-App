@@ -9,6 +9,8 @@ import { Button } from 'tamagui'
 import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native';
 
+import Login from './screens/Login'
+
 export default function App() {
 
   const [fontsLoaded, fontError] = useFonts({
@@ -29,7 +31,7 @@ export default function App() {
     <TamaguiProvider config={config}>
 
       <View style={{ padding: 20 }}>
-        <Button>Click me</Button>
+        <Login />
       </View>
 
     </TamaguiProvider>
