@@ -21,6 +21,7 @@
 
 #### Branch naming
 _feature/frontend/{page or feature or both: page-feature}_
+
 Example: _feature/frontend/login-page_
 
 #### .ENV
