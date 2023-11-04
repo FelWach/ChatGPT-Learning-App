@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// this provides some helpful reset styles to ensure a more consistent look
+
+// only import this from your web app, not native
+
+
+import { TamaguiProvider } from 'tamagui'
+import config from './tamagui.config'
+import { Button } from 'tamagui'
+import { useFonts } from 'expo-font'
+import { View, Text } from 'react-native';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  const [fontsLoaded, fontError] = useFonts({
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+  });
+
+  if (!fontsLoaded) {
+    return (
+      <View>
+        <Text>{fontError?.message}</Text>
+      </View>
+    )
+  }
+
+  return (
+
+    <TamaguiProvider config={config}>
+
+      <View style={{ padding: 20 }}>
+        <Button>Click me</Button>
+      </View>
+
+    </TamaguiProvider>
+
+  )
+
+}
