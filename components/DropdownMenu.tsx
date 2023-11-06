@@ -1,5 +1,5 @@
 import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
     Adapt,
     Select,
@@ -7,6 +7,8 @@ import {
     Sheet,
     YStack,
 } from 'tamagui'
+
+
 
 /* USAGE:
 See pages/DropdownDemo.tsx
@@ -19,12 +21,19 @@ Items are passed in as an array of objects with the following shape:
 label: is a string that will be displayed above the dropdown menu
 native: is a boolean that determines whether to use the native dropdown menu or not
 */
-export function DropdownMenu(props: {items: SelectProps[], native?: boolean, label?: string}) {
-
+export function DropdownMenu(props: {items: SelectProps[], native?: boolean, label?: string, onChange?: (value: string) => void}) {
+    
     const [val, setVal] = useState(props.items[0].value!)
+    const id = props.label;
+
+    // if new value is set emit it to the parent
+    useEffect(() => {
+        if (props.onChange) props.onChange(val);
+    }, [val])
+    
     return (
         <Select
-            id="food"
+            id={id}
             value={val}
             onValueChange={setVal}
             disablePreventBodyScroll
