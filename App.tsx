@@ -8,6 +8,7 @@ import config from './tamagui.config'
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native';
+import { DropdownDemo } from './demo/DropdownDemo';
 
 export default function App() {
 
@@ -31,6 +32,7 @@ export default function App() {
       <View style={{ padding: 20 }}>
         
       </View>
+      <DropdownDemo />
 
     </TamaguiProvider>
 
