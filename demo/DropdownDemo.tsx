@@ -18,7 +18,7 @@ export function DropdownDemo() {
                 <Label f={1} fb={0}>
                     Sample
                 </Label>
-                <DropdownMenu items={itemFruit} native={true} /> 
+                <DropdownMenu items={itemFruit} native={true} label='Fruit'/> 
             </XStack>
         </YStack>
     );

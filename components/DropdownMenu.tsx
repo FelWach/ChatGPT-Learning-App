@@ -16,9 +16,10 @@ Items are passed in as an array of objects with the following shape:
     id?: string
     value: string
     }
-native is a boolean that determines whether to use the native dropdown menu or not
+label: is a string that will be displayed above the dropdown menu
+native: is a boolean that determines whether to use the native dropdown menu or not
 */
-export function DropdownMenu(props: {items: SelectProps[], native?: boolean}) {
+export function DropdownMenu(props: {items: SelectProps[], native?: boolean, label?: string}) {
 
     const [val, setVal] = useState(props.items[0].value!)
     return (
@@ -78,7 +79,7 @@ export function DropdownMenu(props: {items: SelectProps[], native?: boolean}) {
                     minWidth={200}
                 >
                     <Select.Group>
-                        <Select.Label>Fruits</Select.Label>
+                        <Select.Label>{props.label}</Select.Label>
                         {/* for longer lists memoizing these is useful */}
                         {useMemo(
                             () =>
