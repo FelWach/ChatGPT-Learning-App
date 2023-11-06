@@ -9,7 +9,7 @@ import { DropdownMenu } from '../components/DropdownMenu'
 export function DropdownDemo() {
 
     const itemFruit: SelectProps[] = [
-        { name: 'Apple', id: 'apple', value: 'apple' },
+        { name: 'Apple', id: 'apple', value: 'apple' }, // value is required
         { name: 'Banana', id: 'banana', value: 'banana' },
     ]
     return (
