@@ -3,30 +3,33 @@ import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import Register from './Register.tsx'
-
-//const Tab = createBottomTabNavigator();
-
-export default function Login({ /*route,*/ navigation }) {
+export default function Register({ navigation }) {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  //const { usernameParam } = route.params;
+  const [repeatPassword, setRepeatPassword] = useState('');
 
   const handleLogin = () => {
     // Handle login logic here
   };
 
+  const handleRegister = () => {
+      // Handle register logic here
+  };
+
   return (
     <View>
-
-      <H2>Welcome back!</H2>
-      <Text>Login below or create an account</Text>
+        <H2>Create an account</H2>
       <Input
         value={username}
         onChangeText={setUsername}
         placeholder={'Username'}
+      />
+      <Input
+        value={email}
+         onChangeText={setEmail}
+         placeholder={'Email'}
       />
       <Input
         value={password}
@@ -34,16 +37,13 @@ export default function Login({ /*route,*/ navigation }) {
         placeholder={'Password'}
         secureTextEntry={true}
       />
-      <Button onPress={handleLogin, () =>navigation.navigate('StartScreen')}>Sign in</Button>
-      <Text>Forgot Password?</Text>
+      <Input
+        value={repeatPassword}
+        onChangeText={setRepeatPassword}
+        placeholder={'Repeat Password'}
+      />
 
-{/*}
-      <Tab.Navigator>
-            <Tab.Screen name="LearnSet" component={Register} />
-            <Tab.Screen name="Profile" component={Register} />
-          </Tab.Navigator>
-{*/}
-
+      <Button onPress= { handleRegister, () => { navigation.navigate('Login', { username: "Laura" }); }}>Register</Button>
     </View>
   );
 };
