@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react"; // Make sure to import React
-import { Button, Card, CardProps, H4, H1, Paragraph, View, XStack, ScrollView } from "tamagui";
+import {H1, XStack, ScrollView } from "tamagui";
+import { TopicsCard } from "../components/TopicsCard";
 
 export function TopicsOverview() {
-  const [data, setData] =useState<TopicsCardProps[]>([]);
+  const [data, setData] =useState<DummyData[]>([]);
+
+  interface DummyData {
+    headline: string;
+    numberOfLearncards: number;
+  }
 
   useEffect(() => {
     async function fetchData() {
-      const dummyData = [
+      const dummyData: DummyData[] = [
         {
           headline: 'Geografie',
           numberOfLearncards: 5
@@ -62,19 +68,5 @@ export function TopicsOverview() {
       ))}
     </XStack>
     </ScrollView>
-  );
-}
-
-export interface TopicsCardProps extends CardProps {
-  numberOfLearncards: number;
-  headline: string;
-}
-
-export function TopicsCard(props: TopicsCardProps) {
-  return (
-    <Card bordered {...props}>
-      <H4>{props.headline}</H4>
-      <Paragraph theme="alt2">{props.numberOfLearncards} Karteikarten</Paragraph>
-    </Card>
   );
 }
