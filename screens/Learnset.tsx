@@ -2,6 +2,7 @@ import { Button, H1, ScrollView, View, XStack, YStack, Accordion } from "tamagui
 import { Trash, Edit, Plus, ArrowLeft } from '@tamagui/lucide-icons'
 import { useEffect, useState } from "react";
 import { QuestionsAccordionItem } from "../components/QuestionsAccordionItem";
+import { Dimensions } from "react-native";
 
 export function Learnset() {
     const [data, setData] = useState<DummyData[]>([]);
@@ -33,22 +34,22 @@ export function Learnset() {
                 {
                     question: 'Was ist die Hauptstadt von Italien?',
                     answer: 'Rom',
-                    value: '3'
+                    value: '4'
                 },
                 {
                     question: 'Was ist die Hauptstadt von Italien?',
                     answer: 'Rom',
-                    value: '3'
+                    value: '5'
                 },
                 {
                     question: 'Was ist die Hauptstadt von Italien?',
                     answer: 'Rom',
-                    value: '3'
+                    value: '6'
                 },
                 {
                     question: 'Was ist die Hauptstadt von Italien?',
                     answer: 'Rom',
-                    value: '3'
+                    value: '7'
                 },
 
             ];
@@ -57,11 +58,12 @@ export function Learnset() {
         fetchData();
     }, []);
 
-
+    const windowHeight = Dimensions.get('window').height;
+    
     return (
-        <View height={630}>
-            <Button icon={ArrowLeft} size="$5" width="$4" height="$4"></Button>
+        <View height={windowHeight - 50}>
             <ScrollView>
+            <Button icon={ArrowLeft} size="$5" width="$4" height="$4" marginTop="$6"></Button>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
                     <H1 size="$9" paddingVertical="$4">Geografie</H1>
                     <XStack>
