@@ -30,6 +30,7 @@ export function Configurator() {
         { value: '9', name: '9' },
         { value: '10', name: '10' },
     ]
+    
     const changeAccurateness = (value: number[]) => {
         if (value[0] < 33) { setAccurateness("varying"); }
         else if (value[0] < 66) { setAccurateness("balanced"); }
