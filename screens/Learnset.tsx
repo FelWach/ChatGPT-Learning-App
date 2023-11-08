@@ -1,5 +1,5 @@
 import { Button, H1, ScrollView, View, XStack, YStack, Accordion } from "tamagui";
-import { Trash, Edit, Plus } from '@tamagui/lucide-icons'
+import { Trash, Edit, Plus, ArrowLeft } from '@tamagui/lucide-icons'
 import { useEffect, useState } from "react";
 import { QuestionsAccordionItem } from "../components/QuestionsAccordionItem";
 
@@ -29,7 +29,28 @@ export function Learnset() {
                     question: 'Was ist die Hauptstadt von Italien?',
                     answer: 'Rom',
                     value: '3'
-                }
+                }, 
+                {
+                    question: 'Was ist die Hauptstadt von Italien?',
+                    answer: 'Rom',
+                    value: '3'
+                },
+                {
+                    question: 'Was ist die Hauptstadt von Italien?',
+                    answer: 'Rom',
+                    value: '3'
+                },
+                {
+                    question: 'Was ist die Hauptstadt von Italien?',
+                    answer: 'Rom',
+                    value: '3'
+                },
+                {
+                    question: 'Was ist die Hauptstadt von Italien?',
+                    answer: 'Rom',
+                    value: '3'
+                },
+
             ];
             setData(dummyData);
         }
@@ -38,13 +59,14 @@ export function Learnset() {
 
 
     return (
-        <View>
+        <View height={630}>
+            <Button icon={ArrowLeft} size="$5" width="$4" height="$4"></Button>
             <ScrollView>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
                     <H1 size="$9" paddingVertical="$4">Geografie</H1>
                     <XStack>
-                        <Button icon={<Trash />} backgroundColor="none" width="$2"></Button>
-                        <Button icon={<Edit />} backgroundColor="none" width="$2"></Button>
+                        <Button icon={Trash} size="$5" width="$4" height="$4" chromeless></Button>
+                        <Button icon={Edit}  size="$5"  width="$4" height="$4"chromeless></Button>
                     </XStack>
                 </XStack>
 
@@ -58,13 +80,13 @@ export function Learnset() {
                     Add Questions
                 </Button>
             </ScrollView >
-            <View height={250}>
+           
                 <Button size="$5" style={
                     {position: "absolute", 
                     bottom: 0, 
                     right: 0,
                     left: 0}}>Lernen</Button>
-            </View>
+           
         </View>
     )
 }
