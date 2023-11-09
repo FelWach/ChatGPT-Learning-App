@@ -8,20 +8,18 @@ import {
     YStack,
 } from 'tamagui'
 
-
-
 /* USAGE:
-See pages/DropdownDemo.tsx
-Items are passed in as an array of objects with the following shape:
-    {
-    name?: string
-    id?: string
-    value: string
-    }
-label: is a string that will be displayed above the dropdown menu
-native: is a boolean that determines whether to use the native dropdown menu or not
+* See pages/DropdownDemo.tsx
+* Items are passed in as an array of objects with the following shape:
+*    {
+*    name?: string
+*    id?: string
+*    value: string
+*    }
+* label: is a string that will be displayed above the dropdown menu
+* native: is a boolean that determines whether to use the native dropdown menu or not
 */
-export function DropdownMenu(props: {items: SelectProps[], native?: boolean, label?: string, onChange?: (value: string) => void}) {
+export function DropdownMenu({ ...props }: SelectProps & { items: SelectProps[], label?: string, onChange?: (value: string) => void}) {
     
     const [val, setVal] = useState(props.items[0].value!)
     const id = props.label;

@@ -14,12 +14,12 @@ export function DropdownDemo() {
     ]
     return (
         <YStack space>
-            <XStack ai="center" space>
-                <Label f={1} fb={0}>
+            <YStack>
+                <Label>
                     Sample
                 </Label>
                 <DropdownMenu items={itemFruit} native={true} label='Fruit'/> 
-            </XStack>
+            </YStack>
         </YStack>
     );
 }
