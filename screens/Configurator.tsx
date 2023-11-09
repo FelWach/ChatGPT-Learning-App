@@ -1,7 +1,7 @@
-import { Label, SelectProps, Slider, XStack, YStack, Button, View, Text, H1 } from "tamagui"
+import { Label, SelectProps, Slider, XStack, YStack, Button, View, Text, H1, ScrollView } from "tamagui"
 import { DropdownMenu } from "../components/DropdownMenu"
 import { useState } from "react"
-import { atom, useAtom } from 'jotai';
+import { DocumentSelect } from "../components/DocumentSelect";
 
 export function Configurator() {
     let [accurateness, setAccurateness] = useState("balanced");
@@ -46,9 +46,12 @@ export function Configurator() {
     }
 
     return (
-        <View>
+        <ScrollView>
             <YStack paddingVertical={20}>
                 <H1>Configurator</H1>
+            </YStack>
+            <YStack space={20}>
+                <DocumentSelect />
             </YStack>
             <YStack space>
                 <YStack space={10}>
@@ -83,6 +86,6 @@ export function Configurator() {
 
                 <Button onPress={generate}>Generate</Button>
             </YStack>
-        </View >
+        </ScrollView >
     )
 }

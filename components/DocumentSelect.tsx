@@ -5,13 +5,13 @@ import { Button, Text, View } from 'tamagui';
 
 export function DocumentSelect() {
     const [uploaded, setUploaded] = useState("false");
+    const [formData, setFormData] = useState(new FormData());
     const pickPdf = async () => {
         try {
             const docRes = await DocumentPicker.getDocumentAsync({
                 type:
                     "application/pdf"
             });
-            const formData = new FormData();
             const assets = docRes.assets;
             if (!assets) return;
 

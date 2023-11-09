@@ -15,11 +15,12 @@
     "@tamagui/lucide-icons": "^1.76.0",
     "@types/react": "~18.2.14",
     "expo": "~49.0.15",
+    "expo-document-picker": "~11.5.4",
     "expo-status-bar": "~1.6.0",
     "jotai": "^2.5.1",
     "react": "18.2.0",
     "react-native": "0.72.6",
-    "react-native-svg": "^13.14.0",
+    "react-native-svg": "13.9.0",
     "tamagui": "^1.76.0",
     "typescript": "^5.1.3"
   },
