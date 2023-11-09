@@ -50,7 +50,7 @@ export function Configurator() {
             <YStack paddingVertical={20}>
                 <H1>Configurator</H1>
             </YStack>
-            <YStack space={20}>
+<YStack space={20}>
                 <DocumentSelect />
             </YStack>
             <YStack space>
