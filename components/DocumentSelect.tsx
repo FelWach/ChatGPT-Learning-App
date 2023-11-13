@@ -2,16 +2,11 @@ import { Upload, X } from '@tamagui/lucide-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { useState } from 'react';
 import { Button, Text, View, XStack } from 'tamagui';
-
-interface PDFFile {
-    uri: string;
-    name: string;
-    type: string | undefined;
-    size: number | undefined;
-}
+import { useAtomValue, useSetAtom, atom, useAtom, PrimitiveAtom } from "jotai";
+import { filesArray } from './atoms';
 
 export function DocumentSelect() {
-    const [files, setFiles] = useState<PDFFile[]>([]);
+    const [files, setFiles] = useAtom(filesArray);
 
     const deleteFile = (index: number) => () => {
         const newFiles = [...files];

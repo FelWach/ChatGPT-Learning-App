@@ -2,13 +2,17 @@ import { Label, SelectProps, Slider, XStack, YStack, Button, View, Text, H1, Scr
 import { DropdownMenu } from "../components/DropdownMenu"
 import { useState } from "react"
 import { DocumentSelect } from "../components/DocumentSelect";
+import { useAtom } from "jotai";
+import { filesArray } from "../components/atoms";
 
 export function Configurator() {
-    let [accurateness, setAccurateness] = useState("balanced");
+    const [accurateness, setAccurateness] = useState("balanced");
 
-    let [question, setQuestion] = useState("1");
-    let [language, setLanguage] = useState("en");
-    let [languageStyle, setLanguageStyle] = useState("casual");
+    const [question, setQuestion] = useState("1");
+    const [language, setLanguage] = useState("en");
+    const [languageStyle, setLanguageStyle] = useState("casual");
+
+    const [files, setFiles] = useAtom(filesArray);
 
     const languages: SelectProps[] = [
         { value: 'en', name: 'English' },
@@ -43,6 +47,9 @@ export function Configurator() {
         console.log(language)
         console.log(languageStyle)
         console.log(accurateness)
+        if (files.length === 0) {
+            console.log("no files selected")
+        }
     }
 
     return (
