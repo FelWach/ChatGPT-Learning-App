@@ -37,7 +37,7 @@ export function DropdownMenu({ ...props }: SelectProps & { items: SelectProps[],
             disablePreventBodyScroll
             {...props}
         >
-            <Select.Trigger width={250} iconAfter={ChevronDown}>
+            <Select.Trigger iconAfter={ChevronDown}>
                 <Select.Value placeholder="Something" />
             </Select.Trigger>
 
