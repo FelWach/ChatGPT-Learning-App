@@ -30,7 +30,7 @@ export default function App() {
     <TamaguiProvider config={config}>
 
       <View style={{ padding: 20 }}>
-        <Login />
+        
       </View>
 
     </TamaguiProvider>
