@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
+//import { View } from 'react-native';
+import { View, Button, H2, Text, Input } from 'tamagui';
 import { atom, useAtom } from 'jotai';
 
 // Atoms for username and password
@@ -12,7 +12,18 @@ export default function Login() {
   const [username, setUsername] = useAtom(usernameAtom);
   const [password, setPassword] = useAtom(passwordAtom);
 
-  const handleLogin = () => {
+  const checkEmpty = (): boolean => {
+    if (username === '' || password === '') {
+      return true;
+    }
+    return false;
+  }
+
+  const handleLogin = (): void => {
+    if (checkEmpty()) {
+      alert('Please enter a username and password');
+      return;
+    }
     console.log('username', username);
     console.log('password', password);
   };
