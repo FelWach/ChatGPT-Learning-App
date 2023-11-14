@@ -1,24 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
+import { Button, H2, Input } from 'tamagui';
+import { atom, useAtom } from 'jotai';
+import axios from 'axios';
+
+const usernameAtom = atom('');
+const emailAtom = atom('');
+const passwordAtom = atom('');
+const repeatPasswordAtom = atom('');
 
 export default function Register({ navigation }) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [username, setUsername] = useAtom(usernameAtom);
+  const [email, setEmail] = useAtom(emailAtom);
+  const [password, setPassword] = useAtom(passwordAtom);
+  const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
 
-  const handleLogin = () => {
-    // Handle login logic here
-  };
+  const checkEmptyFields = () => {
+    if (username === '' || email === '' || password === '' || repeatPassword === '') {
+      return true;
+    }
+    return false;
+  }
 
-  const handleRegister = () => {
-      // Handle register logic here
+  const handleRegister = async () => {
+    if (checkEmptyFields()) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/addUser',
+        {
+          name: username,
+          email: email,
+          password: password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error during registration. Please try again.');
+    }
   };
 
   return (
     <View>
-        <H2>Create an account</H2>
+      <H2>Create an account</H2>
       <Input
         value={username}
         onChangeText={setUsername}
@@ -26,8 +65,8 @@ export default function Register({ navigation }) {
       />
       <Input
         value={email}
-         onChangeText={setEmail}
-         placeholder={'Email'}
+        onChangeText={setEmail}
+        placeholder={'Email'}
       />
       <Input
         value={password}
@@ -39,9 +78,13 @@ export default function Register({ navigation }) {
         value={repeatPassword}
         onChangeText={setRepeatPassword}
         placeholder={'Repeat Password'}
+        secureTextEntry={true}
       />
-
-      <Button onPress= { handleRegister, () => { navigation.navigate('Login', { username: "Laura" }); }}>Register</Button>
+      <Button onPress={() => {
+        handleRegister();
+      }}>
+        Register
+      </Button>
     </View>
   );
 };
