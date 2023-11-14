@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
+import { atom, useAtom } from 'jotai';
+
+// Atoms for username and password
+const usernameAtom = atom('');
+const passwordAtom = atom('');
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // Using Jotai's useAtom hook to get the state and setter for the atoms
+  const [username, setUsername] = useAtom(usernameAtom);
+  const [password, setPassword] = useAtom(passwordAtom);
 
   const handleLogin = () => {
-    // Handle login logic here
+    console.log('username', username);
+    console.log('password', password);
   };
 
   return (
     <View>
-        <H2>Welcome back!</H2>
-        <Text>Login below or create an account</Text>
+      <H2>Welcome back!</H2>
+      <Text>Login below or create an account</Text>
       <Input
         value={username}
         onChangeText={setUsername}
