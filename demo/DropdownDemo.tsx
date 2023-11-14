@@ -4,12 +4,18 @@ import {
     XStack,
     YStack,
 } from 'tamagui'
-import { DropdownMenu } from '../components/DropdownMenu'
+import { DropdownMenu } from '../components/DropdownMenu/DropdownMenu'
+import { DropdownMenuItem } from '../components/DropdownMenu/types';
+import { atom } from 'jotai';
+
+// Create an atom to manage the selected value
+export const fruit1 = atom('apple');
+export const fruit2 = atom('banana');
 
 export function DropdownDemo() {
 
-    const itemFruit: SelectProps[] = [
-        { name: 'Apple', id: 'apple', value: 'apple' }, // value is required
+    const itemFruit: DropdownMenuItem[] = [
+        { name: 'Apple', id: 'apple', value: 'apple' }, 
         { name: 'Banana', id: 'banana', value: 'banana' },
     ]
     return (
@@ -18,7 +24,8 @@ export function DropdownDemo() {
                 <Label>
                     Sample
                 </Label>
-                <DropdownMenu items={itemFruit} native={true} label='Fruit'/> 
+                <DropdownMenu items={itemFruit} label='Fruit' atom={fruit1} />
+                <DropdownMenu items={itemFruit} label='Fruit' atom={fruit2} />
             </YStack>
         </YStack>
     );

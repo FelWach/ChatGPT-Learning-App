@@ -7,27 +7,19 @@ import {
     Sheet,
     YStack,
 } from 'tamagui'
+import { DropdownMenuItem } from './types'
+import { Atom, useAtom } from 'jotai'
 
 /* USAGE:
 * See pages/DropdownDemo.tsx
-* Items are passed in as an array of objects with the following shape:
-*    {
-*    name?: string
-*    id?: string
-*    value: string
-*    }
+* Items are passed in as an array of type DropdownMenuItem
 * label: is a string that will be displayed above the dropdown menu
 * native: is a boolean that determines whether to use the native dropdown menu or not
 */
-export function DropdownMenu({ ...props }: SelectProps & { items: SelectProps[], label?: string, onChange?: (value: string) => void}) {
+export function DropdownMenu({ ...props }: SelectProps & { items: DropdownMenuItem[], label: string, atom: Atom<string>}) {
     
-    const [val, setVal] = useState(props.items[0].value!)
+    const [val, setVal] = useAtom(props.atom)
     const id = props.label;
-
-    // if new value is set emit it to the parent
-    useEffect(() => {
-        if (props.onChange) props.onChange(val);
-    }, [val])
     
     return (
         <Select
@@ -95,8 +87,8 @@ export function DropdownMenu({ ...props }: SelectProps & { items: SelectProps[],
                                         <Select.Item
                                             debug="verbose"
                                             index={i}
-                                            key={item.value}
-                                            value={item.value!}
+                                            key={item.id}
+                                            value={item.value}
                                         >
                                             <Select.ItemText>{item.name}</Select.ItemText>
                                             <Select.ItemIndicator marginLeft="auto">
@@ -124,3 +116,5 @@ export function DropdownMenu({ ...props }: SelectProps & { items: SelectProps[],
         </Select>
     )
 }
+
+
