@@ -14,7 +14,7 @@ import { Atom, useAtom } from 'jotai'
 * See pages/DropdownDemo.tsx
 * Items are passed in as an array of type DropdownMenuItem
 * label: is a string that will be displayed above the dropdown menu
-* native: is a boolean that determines whether to use the native dropdown menu or not
+* atom: is an atom that will be used to manage the selected value
 */
 export function DropdownMenu({ ...props }: SelectProps & { items: DropdownMenuItem[], label: string, atom: Atom<string>}) {
     
