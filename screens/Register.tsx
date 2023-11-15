@@ -33,6 +33,15 @@ export default function Register({ navigation }) {
       return;
     }
 
+    const data = {
+      name: username,
+      email: email,
+      password: password,
+    };
+
+    console.log(data);
+
+    /*
     try {
       const response = await axios.post(
         'http://10.0.2.2:3000/addUser',
@@ -53,6 +62,7 @@ export default function Register({ navigation }) {
       console.error('Error:', error);
       alert('Error during registration. Please try again.');
     }
+    */
   };
 
   return (
