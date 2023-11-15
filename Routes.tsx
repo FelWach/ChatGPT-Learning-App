@@ -13,7 +13,7 @@ export default function Routes() {
         <Stack.Screen name="Login" component={Login} options={{ title: "" }}  />,
         <Stack.Screen name="Register" component={Register} options={{ title: "" }}  />,
         <Stack.Screen name="LearnSet" component={StartScreen} options={{ headerShown: false }}  />,
-        <Stack.Screen name="Profile" component={StartScreen} options={{ headerShown: false }} } />,
+        <Stack.Screen name="Profile" component={StartScreen} options={{ headerShown: false }}/> ,
         <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />,
         <Stack.Screen name="QuestionsCatalogue" component={StartScreen} options={{ title: "" }}  />,
         <Stack.Screen name="LearnMode" component={StartScreen} options={{ title: "" }}  />
