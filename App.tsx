@@ -6,7 +6,7 @@ import config from './tamagui.config'
 // React Navigation
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Routes from '/Routes.tsx'
+import Routes from './Routes'
 // Jotai
 import { Provider } from 'jotai'
 

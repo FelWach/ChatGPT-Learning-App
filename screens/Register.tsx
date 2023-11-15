@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
 import { useAtom  } from 'jotai'
-import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms.tsx'
+import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
 
 
 export default function Register({ navigation }) {
