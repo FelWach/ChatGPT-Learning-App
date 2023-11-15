@@ -5,12 +5,12 @@
 // for react-native only: @tamagui/config/v2-native
 
 import { config } from '@tamagui/config/v2-native'
-import { Text, View } from 'react-native'
-import { createTamagui } from 'tamagui' // or '@tamagui/core'
 
+import { Text, View } from 'react-native'
+
+import { createTamagui } from 'tamagui' // or '@tamagui/core'
 const appConfig = createTamagui(config)
 export type AppConfig = typeof appConfig
-
 declare module 'tamagui' {
 
   // or '@tamagui/core'
