@@ -8,6 +8,7 @@ import config from './tamagui.config'
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native';
+import { Learnset } from './screens/Learnset/Learnset';
 
 export default function App() {
 
@@ -29,7 +30,7 @@ export default function App() {
     <TamaguiProvider config={config}>
 
       <View style={{ padding: 20 }}>
-        
+      <Learnset />
       </View>
 
     </TamaguiProvider>
