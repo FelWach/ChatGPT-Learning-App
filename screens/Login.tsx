@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 //import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import Register from './Register.tsx'
 
 //const Tab = createBottomTabNavigator();
 

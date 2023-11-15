@@ -7,7 +7,7 @@ import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Routes from '/Routes.tsx'
+import Routes from './Routes'
 
 // creating Native Stack Navigator
 export const Stack = createNativeStackNavigator();

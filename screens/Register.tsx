@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 export default function Register({ navigation }) {
   const [username, setUsername] = useState('');
