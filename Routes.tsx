@@ -1,10 +1,10 @@
+// Stack Component
 import { Stack } from '/App.tsx'
 
 // import Screens
 import StartScreen from './screens/StartScreen.tsx'
 import Login from './screens/Login.tsx'
 import Register from './screens/Register.tsx'
-
 
 export default function Routes() {
 

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useAtom  } from 'jotai'
+import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms.tsx'
+
 
 export default function Register({ navigation }) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [username, setUsername] = useAtom(userAtom);
+  const [email, setEmail] = useAtom(emailAtom);
+  const [password, setPassword] = useAtom(passwordAtom);
+  const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
 
   const handleLogin = () => {
     // Handle login logic here

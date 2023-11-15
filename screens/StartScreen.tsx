@@ -1,22 +1,12 @@
-import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, H2, Image, Text, Input } from 'tamagui';
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
 
 export default function StartScreen({ navigation }) {
 
   return (
     <View>
         <H2>Learning App</H2>
-        {/*}
-        <Image
-            source={{ width: 250, height: 200, uri: 'https://en.m.wikipedia.org/wiki/File:React-icon.svg'}}
-            width='100%'
-            height='100%'
-        />
-        {*/}
-
         <Button onPress={ () => navigation.navigate('Login')}>
             <Text>Login</Text>
         </Button>
@@ -24,5 +14,5 @@ export default function StartScreen({ navigation }) {
              <Text>Register</Text>
         </Button>
     </View>
-  );
-};
+  )
+}
