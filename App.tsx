@@ -7,14 +7,10 @@ import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
-// screens import
-import StartScreen from './screens/StartScreen.tsx'
-import Login from './screens/Login.tsx'
-import Register from './screens/Register.tsx'
+import Routes from '/Routes.tsx'
 
 // creating Native Stack Navigator
-const Stack = createNativeStackNavigator();
+export const Stack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -32,23 +28,12 @@ export default function App() {
   }
 
   return (
-
     <NavigationContainer>
-            <Stack.Navigator initialRouteName="StartScreen">
-                <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Login" component={Login} options={{ title: "" }}/>
-                <Stack.Screen name="Register" component={Register} options={{ title: "" }}/>
-                <Stack.Screen name="LearnSet" component={StartScreen} options={{ headerShown: false }}/>
-                <Stack.Screen name="Profile" component={StartScreen} options={{ headerShown: false }}/>
-                <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}/>
-                <Stack.Screen name="QuestionsCatalogue" component={StartScreen} options={{ title: "" }}/>
-                <Stack.Screen name="LearnMode" component={StartScreen} options={{ title: "" }}/>
-            </Stack.Navigator>
+            <Routes />
             <TamaguiProvider config={config}>
                  <View style={{ padding: 20 }}></View>
             </TamaguiProvider>
     </NavigationContainer>
-
   )
 }
 
