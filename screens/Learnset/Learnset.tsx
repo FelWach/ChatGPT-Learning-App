@@ -2,16 +2,16 @@ import { Button, H1, ScrollView, View, XStack, YStack, Accordion } from "tamagui
 import { Trash, Edit, Plus, ArrowLeft } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
-import { DummyData } from "./type";
+import { QuestionsAccordionItemProps } from "./type";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
 
-const dataAtom = atom<DummyData[]>([]);
+const dataAtom = atom<QuestionsAccordionItemProps[]>([]);
 
 export function Learnset() {
     const [data, setData] = useAtom(dataAtom);
 
-    const dummyData: DummyData[] = [
+    const dummyData: QuestionsAccordionItemProps[] = [
         {
             question: 'Was ist die Hauptstadt von Deutschland?',
             answer: 'Berlin',

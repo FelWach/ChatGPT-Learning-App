@@ -1,7 +1,9 @@
 import { Accordion, Paragraph, Square } from "tamagui";
 import { ChevronDown } from '@tamagui/lucide-icons'
+import { QuestionsAccordionItemProps } from "../screens/Learnset/type";
 
-export function QuestionsAccordionItem(props: { question: string, answer: string, value: string }) {
+
+export function QuestionsAccordionItem(props: QuestionsAccordionItemProps) {
     return (
 
         <Accordion.Item value={props.value} >
