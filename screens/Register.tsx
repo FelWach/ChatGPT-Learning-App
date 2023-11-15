@@ -35,7 +35,7 @@ export default function Register({ navigation }) {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/addUser',
+        'http://10.0.2.2:3000/addUser',
         {
           name: username,
           email: email,
