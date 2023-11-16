@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { Button, H2, Image, Text, Input } from 'tamagui';
+import ApiCalls from './apiCalls'
 
 export default function StartScreen({ navigation }) {
 
@@ -14,6 +15,9 @@ export default function StartScreen({ navigation }) {
         </Button>
         <Button onPress={ () => navigation.navigate('LearnSet')}>
              <Text>Learnset</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Api')}>
+             <Text>Api</Text>
         </Button>
     </View>
   )

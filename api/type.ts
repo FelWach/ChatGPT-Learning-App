@@ -3,3 +3,16 @@ export interface UserProps {
     email: string;
     password: string;
 }
+
+export interface GenerateProps {
+    topic: string,
+    nbQuestions: number
+}
+
+export interface ConfigSettingsProps {
+    language: string,
+    languageLevel: string,
+    difficulty: string,
+    temperature: number
+}
+

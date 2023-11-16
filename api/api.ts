@@ -5,11 +5,13 @@ const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps } from "./type"
+import { UserProps, GenerateProps, ConfigSettingsProps } from "./type"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
 
+
+// user routes
 // post addUser: for registration process
 export async function addUser(data: UserProps) {
     try{
@@ -21,10 +23,11 @@ export async function addUser(data: UserProps) {
     }
 }
 
+// entry routes
 // post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic in request body
-export async function generate(data: UserProps) {
+export async function generate(data: GenerateProps) {
     try{
-        const response = await axios.post(`${baseUrl}/addUser`,  data, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.post(`${baseUrl}/generate`,  data, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -32,10 +35,10 @@ export async function generate(data: UserProps) {
     }
 }
 
-// post generate: generates Q&As and saves them in the database (currently only for 'user 1'), topic as url param
-export async function generate(topic: string) {
+// post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic as url param
+export async function generate2(topic: string) {
     try{
-        const response = await axios.post(`${baseUrl}/addUser`,  data, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.post(`${baseUrl}/generate`,  {params: {topic: topic}}, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -44,9 +47,9 @@ export async function generate(topic: string) {
 }
 
 // post setConfigurations: saves the configurator settings
-export async function setConfigurations(settings: ) {
+export async function setConfiguration(settings: ConfigSettingsProps ) {
     try{
-        const response = await axios.get(`${baseUrl}/entries`, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.post(`${baseUrl}/setConfiguration`, settings, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -55,7 +58,7 @@ export async function setConfigurations(settings: ) {
 }
 
 // get entries: returns all Q&As with id and topic
-export async function entries() {
+export async function getEntries() {
     try{
         const response = await axios.get(`${baseUrl}/entries`, {headers: { 'Content-Type': 'application/json'}});
         return response
@@ -66,9 +69,9 @@ export async function entries() {
 }
 
 // get entries: returns all Q&As from a user
-export async function entries(id: number) {
+export async function getUserEntries(userId: number) {
     try{
-        const response = await axios.get(`${baseUrl}/entries`, {params: {id: id}, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: userId}}, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -77,9 +80,9 @@ export async function entries(id: number) {
 }
 
 // get entries: returns all Q&As from a user for a specific topic
-export async function entries(id: number, topic: string) {
+export async function getEntriesWithTopic(userId: number, topic: string) {
     try{
-        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: id}, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: userId, topic: topic}}, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -88,9 +91,9 @@ export async function entries(id: number, topic: string) {
 }
 
 // get entry: returns a specific Q&A
-export async function entry(id: number) {
+export async function getEntry(id: number) {
     try{
-        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: id}, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.get(`${baseUrl}/entry`, {params: {id: id}}, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -101,8 +104,8 @@ export async function entry(id: number) {
 // delete entry: deletes a specific Q&A
 export async function deleteEntry(id: number) {
     try{
-        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: id}, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        const response = await axios.delete(`${baseUrl}/deleteEntry`, {params: {id: id}}, {headers: { 'Content-Type': 'application/json'}});
+        return responses
     }
     catch (error) {
         console.log('Error: ' + error)
