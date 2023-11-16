@@ -1,45 +1,99 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, H2, Input } from 'tamagui';
-import { atom, useAtom } from 'jotai';
+import { Button, H2, Input, Text } from 'tamagui';
+import { useAtom, useAtomValue } from 'jotai';
+import { atomWithValidate, validateAtoms, atomWithFormControls } from 'jotai-form';
 import axios from 'axios';
+import * as Yup from 'yup';
 
-const usernameAtom = atom('');
-const emailAtom = atom('');
-const passwordAtom = atom('');
-const repeatPasswordAtom = atom('');
+export const nameSchema = Yup.string().required();
+export const emailSchema = Yup.string().email().required();
+export const passwordSchema = Yup.string().min(8).required();
+export const repeatPasswordSchema = Yup.string()
+  .required('Please retype your password.')
+
+const nameAtom = atomWithValidate('', {
+  validate: async (v) => {
+    await nameSchema.validate(v);
+    return v;
+  },
+});
+
+const emailAtom = atomWithValidate('', {
+  validate: async (v) => {
+    await emailSchema.validate(v);
+    return v;
+  },
+});
+
+const passwordAtom = atomWithValidate('', {
+  validate: async (v) => {
+    await passwordSchema.validate(v);
+    return v;
+  },
+});
+
+const repeatPasswordAtom = atomWithValidate('', {
+  validate: async (v) => {
+    await repeatPasswordSchema.validate(v);
+    return v;
+  },
+});
+
+const formControlAtom = atomWithFormControls(
+  {
+    name: nameAtom,
+    email: emailAtom,
+    password: passwordAtom,
+    repeatPassword: repeatPasswordAtom,
+  },
+  {
+    validate: (values) => {
+      if (values.password !== values.repeatPassword) {
+        throw new Error('Passwords do not match.');
+      }
+    }
+  }
+);
 
 export default function Register({ navigation }) {
-  const [username, setUsername] = useAtom(usernameAtom);
-  const [email, setEmail] = useAtom(emailAtom);
-  const [password, setPassword] = useAtom(passwordAtom);
-  const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
 
-  const checkEmptyFields = () => {
-    if (username === '' || email === '' || password === '' || repeatPassword === '') {
-      return true;
-    }
-    return false;
-  }
+  const {
+    // Values per field
+    values,
+    // is the form valid
+    isValid,
+    // focused state per field
+    focused,
+    // touched state per field
+    touched,
+    // errors per field
+    fieldErrors,
+    // form error
+    error,
+    // handle change of value per field
+    handleOnChange,
+    // handle blur event per field
+    handleOnBlur,
+    // handle focus event per field
+    handleOnFocus,
+  } = useAtomValue(formControlAtom);
 
   const handleRegister = async () => {
-    if (checkEmptyFields()) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    if (password !== repeatPassword) {
-      alert('Passwords do not match');
-      return;
-    }
 
     const data = {
-      name: username,
-      email: email,
-      password: password,
+      name: values.name,
+      email: values.email,
+      password: values.password,
     };
 
-    console.log(data);
+    if (isValid) {
+      console.log('Form is valid');
+      console.log(data);
+    } else {
+      console.log('Form is invalid');
+      console.log(data);
+    }
 
     /*
     try {
@@ -68,28 +122,71 @@ export default function Register({ navigation }) {
   return (
     <View>
       <H2>Create an account</H2>
+
       <Input
-        value={username}
-        onChangeText={setUsername}
-        placeholder={'Username'}
+        value={values.name}
+        onChangeText={(e) => {
+          handleOnChange('name')(e);
+        }}
+        //onFocus={handleOnFocus('name')}
+        onBlur={handleOnBlur('name')}
+        placeholder={'Name'}
       />
+      <Text>
+        {fieldErrors.name && touched.name
+          ? `${fieldErrors.name}`
+          : ''}
+      </Text>
+
       <Input
-        value={email}
-        onChangeText={setEmail}
+        value={values.email}
+        onChangeText={(e) => {
+          handleOnChange('email')(e);
+        }}
+        //onFocus={handleOnFocus('email')}
+        onBlur={handleOnBlur('email')}
         placeholder={'Email'}
       />
+      <Text>
+        {fieldErrors.email && touched.email
+          ? `${fieldErrors.email}`
+          : ''}
+      </Text>
+
       <Input
-        value={password}
-        onChangeText={setPassword}
-        placeholder={'Password'}
+        value={values.password}
+        onChangeText={(e) => {
+          handleOnChange('password')(e);
+        }}
+        //onFocus={handleOnFocus('password')}
+        onBlur={handleOnBlur('password')}
         secureTextEntry={true}
+        placeholder='Password'
       />
+      <Text>
+        {fieldErrors.password && touched.password
+          ? `${fieldErrors.password}`
+          : ''}
+      </Text>
+
       <Input
-        value={repeatPassword}
-        onChangeText={setRepeatPassword}
-        placeholder={'Repeat Password'}
+        value={values.repeatPassword}
+        onChangeText={(e) => {
+          handleOnChange('repeatPassword')(e);
+        }}
+        //onFocus={handleOnFocus('repeatPassword')}
+        onBlur={handleOnBlur('repeatPassword')}
         secureTextEntry={true}
+        placeholder='Repeat Password'
       />
+      <Text>
+        {fieldErrors.repeatPassword && touched.repeatPassword
+          ? `${fieldErrors.repeatPassword}`
+          : ''}
+      </Text>
+
+      <Text>{error?.toString()}</Text>
+
       <Button onPress={() => {
         handleRegister();
       }}>
