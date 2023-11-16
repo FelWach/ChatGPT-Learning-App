@@ -29,9 +29,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-            <Routes />
             <TamaguiProvider config={config}>
-                 <View style={{ padding: 20 }}></View>
+                 <Routes />
             </TamaguiProvider>
     </NavigationContainer>
   )
