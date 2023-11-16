@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { Button, H2, Image, Text, Input } from 'tamagui';
 
-
 export default function StartScreen({ navigation }) {
 
   return (
@@ -12,6 +11,9 @@ export default function StartScreen({ navigation }) {
         </Button>
         <Button onPress={ () => navigation.navigate('Register')}>
              <Text>Register</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('LearnSet')}>
+             <Text>Learnset</Text>
         </Button>
     </View>
   )

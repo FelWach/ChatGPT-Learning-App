@@ -2617,6 +2617,13 @@
     "@tamagui/use-controllable-state" "1.76.0"
     reforest "^0.13.0"
 
+"@tamagui/helpers-icon@1.76.0":
+  version "1.76.0"
+  resolved "https://registry.yarnpkg.com/@tamagui/helpers-icon/-/helpers-icon-1.76.0.tgz#b7658fbb27b21e473b21f1e25a058fad290fd711"
+  integrity sha512-DL3fSNfoNqY+qrFFsg+WGitwP4mudWORHI8J53AQjoDSUvrMjMWIh/tscv+zGhLAyIL0geteZszPx7eeXYfGwA==
+  dependencies:
+    "@tamagui/core" "1.76.0"
+
 "@tamagui/helpers-tamagui@1.76.0":
   version "1.76.0"
   resolved "https://registry.npmjs.org/@tamagui/helpers-tamagui/-/helpers-tamagui-1.76.0.tgz"
@@ -2653,7 +2660,7 @@
     "@tamagui/text" "1.76.0"
     "@tamagui/web" "1.76.0"
 
-"@tamagui/linear-gradient@1.76.0":
+"@tamagui/linear-gradient@1.76.0", "@tamagui/linear-gradient@^1.76.0":
   version "1.76.0"
   resolved "https://registry.npmjs.org/@tamagui/linear-gradient/-/linear-gradient-1.76.0.tgz"
   integrity sha512-aBO9tWFQvVfz1M8Qdny+rsh/yx2CSLR10pSFgtt3O/BJUWoPanjMCI4OwUQ2m5+W9Ab8ismUerb4TIniTZBaFA==
@@ -2672,6 +2679,14 @@
     "@tamagui/helpers-tamagui" "1.76.0"
     "@tamagui/text" "1.76.0"
     "@tamagui/web" "1.76.0"
+
+"@tamagui/lucide-icons@^1.76.0":
+  version "1.76.0"
+  resolved "https://registry.yarnpkg.com/@tamagui/lucide-icons/-/lucide-icons-1.76.0.tgz#ff3f9992fafda2aa1a6e770f9061f960a92efc45"
+  integrity sha512-5VgCI50Cz0ocjtrYKUDM+BPgRRe8BhS5rL7P/Sb8tU3Vdfh2SEvbatJriOJktSGerr7h7yjo49oP6Jd75d7urw==
+  dependencies:
+    "@tamagui/core" "1.76.0"
+    "@tamagui/helpers-icon" "1.76.0"
 
 "@tamagui/normalize-css-color@1.76.0":
   version "1.76.0"
@@ -4729,6 +4744,32 @@ csstype@3.0.9:
   integrity sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==
 
 csstype@^3.0.10, csstype@^3.0.2:
+
+css-select@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/css-select/-/css-select-5.1.0.tgz#b8ebd6554c3637ccc76688804ad3f6a6fdaea8a6"
+  integrity sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==
+  dependencies:
+    boolbase "^1.0.0"
+    css-what "^6.1.0"
+    domhandler "^5.0.2"
+    domutils "^3.0.1"
+    nth-check "^2.0.1"
+
+css-tree@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-1.1.3.tgz#eb4870fb6fd7707327ec95c2ff2ab09b5e8db91d"
+  integrity sha512-tRpdppF7TRazZrjJ6v3stzv93qxRcSsFmW6cX0Zm2NVKpxE1WV1HblnghVv9TreireHkqI/VDEsfolRF1p6y7Q==
+  dependencies:
+    mdn-data "2.0.14"
+    source-map "^0.6.1"
+
+css-what@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/css-what/-/css-what-6.1.0.tgz#fb5effcf76f1ddea2c81bdfaa4de44e79bac70f4"
+  integrity sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==
+
+csstype@^3.0.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.2.tgz"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
@@ -4965,6 +5006,36 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
+dom-serializer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
+  integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
+  dependencies:
+    domelementtype "^2.3.0"
+    domhandler "^5.0.2"
+    entities "^4.2.0"
+
+domelementtype@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
+  integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
+
+domhandler@^5.0.2, domhandler@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
+  integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
+  dependencies:
+    domelementtype "^2.3.0"
+
+domutils@^3.0.1:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.1.0.tgz#c47f551278d3dc4b0b1ab8cbb42d751a6f0d824e"
+  integrity sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==
+  dependencies:
+    dom-serializer "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.3"
+
 dotenv-expand@~10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/dotenv-expand/-/dotenv-expand-10.0.0.tgz"
@@ -5019,6 +5090,11 @@ entities@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
   integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
+
+entities@^4.2.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
+  integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
 
 env-editor@^0.4.1:
   version "0.4.2"
@@ -6423,21 +6499,6 @@ join-component@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/join-component/-/join-component-1.1.0.tgz"
   integrity sha512-bF7vcQxbODoGK1imE2P9GS9aw4zD0Sd+Hni68IMZLj7zRnquH7dXUmMw9hDI5S/Jzt7q+IyTXN0rSg2GI0IKhQ==
-
-jotai-devtools@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/jotai-devtools/-/jotai-devtools-0.7.0.tgz#487432c1da58838a98bd275f0d96844765ed5420"
-  integrity sha512-rMcNusiJ3YtvbVkUF6RrUa1mJZbcH7Cs6MGULHllTQ/+4/kKtWtEPXUMdwxyJ33Sdx/L0Al8b0g0NpLOPUr0zA==
-  dependencies:
-    "@mantine/core" "^6.0.21"
-    "@mantine/hooks" "^6.0.21"
-    "@mantine/prism" "^6.0.21"
-    "@redux-devtools/extension" "^3.2.5"
-    javascript-stringify "^2.1.0"
-    jsondiffpatch "^0.5.0"
-    react-error-boundary "^4.0.11"
-    react-json-tree "^0.18.0"
-    react-resizable-panels "^0.0.54"
 
 jotai@^2.5.1:
   version "2.5.1"
@@ -8360,6 +8421,14 @@ react-native-web@~0.19.6:
     postcss-value-parser "^4.2.0"
     styleq "^0.1.3"
 
+react-native-svg@^13.14.0:
+  version "13.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.14.0.tgz#879930cfe10e877e51ebb77dfcc2cd65fc6b0d21"
+  integrity sha512-27ZnxUkHgWICimhuj6MuqBkISN53lVvgWJB7pIypjXysAyM+nqgQBPh4vXg+7MbqLBoYvR4PiBgKfwwGAqVxHg==
+  dependencies:
+    css-select "^5.1.0"
+    css-tree "^1.1.3"
+
 react-native@0.72.6:
   version "0.72.6"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.72.6.tgz"
@@ -9087,7 +9156,7 @@ source-map@^0.5.6:
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz"
   integrity sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==
 
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
+source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
