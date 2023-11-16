@@ -52,12 +52,12 @@ export default function ApiCalls() {
   };
 
   const handleEntry = async () => {
-       const response = await getEntry(1);
+       const response = await getEntry(27);
        console.log(response.data)
   };
 
   const handleDeleteEntry = async () => {
-       const response = await deleteEntry(2);
+       const response = await deleteEntry(29);
        console.log(response.data.message)
   };
 

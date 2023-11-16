@@ -93,7 +93,7 @@ export async function getEntriesWithTopic(userId: number, topic: string) {
 // get entry: returns a specific Q&A
 export async function getEntry(id: number) {
     try{
-        const response = await axios.get(`${baseUrl}/entry`, {params: {id: id}}, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.get(`${baseUrl}/entry/${id}`, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
@@ -104,8 +104,8 @@ export async function getEntry(id: number) {
 // delete entry: deletes a specific Q&A
 export async function deleteEntry(id: number) {
     try{
-        const response = await axios.delete(`${baseUrl}/deleteEntry`, {params: {id: id}}, {headers: { 'Content-Type': 'application/json'}});
-        return responses
+        const response = await axios.delete(`${baseUrl}/deleteEntry/${id}`, {headers: { 'Content-Type': 'application/json'}});
+        return response
     }
     catch (error) {
         console.log('Error: ' + error)
