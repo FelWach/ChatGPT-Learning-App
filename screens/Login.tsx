@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
 //import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAtom  } from 'jotai'
-import { userAtom, passwordAtom } from '../state/atoms.tsx'
+import { userAtom, passwordAtom } from '../state/atoms'
 
 
 //const Tab = createBottomTabNavigator();
