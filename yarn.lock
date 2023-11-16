@@ -2508,7 +2508,7 @@
     "@tamagui/text" "1.76.0"
     "@tamagui/web" "1.76.0"
 
-"@tamagui/linear-gradient@1.76.0":
+"@tamagui/linear-gradient@1.76.0", "@tamagui/linear-gradient@^1.76.0":
   version "1.76.0"
   resolved "https://registry.npmjs.org/@tamagui/linear-gradient/-/linear-gradient-1.76.0.tgz"
   integrity sha512-aBO9tWFQvVfz1M8Qdny+rsh/yx2CSLR10pSFgtt3O/BJUWoPanjMCI4OwUQ2m5+W9Ab8ismUerb4TIniTZBaFA==
