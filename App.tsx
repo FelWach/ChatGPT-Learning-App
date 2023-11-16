@@ -1,18 +1,23 @@
-// this provides some helpful reset styles to ensure a more consistent look
-
-// only import this from your web app, not native
-
-
+import { useFonts } from 'expo-font'
+// Tamagui
+import { Button, View, Text } from 'tamagui'
 import { TamaguiProvider } from 'tamagui'
 import config from './tamagui.config'
-import { Button } from 'tamagui'
-import { useFonts } from 'expo-font'
-import { View, Text } from 'react-native';
-import Learning from './screens/Learning';
+// React Navigation
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Routes from './Routes'
+// Jotai
+import { Provider } from 'jotai'
+// React Native Gesture Handler
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function App() {
 
+
+// creating Native Stack Navigator
+export const Stack = createNativeStackNavigator();
+
+export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
@@ -27,16 +32,16 @@ export default function App() {
   }
 
   return (
-
-    <TamaguiProvider config={config}>
-      <GestureHandlerRootView>
-      <View style={{ padding: 20 }}>
-        <Learning/>
-      </View>
-      </GestureHandlerRootView>
-
-    </TamaguiProvider>
+    <Provider>
+      <NavigationContainer>
+              <TamaguiProvider config={config}>
+              <GestureHandlerRootView>
+                  <Routes />
+                </GestureHandlerRootView>
+              </TamaguiProvider>
+      </NavigationContainer>
+    </Provider>
 
   )
-
 }
+
