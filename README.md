@@ -37,7 +37,7 @@ Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei 
 
 POST /generateAnswer 
 
-generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 8)
+generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
 
 POST /setConfigurations
 
