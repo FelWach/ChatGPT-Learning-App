@@ -35,9 +35,15 @@ Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei 
 
 ## API Endpoints
 
-POST /generateAnswer 
+POST /generate
 
 generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
+Benötigt topic in request body
+
+POST /generate/:topic
+
+generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
+topic in req params. (eventuell wird nur diese route benötigt)
 
 POST /setConfigurations
 
