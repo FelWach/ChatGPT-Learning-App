@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
+//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-export default function Login() {
+
+//const Tab = createBottomTabNavigator();
+
+export default function Login({ /*route,*/ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  //const { usernameParam } = route.params;
 
   const handleLogin = () => {
     // Handle login logic here
@@ -12,8 +17,9 @@ export default function Login() {
 
   return (
     <View>
-        <H2>Welcome back!</H2>
-        <Text>Login below or create an account</Text>
+
+      <H2>Welcome back!</H2>
+      <Text>Login below or create an account</Text>
       <Input
         value={username}
         onChangeText={setUsername}
@@ -25,8 +31,16 @@ export default function Login() {
         placeholder={'Password'}
         secureTextEntry={true}
       />
-      <Button onPress={handleLogin}>Sign in</Button>
+      <Button onPress={handleLogin, () =>navigation.navigate('StartScreen')}>Sign in</Button>
       <Text>Forgot Password?</Text>
+
+{/*}
+      <Tab.Navigator>
+            <Tab.Screen name="LearnSet" component={Register} />
+            <Tab.Screen name="Profile" component={Register} />
+          </Tab.Navigator>
+{*/}
+
     </View>
   );
 };
