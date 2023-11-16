@@ -1,6 +1,7 @@
 import { Card, CardProps, H4, Paragraph } from "tamagui";
+import { TopicCardProps } from "./types";
 
-export function TopicsCard({ ...props }: CardProps & { headline: string; numberOfLearncards: number }) { // extend CardProps with headline and numberOfLearncards
+export function TopicsCard({ ...props }: CardProps & TopicCardProps) { // extend CardProps with headline and numberOfLearncards
     return (
         <Card bordered {...props}>
             <H4>{props.headline}</H4>

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react"; // Make sure to import React
 import { H1, XStack, ScrollView } from "tamagui";
-import { TopicsCard } from "../../components/TopicsCard";
-import { DummyData } from "./types";
+import { TopicsCard } from "../../components/TopicCards/TopicsCard";
+import { TopicCardProps } from "../../components/TopicCards/types";
 import { atom, useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 
-const dataAtom = atom<DummyData[]>([]);
+const dataAtom = atom<TopicCardProps[]>([]);
 
 export function TopicsOverview() {
 
   const [data, setData] = useAtom(dataAtom);
 
-  const dummyData: DummyData[] = [
+  const dummyData: TopicCardProps[] = [
     {
       headline: 'Geografie',
       numberOfLearncards: 5

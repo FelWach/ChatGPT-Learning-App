@@ -1,4 +1,4 @@
-export interface DummyData {
+export interface TopicCardProps {
     headline: string;
     numberOfLearncards: number;
   }
