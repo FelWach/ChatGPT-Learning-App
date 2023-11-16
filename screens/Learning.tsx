@@ -1,50 +1,67 @@
 import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { Swipeable } from 'react-native-gesture-handler';
 import { Progress, SizeTokens, YStack, Card, Button} from 'tamagui';
+import axios from 'axios';
 
 export default function Learning() {
 
-  const [data, setData] = useState([
+  const [data, setData] = useState<DataType[]>([
     {
-      ID: 1,
-      Q: "What is the capital of France?",
-      A: "Paris"
-    },
-    {
-      ID: 2,
-      Q: "What is the capital of Austria?",
-      A: "Vienna"
-    },
-    {
-      ID: 3,
-      Q: "What is the capital of Germany?",
-      A: "Berlin"
+      id: 0,
+      Q: "",
+      A: ""
     }
   ]);
-  const [size, setSize] = useState(4)
+  type DataType = { id: number; Q: string; A: string };
+  const [currID, setCurrID]= useState(0);
+  const [currQ, setCurrQ] = useState("");
+  const [currA, setCurrA] = useState("");
+  const [numberQ, setNumberQ] = useState(1);
+  const [dataLength, setDataLength] = useState(0);
+
+  let swipeableRef: { close: () => any; } | null = null;
+
+  const size = 4;
   const [progress, setProgress] = useState(0)
   const sizeProp = `$${size}` as SizeTokens
-
-  const [currID, setCurrID]= useState(data[0].ID);
-  const [currQ, setCurrQ] = useState(data[0].Q);
-  const [currA, setCurrA] = useState(data[0].A);
 
   const [isFront, setIsFront] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-      /*async function fetchData() {
-        const response = await fetch('http://localhost:3000/main');
-        const data = await response.json();
-        setData(data);
-      }
-      fetchData();*/
+    loadQuestions();
   }, [])
 
-  const handleQuestions = () => {
-    setProgress((prev) => (prev + 100/data.length));
+  const loadQuestions = async () => {
+    try {
+      const response = await axios.get('http://10.0.2.2:3000/entries');
+      setData(response.data);
 
-    if (currID === data.length) {
+      setCurrID(response.data[0].id);
+      setCurrQ(response.data[0].Q);
+      setCurrA(response.data[0].A);
+      setDataLength(response.data.length);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleSwipeableOpen = (side: string) => {
+    if (swipeableRef) {
+      swipeableRef.close();
+    }
+    if (side === 'right') {
+      nextQuestion();
+    } else {
+      repeatOneQuestion();
+    }
+  };
+
+  const nextQuestion = () => {
+    setProgress((prev) => (prev + 100/dataLength));
+
+    if (numberQ === data.length) {
       setIsFront(true);
       setIsFinished(true);
       return;
@@ -54,11 +71,29 @@ export default function Learning() {
       setIsFront(true);
     }
     
-    if (currID < data.length) {
+    if (numberQ < data.length) {
+      setNumberQ(numberQ + 1);
       setCurrID(currID + 1);
-      setCurrQ(data[currID].Q);
-      setCurrA(data[currID].A);
+      setCurrQ(data[numberQ].Q);
+      setCurrA(data[numberQ].A);
     }
+  }
+
+  const repeatOneQuestion = () => {
+    data.push({id: currID, Q: currQ, A: currA});
+    data.splice(currID - 1, 1);
+    
+    if (numberQ < data.length) {
+      setNumberQ(numberQ + 1);
+      setCurrID(currID + 1);
+      setCurrQ(data[numberQ].Q);
+      setCurrA(data[numberQ].A);
+    }
+
+    if (isFront) {
+      return;
+    }
+    setIsFront(true);
   }
 
   const handleCard = () => {
@@ -71,17 +106,49 @@ export default function Learning() {
     setIsFront(false);
   }
 
-  const repeatOneQuestion = () => {
-    if (isFront) {
+  const leftSwipeActions = () => {
+    if (isFinished) {
       return;
     }
-    setIsFront(true);
+    return (
+      <Card elevate size="$20" borderRadius="$10" style={{backgroundColor: "red"}}>
+        <Card.Header padded>
+        </Card.Header>
+        <Card.Footer padded>
+
+        </Card.Footer>
+        <Card.Background alignItems="center">
+          <Text style={styles.cardText} >
+            Wrong
+          </Text>
+        </Card.Background>
+      </Card>
+          )
+  }
+
+  const rightSwipeActions = () => {
+    if (isFinished) {
+      return;
+    }
+    return (
+      <Card elevate size="$20" borderRadius="$10" style={{backgroundColor: "green"}}>
+        <Card.Header padded>
+        </Card.Header>
+        <Card.Footer padded>
+
+        </Card.Footer>
+        <Card.Background alignItems="center">
+          <Text style={styles.cardText} >
+            Correct
+          </Text>
+        </Card.Background>
+      </Card>
+    )
   }
 
   const repeatAllQuestions = () => {
-    setCurrID(1);
-    setCurrQ(data[0].Q);
-    setCurrA(data[0].A);
+    loadQuestions();
+    setNumberQ(1);
     setProgress(0);
     setIsFront(true);
     setIsFinished(false);
@@ -89,22 +156,24 @@ export default function Learning() {
     
   return (
   <View>
-    <Text>Frage {currID} von {data.length}</Text>
+    <Text>Frage {numberQ} von {data.length}</Text>
       <View>
         <Button>
           X
         </Button>
-
         <View>
-          {!isFront ?
-              <View>
-                <Text onPress={() => handleQuestions()}>Richtig</Text>
-                <Text onPress={() => repeatOneQuestion()}>Falsch</Text>
-              </View> :
-              isFinished &&
-              <Text onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
+          {
+            isFinished &&
+            <Text onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
           }
-          <Card elevate size="$20" borderRadius="$10" onPress={() => handleCard()}>
+          <Swipeable
+            ref={(ref) => (swipeableRef = ref)}
+            renderLeftActions={leftSwipeActions}
+            renderRightActions={rightSwipeActions}
+            overshootFriction={8}
+            onSwipeableOpen={(event) => handleSwipeableOpen(event === 'right' ? 'right' : 'left')}
+          >
+          <Card elevate size="$20" borderRadius="$10" onPress={() => handleCard()} >
             <Card.Header padded>
             </Card.Header>
             <Card.Footer padded>
@@ -118,10 +187,17 @@ export default function Learning() {
               </Text>
             </Card.Background>
           </Card>
+          </Swipeable>
         </View>
       </View>
-    <Text>Swipe to complete the question</Text>
-    <Text>Tap the Card to reveal the answer</Text>
+    {!isFinished && 
+      <>
+        {isFront ?
+          <Text>Tap the Card to reveal the answer</Text> :
+          <Text>Swipe to complete the question</Text> 
+        }
+      </>
+    }
     <YStack height={60} alignItems="center" space>
       <Progress size={sizeProp} marginTop="$5" value={progress}>
         <Progress.Indicator animation="bouncy" />

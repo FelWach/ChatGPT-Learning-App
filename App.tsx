@@ -8,6 +8,8 @@ import config from './tamagui.config'
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font'
 import { View, Text } from 'react-native';
+import Learning from './screens/Learning';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
 
@@ -27,10 +29,11 @@ export default function App() {
   return (
 
     <TamaguiProvider config={config}>
-
+      <GestureHandlerRootView>
       <View style={{ padding: 20 }}>
-        
+        <Learning/>
       </View>
+      </GestureHandlerRootView>
 
     </TamaguiProvider>
 
