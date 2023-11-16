@@ -1,8 +1,5 @@
 // this provides some helpful reset styles to ensure a more consistent look
-
 // only import this from your web app, not native
-
-
 import { TamaguiProvider } from 'tamagui'
 import config from './tamagui.config'
 import { Button } from 'tamagui'
@@ -31,15 +28,12 @@ export default function App() {
   }
 
   return (
-
-    <TamaguiProvider config={config}>
-
-      <View style={{ padding: 20 }}>
-        <Register />
-      </View>
-
-    </TamaguiProvider>
-
+    <NavigationContainer>
+            <Routes />
+            <TamaguiProvider config={config}>
+                 <View style={{ padding: 20 }}></View>
+            </TamaguiProvider>
+    </NavigationContainer>
   )
-
 }
+
