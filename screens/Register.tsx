@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
+import { Button, H2, Text, Input, YStack } from 'tamagui';
 
 export default function Register({ navigation }) {
   const [username, setUsername] = useState('');
@@ -17,7 +16,7 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View>
+    <YStack space>
         <H2>Create an account</H2>
       <Input
         value={username}
@@ -42,6 +41,6 @@ export default function Register({ navigation }) {
       />
 
       <Button onPress= { handleRegister, () => { navigation.navigate('Login', { username: "Laura" }); }}>Register</Button>
-    </View>
+    </YStack>
   );
 };
