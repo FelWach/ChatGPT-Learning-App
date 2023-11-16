@@ -8,7 +8,7 @@ import { useHydrateAtoms } from 'jotai/utils'
 
 const dataAtom = atom<QuestionsAccordionItemProps[]>([]);
 
-export function Learnset() {
+export function Learnset({ navigation }) {
     const [data, setData] = useAtom(dataAtom);
 
     const dummyData: QuestionsAccordionItemProps[] = [
@@ -80,6 +80,7 @@ export function Learnset() {
     }
 
     // TODO: add back button functionality
+    // TODO: fix learn button position
     return (
         <View height={windowHeight - 50}>
             <ScrollView>
