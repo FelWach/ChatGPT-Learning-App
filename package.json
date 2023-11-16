@@ -16,6 +16,8 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
     "@tamagui/config": "^1.76.0",
+    "@tamagui/linear-gradient": "^1.76.0",
+    "@tamagui/lucide-icons": "^1.76.0",
     "@types/react": "~18.2.14",
     "axios": "^1.6.1",
     "expo": "~49.0.15",
@@ -29,6 +31,7 @@
     "react-native-web": "~0.19.6",
     "react-router-dom": "^6.18.0",
     "react-router-native": "^6.18.0",
+    "react-native-svg": "^13.14.0",
     "tamagui": "^1.76.0",
     "typescript": "^5.1.3"
   },

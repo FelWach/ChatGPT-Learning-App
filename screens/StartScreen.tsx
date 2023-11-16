@@ -21,6 +21,9 @@ export default function StartScreen({ navigation }) {
         <Button onPress={ () => navigation.navigate('Register')}>
              <Text>Register</Text>
         </Button>
+        <Button onPress={ () => navigation.navigate('LearnSet')}>
+             <Text>Learnset</Text>
+        </Button>
     </View>
   );
 };
