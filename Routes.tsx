@@ -1,4 +1,3 @@
-
 import { Stack } from './App'
 
 // import Screens
@@ -7,7 +6,6 @@ import Login from './screens/Login'
 import Register from './screens/Register'
 import { Learnset } from './screens/Learnset/Learnset';
 
-
 export default function Routes() {
 
 /*
@@ -15,7 +13,7 @@ export default function Routes() {
         <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }}  />,
         <Stack.Screen name="Login" component={Login} options={{ title: "" }}  />,
         <Stack.Screen name="Register" component={Register} options={{ title: "" }}  />,
-        <Stack.Screen name="LearnSet" component={Learnset} options={{  title: "Learnset" }}  />,
+        <Stack.Screen name="LearnSet" component={Learnset} options={{ title: "Learnset" }}  />,
         <Stack.Screen name="Profile" component={StartScreen} options={{ headerShown: false }}/> ,
         <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />,
         <Stack.Screen name="QuestionsCatalogue" component={StartScreen} options={{ title: "" }}  />,
