@@ -9,8 +9,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Routes from './Routes'
 // Jotai
 import { Provider } from 'jotai'
-
-
+// React Gesture Handler
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 // creating Native Stack Navigator
 export const Stack = createNativeStackNavigator();
@@ -32,9 +32,11 @@ export default function App() {
   return (
     <Provider>
       <NavigationContainer>
+          <GestureHandlerRootView style={{ flex: 1 }}>
               <TamaguiProvider config={config}>
                   <Routes />
               </TamaguiProvider>
+          </GestureHandlerRootView>    
       </NavigationContainer>
     </Provider>
   )
