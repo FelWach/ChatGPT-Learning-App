@@ -1,11 +1,8 @@
 import { View } from 'react-native';
 import { Button, H2, Text, Input } from 'tamagui';
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom } from '../state/atoms'
 
-
-//const Tab = createBottomTabNavigator();
 
 export default function Login({ /*route,*/ navigation }) {
   const [username, setUsername] = useAtom(userAtom);
@@ -34,14 +31,6 @@ export default function Login({ /*route,*/ navigation }) {
       />
       <Button onPress={handleLogin, () => navigation.navigate('StartScreen')}>Sign in</Button>
       <Text>Forgot Password?</Text>
-
-{/*}
-      <Tab.Navigator>
-            <Tab.Screen name="LearnSet" component={Register} />
-            <Tab.Screen name="Profile" component={Register} />
-          </Tab.Navigator>
-{*/}
-
     </View>
   );
 };
