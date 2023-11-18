@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react"; // Make sure to import React
 import { H1, XStack, ScrollView } from "tamagui";
 import { TopicsCard } from "../../components/TopicCards/TopicsCard";
 import { TopicCardProps } from "../../components/TopicCards/types";
