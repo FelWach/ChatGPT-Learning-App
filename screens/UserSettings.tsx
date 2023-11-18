@@ -1,55 +1,89 @@
+import React from 'react';
 import { View } from 'react-native';
-import { Button, H2, Text, Input, H1 } from 'tamagui';
-import { atom } from 'jotai'
-import { useAtom  } from 'jotai';
-import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
+import { Button, Text, Input, H1, XStack } from 'tamagui'; // Removed unused imports
+import { Pencil, X } from '@tamagui/lucide-icons';
+import { useAtom } from 'jotai';
+import { atom } from 'jotai';
+import {
+  userAtom,
+  passwordAtom,
+  emailAtom,
+  repeatPasswordAtom,
+} from '../state/atoms';
+
+const editingPasswordAtom = atom<boolean>(false);
 
 export default function UserSettings({ navigation }) {
+    
 
-    const [username, setUsername] = useAtom(userAtom);  
+    const [username, setUsername] = useAtom(userAtom);
     const [email, setEmail] = useAtom(emailAtom);
     const [password, setPassword] = useAtom(passwordAtom);
     const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
-
-    const tempUsernameAtom = atom<string>(username);
-    const tempPasswordAtom = atom<string>(password);
-    const tempEmailAtom = atom<string>(email);
-
-    const [tempUsername, setTempUsername] = useAtom(tempUsernameAtom);
-    const [tempPassword, setTempPassword] = useAtom(tempPasswordAtom);
-    const [tempEmail, setTempEmail] = useAtom(tempEmailAtom);
-
+    const [isEditingPassword, setIsEditingPassword] = useAtom(editingPasswordAtom);
+  
     const saveUserData = () => {
-        setUsername(tempUsername);
-        setEmail(tempEmail);
-        setPassword(tempPassword);
-        setRepeatPassword(repeatPassword);
-    }
+        // Handle changes
+    };
+
+    const editUsername = () => {
+        // Handle changes
+    };
+
+    const editEmail = () => {
+        // Handle changes
+    };
+
+    const editPassword = () => {
+        isEditingPassword ? setIsEditingPassword(false) : setIsEditingPassword(true);
+        // Handle changes
+    };
+  
     return (
-        <View>
-            <H1>Your Profile</H1>
+      <View>
+        <H1>Your Profile</H1>
+        <XStack alignItems="center" space="$2">
             <Input
-                value={tempUsername}
-                onChangeText={setTempUsername}
-                placeholder={'Username'}
+            value={username}
+            onChangeText={(value) => setUsername(value)}
+            placeholder={'Username'}
             />
+            <Button onPress={() => editUsername()}>
+            <Pencil />
+            </Button>
+        </XStack>
+        <XStack alignItems="center" space="$2">
             <Input
-                value={tempEmail}
-                onChangeText={setTempEmail}
-                placeholder={'Email'}
+            value={email}
+            onChangeText={(value) => setEmail(value)}
+            placeholder={'Email'}
             />
+            <Button onPress={() => editEmail()}>
+            <Pencil />
+            </Button>
+        </XStack>
+        <XStack alignItems="center" space="$2">
             <Input
-                value={tempPassword}
-                onChangeText={setTempPassword}
-                placeholder={'Password'}
-                secureTextEntry={true}
+            value={password}
+            onChangeText={(value) => setPassword(value)}
+            placeholder={'Password'}
+            secureTextEntry={true}
             />
-            <Input
+            <Button onPress={() => editPassword()}>
+            <Pencil />
+            </Button>
+        </XStack>
+        {isEditingPassword && 
+            <XStack alignItems="center" space="$2">
+                <Input
                 value={repeatPassword}
-                onChangeText={setRepeatPassword}
+                onChangeText={(value) => setRepeatPassword(value)}
                 placeholder={'Repeat Password'}
-            />
-            <Button onPress={() => saveUserData()}>Save</Button>
-        </View>
-    )
-}
+                />
+            </XStack>
+        }
+        <Button onPress={() => saveUserData()}>Save</Button>
+      </View>
+    );
+  }
+  
