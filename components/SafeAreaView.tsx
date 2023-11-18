@@ -6,7 +6,7 @@ export function SaveAreaView({children}) {
     const insets = useSafeAreaInsets();
    
     return (
-        <View style={{paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right}}>
+        <View style={{paddingTop: insets.top, paddingLeft: 15, paddingRight: 10, paddingBottom: insets.bottom}}>
             {children}
         </View>
     )
