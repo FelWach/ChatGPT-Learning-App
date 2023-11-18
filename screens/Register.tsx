@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, H2, Text, Input, YStack } from 'tamagui';
+import { SaveAreaView } from "../components/SafeAreaView";
 
 export default function Register({ navigation }) {
   const [username, setUsername] = useState('');
@@ -16,6 +17,7 @@ export default function Register({ navigation }) {
   };
 
   return (
+    <SaveAreaView>
     <YStack space>
         <H2>Create an account</H2>
       <Input
@@ -42,5 +44,6 @@ export default function Register({ navigation }) {
 
       <Button onPress= { handleRegister, () => { navigation.navigate('Login', { username: "Laura" }); }}>Register</Button>
     </YStack>
+    </SaveAreaView>
   );
 };

@@ -1,9 +1,7 @@
-// this provides some helpful reset styles to ensure a more consistent look
-// only import this from your web app, not native
-import { TamaguiProvider, Theme } from 'tamagui'
+import { TamaguiProvider, View } from 'tamagui'
 import config from './tamagui.config'
 import { useFonts } from 'expo-font'
-import { Text, StyleSheet, SafeAreaView, StatusBar, View } from 'react-native'
+import { Text, StyleSheet, StatusBar } from 'react-native'
 import { DarkTheme, NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Routes from './Routes'
@@ -26,30 +24,14 @@ export default function App() {
     )
   }
 
-  const styles = StyleSheet.create({
-    base: {
-      backgroundColor: '#000',
-      padding: 30,
-      flex: 1,
-    },
-    view : {
-      padding: 30,
-      flex: 1,
-    }
-  });
-
-  // TODO: Add Basic View with inital padding, wont work
+  // added DarkTheme to NavigationContainer to make background color dark
   return (
-    <TamaguiProvider config={config}>
-    <NavigationContainer theme={DarkTheme}>
-    <StatusBar barStyle="light-content" backgroundColor="black" />
-        <SafeAreaView style={styles.base}>
-            <Theme name={'dark_blue'}>
-              <Routes />
-            </Theme>
-        </SafeAreaView>
+    <NavigationContainer theme={DarkTheme}> 
+      <StatusBar barStyle='light-content' />
+      <TamaguiProvider config={config} defaultTheme='dark_blue'>
+          <Routes />
+      </TamaguiProvider>
     </NavigationContainer>
-    </TamaguiProvider>
   )
 }
 

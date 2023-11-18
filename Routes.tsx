@@ -5,8 +5,6 @@ import Login from './screens/Login'
 import Register from './screens/Register'
 import { Learnset } from './screens/Learnset/Learnset';
 
-
-
 export default function Routes() {
 
     // TODO: Cusotmize header 
