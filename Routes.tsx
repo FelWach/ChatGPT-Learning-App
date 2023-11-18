@@ -5,6 +5,7 @@ import StartScreen from './screens/StartScreen'
 import Login from './screens/Login'
 import Register from './screens/Register'
 import { Learnset } from './screens/Learnset/Learnset';
+import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview';
 
 export default function Routes() {
 
@@ -32,6 +33,7 @@ export default function Routes() {
             <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="QuestionsCatalogue" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="LearnMode" component={StartScreen} options={{ title: "" }}  />
+            <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ title: "Deine Lernsets" }}  />
         </Stack.Navigator>
     )
 }
