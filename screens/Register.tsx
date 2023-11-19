@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button, H2, Input, Text } from 'tamagui';
 import { useAtom, useAtomValue } from 'jotai';
-import { atomWithValidate, validateAtoms, atomWithFormControls } from 'jotai-form';
+import { atomWithValidate, atomWithFormControls } from 'jotai-form';
 import axios from 'axios';
 import * as Yup from 'yup';
 
@@ -87,36 +87,25 @@ export default function Register({ navigation }) {
       password: values.password,
     };
 
+
     if (isValid) {
-      console.log('Form is valid');
-      console.log(data);
-    } else {
-      console.log('Form is invalid');
-      console.log(data);
+      try {
+        const response = await axios.post(
+          'http://10.0.2.2:3000/register',
+          data,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error during registration. Please try again.');
+      }
     }
 
-    /*
-    try {
-      const response = await axios.post(
-        'http://10.0.2.2:3000/addUser',
-        {
-          name: username,
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error during registration. Please try again.');
-    }
-    */
   };
 
   return (
