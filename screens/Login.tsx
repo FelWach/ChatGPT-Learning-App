@@ -1,16 +1,16 @@
-import React from 'react';
-//import { View } from 'react-native';
-import { View, Button, H2, Text, Input } from 'tamagui';
-import { atom, useAtom } from 'jotai';
+import { View } from 'react-native';
+import { Button, H2, Text, Input } from 'tamagui';
+//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useAtom  } from 'jotai'
+import { userAtom, passwordAtom } from '../state/atoms'
 
-// Atoms for username and password
-const usernameAtom = atom('');
-const passwordAtom = atom('');
 
-export default function Login() {
-  // Using Jotai's useAtom hook to get the state and setter for the atoms
-  const [username, setUsername] = useAtom(usernameAtom);
+//const Tab = createBottomTabNavigator();
+
+export default function Login({ /*route,*/ navigation }) {
+  const [username, setUsername] = useAtom(userAtom);
   const [password, setPassword] = useAtom(passwordAtom);
+  //const { usernameParam } = route.params;
 
   const checkEmpty = (): boolean => {
     if (username === '' || password === '') {
@@ -43,8 +43,16 @@ export default function Login() {
         placeholder={'Password'}
         secureTextEntry={true}
       />
-      <Button onPress={handleLogin}>Sign in</Button>
+      <Button onPress={handleLogin(), () => navigation.navigate('StartScreen')}>Sign in</Button>
       <Text>Forgot Password?</Text>
+
+{/*}
+      <Tab.Navigator>
+            <Tab.Screen name="LearnSet" component={Register} />
+            <Tab.Screen name="Profile" component={Register} />
+          </Tab.Navigator>
+{*/}
+
     </View>
   );
 };
