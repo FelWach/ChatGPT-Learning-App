@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
 import { Button, H2, Text, Input, YStack } from 'tamagui';
 import { SaveAreaView } from "../components/SafeAreaView";
+import { useAtom  } from 'jotai'
+import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
+
 
 export default function Register({ navigation }) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [username, setUsername] = useAtom(userAtom);
+  const [email, setEmail] = useAtom(emailAtom);
+  const [password, setPassword] = useAtom(passwordAtom);
+  const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
 
   const handleLogin = () => {
     // Handle login logic here

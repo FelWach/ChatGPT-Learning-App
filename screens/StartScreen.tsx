@@ -9,15 +9,8 @@ export default function StartScreen({ navigation }) {
     <SaveAreaView>
       <YStack space>
         <H2>Learning App</H2>
-        {/*}
-        <Image
-            source={{ width: 250, height: 200, uri: 'https://en.m.wikipedia.org/wiki/File:React-icon.svg'}}
-            width='100%'
-            height='100%'
-        />
-        {*/}
-        <Button onPress={() => navigation.navigate('Login')} >
-          <Text>Login</Text>
+        <Button onPress={ () => navigation.navigate('Login')}>
+            <Text>Login</Text>
         </Button>
         <Button onPress={() => navigation.navigate('Register')} >
           <Text>Register</Text>
@@ -25,7 +18,16 @@ export default function StartScreen({ navigation }) {
         <Button onPress={() => navigation.navigate('LearnSet')} >
           <Text>Learnset</Text>
         </Button>
+        <Button onPress={() => navigation.navigate('UserSettings')}>
+             <Text>User Settings</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Learning')}>
+             <Text>Learning</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('TopicsOverview')}>
+             <Text>Topics Overview</Text>
+        </Button>
       </YStack>
     </SaveAreaView>
-  );
-};
+  )
+}
