@@ -82,7 +82,7 @@ export default function UserSettings({ navigation }) {
                 />
             </XStack>
         }
-        <Button onPress={() => saveUserData()}>Save</Button>
+        <Button onPress={saveUserData, () => navigation.navigate('StartScreen')}>Save</Button>
       </View>
     );
   }
