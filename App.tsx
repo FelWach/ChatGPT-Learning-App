@@ -10,8 +10,6 @@ import Routes from './Routes'
 // Jotai
 import { Provider } from 'jotai'
 
-
-
 // creating Native Stack Navigator
 export const Stack = createNativeStackNavigator();
 
@@ -32,9 +30,9 @@ export default function App() {
   return (
     <Provider>
       <NavigationContainer>
-              <TamaguiProvider config={config}>
-                  <Routes />
-              </TamaguiProvider>
+        <TamaguiProvider config={config}>
+          <Routes />
+        </TamaguiProvider>
       </NavigationContainer>
     </Provider>
   )
