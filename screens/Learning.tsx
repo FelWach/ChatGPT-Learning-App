@@ -1,27 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { Progress, SizeTokens, YStack, Card, Button} from 'tamagui';
 import axios from 'axios';
 
-export default function Learning() {
+import { useAtom } from 'jotai';
+import { atom } from 'jotai';
+
+// atom states 
+const dataAtom = atom([]);
+const currIDAtom = atom(0);
+const currQAtom = atom("");
+const currAAtom = atom("");
+const dataLengthAtom = atom(0);
+const numberQAtom = atom(1);
+const progressAtom = atom(0);
+const isFrontAtom = atom(true);
+const isFinishedAtom = atom(false);
+
+
+export default function Learning({ navigation}) {
 
   type DataType = { id: number; Q: string; A: string };
-  const [data, setData] = useState<DataType[]>([]);
-  const [currID, setCurrID]= useState(0);
-  const [currQ, setCurrQ] = useState("");
-  const [currA, setCurrA] = useState("");
-  const [dataLength, setDataLength] = useState(0);
-  const [numberQ, setNumberQ] = useState(1);
+  const [data, setData] = useAtom(dataAtom);
+  const [currID, setCurrID]= useAtom(currIDAtom);
+  const [currQ, setCurrQ] = useAtom(currQAtom);
+  const [currA, setCurrA] = useAtom(currAAtom);
+  const [dataLength, setDataLength] = useAtom(dataLengthAtom);
+  const [numberQ, setNumberQ] = useAtom(numberQAtom);
 
   let swipeableRef: { close: () => any; } | null = null;
 
   const size = 4;
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useAtom(progressAtom);
   const sizeProp = `$${size}` as SizeTokens
 
-  const [isFront, setIsFront] = useState(true);
-  const [isFinished, setIsFinished] = useState(false);
+  const [isFront, setIsFront] = useAtom(isFrontAtom);
+  const [isFinished, setIsFinished] = useAtom(isFinishedAtom);
 
   useEffect(() => {
       loadQuestions();
