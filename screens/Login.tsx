@@ -7,11 +7,15 @@ import axios from 'axios';
 
 //const Tab = createBottomTabNavigator();
 
+const errorAtom = atom<string>('');
+
 export default function Login({ /*route,*/ navigation }) {
   const [usernameOrEmail, setUsernameOrEmail] = useAtom(usernameOrEmailAtom);
   const [password, setPassword] = useAtom(passwordAtom);
   //const { usernameParam } = route.params;
   const [id, setId] = useAtom(userIdAtom);
+
+  const [error, setError] = useAtom(errorAtom);
 
   const checkEmpty = (): boolean => {
     if (usernameOrEmail === '' || password === '') {
@@ -22,7 +26,7 @@ export default function Login({ /*route,*/ navigation }) {
 
   const handleLogin = async () => {
     if (checkEmpty()) {
-      alert('Please enter a username and password');
+      setError('Please fill in all fields.');
       return;
     }
     // Handle login logic here
@@ -42,11 +46,10 @@ export default function Login({ /*route,*/ navigation }) {
         }
       );
       setId(response.data.userId);
+      navigation.navigate('StartScreen');
     } catch (error) {
       console.error('Error:', error);
-      alert('Error during login. Please try again.');
-    } finally {
-      navigation.navigate('StartScreen');
+      setError(error.response.data.message);
     }
   };
 
@@ -65,6 +68,7 @@ export default function Login({ /*route,*/ navigation }) {
         placeholder={'Password'}
         secureTextEntry={true}
       />
+      {error !== '' && <Text>{error}</Text>}
       <Button onPress={() => {
         handleLogin()
       }}>
