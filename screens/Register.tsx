@@ -4,7 +4,6 @@ import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
 import { addUser } from '../api/api'
 
-
 export default function Register({ navigation }) {
   const [username, setUsername] = useAtom(userAtom);
   const [email, setEmail] = useAtom(emailAtom);

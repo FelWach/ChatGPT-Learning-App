@@ -19,7 +19,6 @@ export default function StartScreen({ navigation }) {
         <Button onPress={() => navigation.navigate('LearnSet')} >
           <Text>Learnset</Text>
         </Button>
-
         <Button onPress={() => navigation.navigate('UserSettings')}>
              <Text>User Settings</Text>
         </Button>
@@ -31,6 +30,9 @@ export default function StartScreen({ navigation }) {
         </Button>
         <Button onPress={ () => navigation.navigate('Api')}>
              <Text>Api</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Profile')}>
+             <Text>Profile</Text>
         </Button>
       </YStack>
     </SaveAreaView>

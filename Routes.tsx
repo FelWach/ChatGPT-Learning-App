@@ -7,7 +7,7 @@ import UserSettings from './screens/UserSettings'
 import Learning from './screens/Learning'
 import { Learnset } from './screens/Learnset/Learnset'
 import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview'
-
+import Profile from './screens/Profile'
 // for testing
 import  ApiCalls  from './screens/apiCalls'
 
@@ -34,7 +34,7 @@ export default function Routes() {
             <Stack.Screen name="Login" component={Login} options={{ title: "" }}  />
             <Stack.Screen name="Register" component={Register} options={{ title: "" }}  />
             <Stack.Screen name="LearnSet" component={Learnset} options={{  title: "Learnset" }}  />
-            <Stack.Screen name="Profile" component={StartScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
             <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="Learning" component={Learning} options={{ title: "" }}  />
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ title: "Deine Lernsets" }}  />
