@@ -1,5 +1,6 @@
 import { View } from 'react-native';
-import { Button, H2, Image, Text, Input } from 'tamagui';
+import { Button, H2, Image, Text, Input, YStack } from 'tamagui';
+import { SaveAreaView } from '../components/SafeAreaView';
 
 export default function StartScreen({ navigation }) {
 

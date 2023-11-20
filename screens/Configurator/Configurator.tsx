@@ -1,10 +1,11 @@
-import { Label, Slider, Button, Text, H1, ScrollView, YStack, XStack, Input, ToggleGroup } from "tamagui"
+import { Label, Slider, Button, Text, ScrollView, YStack, XStack, Input, ToggleGroup } from "tamagui"
 import { DropdownMenu } from "../../components/DropdownMenu/DropdownMenu";
 import { DocumentSelect } from "../../components/DocumentSelect";
 import { atom, useAtom } from "jotai";
 import { filesArray } from "../../components/atoms";
 import { accuratenessAtom, languageAtom, languageStyleAtom, questionAtom, dropdownMenuLanguageAtom, dropdownMenuLanguageStyleAtom, dropdownMenuQuestionAtom } from "./atoms";
 import { Lock, Brush } from '@tamagui/lucide-icons'
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const selectedValueAtom = atom("1");
 
@@ -31,32 +32,31 @@ export function Configurator() {
     }
     return (
         <ScrollView>
-            <YStack paddingVertical={20}>
-                <H1>Configurator</H1>
-            </YStack>
-            <XStack display="flex" justifyContent="center">
-                <ToggleGroup type="single" value={selectedValue} onValueChange={setSelectedValue} >
-                    <ToggleGroup.Item value="1">
-                        <Text>Choose Topic</Text>
-                    </ToggleGroup.Item>
-                    <ToggleGroup.Item value="2">
-                        <Text>Upload PDF</Text>
-                    </ToggleGroup.Item>
-                </ToggleGroup>
-            </XStack>
-            <YStack space={10} paddingTop={30} paddingBottom={20}>
-                {selectedValue === "1" ? (
-                    <>
-                        <Label>Topic</Label>
-                        <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} />
-                    </>
-                ) : (
-                    <DocumentSelect />
-                )}
-            </YStack>
-            <InputBasis />
-            <Button onPress={generate}>Generate</Button>
-        </ScrollView >
+            <SafeAreaView>
+                <XStack display="flex" justifyContent="center">
+                    <ToggleGroup type="single" value={selectedValue} onValueChange={setSelectedValue} >
+                        <ToggleGroup.Item value="1">
+                            <Text>Choose Topic</Text>
+                        </ToggleGroup.Item>
+                        <ToggleGroup.Item value="2">
+                            <Text>Upload PDF</Text>
+                        </ToggleGroup.Item>
+                    </ToggleGroup>
+                </XStack>
+                <YStack paddingTop={30} paddingBottom={20}>
+                    {selectedValue === "1" ? (
+                        <>
+                            <Label paddingBottom={10}>Topic</Label>
+                            <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} />
+                        </>
+                    ) : (
+                        <DocumentSelect />
+                    )}
+                </YStack>
+                <InputBasis />
+                <Button size="$6" theme="active" marginVertical={30} onPress={generate}>Generate</Button>
+            </SafeAreaView>
+        </ScrollView>
     )
 }
 
@@ -72,19 +72,16 @@ function InputBasis() {
                 <Label>Questions</Label>
                 <DropdownMenu items={questions} label={"Number of Questions"} atom={questionAtom} />
             </YStack>
-
             <YStack space={10}>
                 <Label>Language</Label>
                 <DropdownMenu items={languages} label={"Language"} atom={languageAtom}
                 />
             </YStack>
-
             <YStack space={10}>
                 <Label>Language Style</Label>
                 <DropdownMenu items={languageStyles} label={"Language style"} atom={languageStyleAtom}
                 />
             </YStack>
-
             <YStack paddingTop={20}>
                 <Label>Creativity</Label>
                 <YStack paddingTop={30}>
