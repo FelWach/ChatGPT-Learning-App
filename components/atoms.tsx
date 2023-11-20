@@ -1,4 +1,4 @@
 import { PrimitiveAtom, atom } from "jotai";
 import { PDFFile } from "./types";
 
-export const filesArray = atom<PrimitiveAtom<PDFFile>[]>([]);
+export const filesArray = atom<PDFFile[]>([]);

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button, Text, View, XStack } from 'tamagui';
 import { useAtomValue, useSetAtom, atom, useAtom, PrimitiveAtom } from "jotai";
 import { filesArray } from './atoms';
+import { PDFFile } from './types';
 
 export function DocumentSelect() {
     const [files, setFiles] = useAtom(filesArray);

@@ -8,6 +8,8 @@ import UserSettings from './screens/UserSettings'
 import Learning from './screens/Learning'
 import { Learnset } from './screens/Learnset/Learnset';
 import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview';
+import { Configuration } from 'tamagui'
+import { Configurator } from './screens/Configurator/Configurator'
 
 export default function Routes() {
 
@@ -32,7 +34,7 @@ export default function Routes() {
             <Stack.Screen name="Register" component={Register} options={{ title: "" }}  />
             <Stack.Screen name="LearnSet" component={Learnset} options={{  title: "Learnset" }}  />
             <Stack.Screen name="Profile" component={StartScreen} options={{ headerShown: false }}/>
-            <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />
+            <Stack.Screen name="Configurator" component={Configurator} options={{ title: "Add Learnset" }}  />
             <Stack.Screen name="QuestionsCatalogue" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="LearnMode" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="Learning" component={Learning} options={{ title: "" }}  />

@@ -24,6 +24,9 @@ export default function StartScreen({ navigation }) {
         <Button onPress={ () => navigation.navigate('TopicsOverview')}>
              <Text>Topics Overview</Text>
         </Button>
+        <Button onPress={ () => navigation.navigate('Configurator')}>
+             <Text>Configurator</Text>
+        </Button>
     </View>
   )
 }
