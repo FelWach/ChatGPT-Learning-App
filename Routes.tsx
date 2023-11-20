@@ -1,5 +1,4 @@
 import { Stack } from './App'
-
 // import Screens
 import StartScreen from './screens/StartScreen'
 import Login from './screens/Login'

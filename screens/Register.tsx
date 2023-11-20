@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
+import { Button, H2, Text, Input, YStack } from 'tamagui';
+import { SaveAreaView } from "../components/SafeAreaView";
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
 
@@ -19,7 +19,8 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View>
+    <SaveAreaView>
+    <YStack space>
         <H2>Create an account</H2>
       <Input
         value={username}
@@ -44,6 +45,7 @@ export default function Register({ navigation }) {
       />
 
       <Button onPress= { handleRegister, () => { navigation.navigate('Login', { username: "Laura" }); }}>Register</Button>
-    </View>
+    </YStack>
+    </SaveAreaView>
   );
 };

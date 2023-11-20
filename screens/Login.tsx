@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
+import React, { useState } from 'react';
+import { Button, H2, Text, Input, YStack } from 'tamagui';
 //import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom } from '../state/atoms'
@@ -17,8 +17,7 @@ export default function Login({ /*route,*/ navigation }) {
   };
 
   return (
-    <View>
-
+    <YStack space>
       <H2>Welcome back!</H2>
       <Text>Login below or create an account</Text>
       <Input
@@ -42,6 +41,6 @@ export default function Login({ /*route,*/ navigation }) {
           </Tab.Navigator>
 {*/}
 
-    </View>
+    </YStack>
   );
 };
