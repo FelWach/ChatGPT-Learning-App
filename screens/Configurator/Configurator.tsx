@@ -1,40 +1,34 @@
-import { Label, SelectProps, Slider, XStack, YStack, Button, View, Text, H1, ScrollView } from "tamagui"
-import { DropdownMenu } from "../components/DropdownMenu"
-import { useState } from "react"
-import { DocumentSelect } from "../components/DocumentSelect";
+import { Label, SelectProps, Slider, Button, Text, H1, ScrollView, YStack } from "tamagui"
+import { DropdownMenu } from "../../components/DropdownMenu"
+import { DocumentSelect } from "../../components/DocumentSelect";
 import { useAtom } from "jotai";
-import { filesArray } from "../components/atoms";
+import { filesArray } from "../../components/atoms";
+import { accuratenessAtom, languageAtom, languageStyleAtom, questionAtom } from "./atoms";
 
 export function Configurator() {
-    const [accurateness, setAccurateness] = useState("balanced");
-
-    const [question, setQuestion] = useState("1");
-    const [language, setLanguage] = useState("en");
-    const [languageStyle, setLanguageStyle] = useState("casual");
+    const [question, setQuestion] = useAtom(questionAtom);
+    const [language, setLanguage] = useAtom(languageAtom);
+    const [languageStyle, setLanguageStyle] = useAtom(languageStyleAtom);
+    const [accurateness, setAccurateness] = useAtom(accuratenessAtom);
 
     const [files, setFiles] = useAtom(filesArray);
 
     const languages: SelectProps[] = [
         { value: 'en', name: 'English' },
         { value: 'de', name: 'Deutsch' },
+        { value: 'fr', name: 'French' },
     ]
     const languageStyles: SelectProps[] = [
+        { value: 'normal', name: 'Normal' },
         { value: 'academic', name: 'Academic' },
-        { value: 'casual', name: 'Casual' },
+        { value: 'simplyfied', name: 'Simplyfied' },
+        { value: 'elementary', name: 'Elementary' },
     ]
-    const questions: SelectProps[] = [
-        { value: '1', name: '1' },
-        { value: '2', name: '2' },
-        { value: '3', name: '3' },
-        { value: '4', name: '4' },
-        { value: '5', name: '5' },
-        { value: '6', name: '6' },
-        { value: '7', name: '7' },
-        { value: '8', name: '8' },
-        { value: '9', name: '9' },
-        { value: '10', name: '10' },
-    ]
-    
+    const questions: SelectProps[] = []
+    for (let i = 1; i <= 30; i++) {
+        questions.push({ value: i.toString(), name: i.toString() })
+    }
+
     const changeAccurateness = (value: number[]) => {
         if (value[0] < 33) { setAccurateness("varying"); }
         else if (value[0] < 66) { setAccurateness("balanced"); }
@@ -57,24 +51,24 @@ export function Configurator() {
             <YStack paddingVertical={20}>
                 <H1>Configurator</H1>
             </YStack>
-<YStack space={20}>
+            <YStack space={20}>
                 <DocumentSelect />
             </YStack>
             <YStack space>
                 <YStack space={10}>
                     <Label>Questions</Label>
-                    <DropdownMenu items={questions} label={"Number of Questions"} onChange={(value) => { setQuestion(value) }} />
+                    <DropdownMenu items={questions} label={"Number of Questions"} atom={questionAtom} />
                 </YStack>
 
                 <YStack space={10}>
                     <Label>Language</Label>
-                    <DropdownMenu items={languages} label={"Language"} onChange={(value) => { setLanguage(value) }}
+                    <DropdownMenu items={languages} label={"Language"} atom={languageAtom}
                     />
                 </YStack>
 
                 <YStack space={10}>
                     <Label>Language Style</Label>
-                    <DropdownMenu items={languageStyles} label={"Language style"} onChange={(value) => { setLanguageStyle(value) }}
+                    <DropdownMenu items={languageStyles} label={"Language style"} atom={languageStyleAtom}
                     />
                 </YStack>
 
