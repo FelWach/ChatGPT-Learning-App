@@ -30,7 +30,7 @@ export default function Profile({ navigation }){
 
 
         <XStack  flexDirection='column' alignItems='center' padding='$4'>
-            <TabNavigator navigation={navigation} value={'topicsOverview'} />
+            <TabNavigator navigation={navigation} value={'profile'} />
         </XStack>
     </View>
   );

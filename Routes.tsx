@@ -37,7 +37,7 @@ export default function Routes() {
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
             <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="Learning" component={Learning} options={{ title: "" }}  />
-            <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ title: "Deine Lernsets" }}  />
+            <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false  }}  />
             <Stack.Screen name="UserSettings" component={UserSettings} options={{ title: "" }}  />
             <Stack.Screen name="Api" component={ApiCalls} options={{ title: "Api Calls" }}  />
 
