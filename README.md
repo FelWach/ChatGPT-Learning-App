@@ -32,3 +32,66 @@ Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei 
 `IP_ADDRESS` wenn localhost oder 10.0.2.2 nicht klappt
 
 `PORT`
+
+## API Endpoints
+
+### Generation
+
+POST /generate
+
+generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
+Benötigt topic in request body
+
+POST /generate/:topic
+
+generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
+topic in req params. (eventuell wird nur diese route benötigt)
+
+POST /setConfigurations
+
+setzt die richtigen Konfigurator Einstellungen
+
+
+### Entry
+
+GET /entries
+
+gibt alle Fragen und Antworten mit ID und topic zurück
+
+GET /entries/:userId
+
+gibt alle Fragen und Antworten eines Users zurück
+
+GET /entries/:userId/:topic
+
+gibt alle Fragen und Antworten eines Users zu einem Thema zurück
+
+GET /entry/:id
+
+gibt eine Frage mit id zurück
+
+DELETE /deleteEntry/:id
+
+löscht Eintrag mit id
+
+### User
+
+POST /register
+
+registriert einen neuen Nutzer mit name (user name), email, password und gibt dessen userId zurück
+
+POST /login 
+
+loggt den Nutzer mit name (user name) oder email und password ein und gibt dessen userId zurück
+
+GET /users 
+
+gibt alle Nutzer aus dem Table user zurück
+
+POST /addUser 
+
+fügt neuen Nutzer mit name (user name), email, password hinzu
+
+DELETE /deleteUser/:id
+
+Löscht einen Nutzer mit der ID
