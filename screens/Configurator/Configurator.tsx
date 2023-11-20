@@ -53,14 +53,14 @@ export function Configurator() {
                         <DocumentSelect />
                     )}
                 </YStack>
-                <InputBasis />
+                <ConfiguratorBasis />
                 <Button size="$6" theme="active" marginVertical={30} onPress={generate}>Generate</Button>
             </SafeAreaView>
         </ScrollView>
     )
 }
 
-function InputBasis() {
+function ConfiguratorBasis() {
     const [questions] = useAtom(dropdownMenuQuestionAtom);
     const [languages] = useAtom(dropdownMenuLanguageAtom);
     const [languageStyles] = useAtom(dropdownMenuLanguageStyleAtom);
