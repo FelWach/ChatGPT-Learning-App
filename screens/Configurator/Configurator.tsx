@@ -1,8 +1,8 @@
 import { Label, Slider, Button, Text, ScrollView, YStack, XStack, Input, ToggleGroup } from "tamagui"
 import { DropdownMenu } from "../../components/DropdownMenu/DropdownMenu";
-import { DocumentSelect } from "../../components/DocumentSelect";
+import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
-import { filesArray } from "../../components/atoms";
+import { filesArray } from "../../components/DocumentSelect/atoms";
 import { accuratenessAtom, languageAtom, languageStyleAtom, questionAtom, dropdownMenuLanguageAtom, dropdownMenuLanguageStyleAtom, dropdownMenuQuestionAtom } from "./atoms";
 import { Lock, Brush } from '@tamagui/lucide-icons'
 import { SafeAreaView } from "react-native-safe-area-context";
