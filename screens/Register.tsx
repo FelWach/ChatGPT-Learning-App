@@ -2,6 +2,7 @@ import { Button, H2, Text, Input, YStack } from 'tamagui';
 import { SaveAreaView } from "../components/SafeAreaView";
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
+import { addUser } from '../api/api'
 
 
 export default function Register({ navigation }) {
@@ -10,12 +11,15 @@ export default function Register({ navigation }) {
   const [password, setPassword] = useAtom(passwordAtom);
   const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
 
-  const handleLogin = () => {
-    // Handle login logic here
-  };
 
-  const handleRegister = () => {
-      // Handle register logic here
+  const handleRegister = async () => {
+  const data = {
+       name: username,
+       email: email,
+       password: password
+  };
+      const response = await addUser(data);
+      console.log(response.status)
   };
 
   return (
@@ -44,7 +48,7 @@ export default function Register({ navigation }) {
         placeholder={'Repeat Password'}
       />
 
-      <Button onPress= { handleRegister, () => { navigation.navigate('Login', { username: "Laura" }); }}>Register</Button>
+      <Button onPress= {  handleRegister }>Register</Button>
     </YStack>
     </SaveAreaView>
   );

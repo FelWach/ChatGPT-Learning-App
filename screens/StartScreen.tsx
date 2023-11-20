@@ -1,5 +1,6 @@
+
 import { Save } from '@tamagui/lucide-icons';
-import { Button, H2, Text, View, YStack } from 'tamagui';
+import { Button, H2, Text, View, YStack, TextArea, Input } from 'tamagui';
 import { SaveAreaView } from '../components/SafeAreaView';
 
 
@@ -18,6 +19,7 @@ export default function StartScreen({ navigation }) {
         <Button onPress={() => navigation.navigate('LearnSet')} >
           <Text>Learnset</Text>
         </Button>
+
         <Button onPress={() => navigation.navigate('UserSettings')}>
              <Text>User Settings</Text>
         </Button>
@@ -26,6 +28,9 @@ export default function StartScreen({ navigation }) {
         </Button>
         <Button onPress={ () => navigation.navigate('TopicsOverview')}>
              <Text>Topics Overview</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Api')}>
+             <Text>Api</Text>
         </Button>
       </YStack>
     </SaveAreaView>
