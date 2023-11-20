@@ -1,15 +1,11 @@
 import { useFonts } from 'expo-font'
-// Tamagui
-import { Button, View, Text } from 'tamagui'
-import { TamaguiProvider } from 'tamagui'
+import { StyleSheet, StatusBar } from 'react-native'
+import { Button, View, Text, TamaguiProvider } from 'tamagui'
 import config from './tamagui.config'
-// React Navigation
-import { NavigationContainer } from '@react-navigation/native'
+import { DarkTheme, NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Routes from './Routes'
-// Jotai
 import { Provider } from 'jotai'
-// React Gesture Handler
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 // creating Native Stack Navigator
@@ -29,14 +25,16 @@ export default function App() {
     )
   }
 
+  // added DarkTheme to NavigationContainer to make background color dark
   return (
     <Provider>
-      <NavigationContainer>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-              <TamaguiProvider config={config}>
-                  <Routes />
-              </TamaguiProvider>
-          </GestureHandlerRootView>    
+      <NavigationContainer theme={DarkTheme}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StatusBar barStyle='light-content' />
+          <TamaguiProvider config={config} defaultTheme='dark_blue'>
+            <Routes />
+          </TamaguiProvider>
+        </GestureHandlerRootView>
       </NavigationContainer>
     </Provider>
   )
