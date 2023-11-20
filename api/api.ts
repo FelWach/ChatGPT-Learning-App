@@ -34,9 +34,9 @@ export async function users() {
 }
 
 // delete user: for deleting a user
-export async function deleteUser(userId: number) {
+export async function deleteUser(id: number) {
     try{
-        const response = await axios.delete(`${baseUrl}/deleteUser`,  {params: {userId: userId}}, {headers: { 'Content-Type': 'application/json'}});
+        const response = await axios.delete(`${baseUrl}/deleteUser/${id}`, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {

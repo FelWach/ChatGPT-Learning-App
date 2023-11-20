@@ -64,7 +64,7 @@ export default function ApiCalls() {
   const handleAddUser = async () => {
       const data = {
              name: 'avocado',
-             email: 'avo@cado.com'
+             email: 'avo@cado.com',
              password: 'iloveavocados'
       };
       const response = await addUser(data);
@@ -73,28 +73,28 @@ export default function ApiCalls() {
 
   const handleUsers = async () => {
       const response = await users();
-      console.log(response.data.message)
+      console.log(response.data)
   };
 
   const handleDeleteUser = async () => {
-      const response = await deleteUser(2);
+      const response = await deleteUser(16);
       console.log(response.data.message)
   };
 
    const handleLogin = async () => {
       const data = {
-               usernameOrEmail: 'Avocado',
-               password: '123'
+               usernameOrEmail: 'banana',
+               password: 'ilovebananas'
    };
       const response = await login(data);
-      console.log(response.data.message)
+      console.log(response.data)
    };
 
    const handleRegister = async () => {
       const data = {
-               name: 'avocado',
-               email: 'avo@cado.com'
-               password: 'iloveavocados'
+               name: 'banana',
+               email: 'ba@nana.com',
+               password: 'ilovebananas'
    };
       const response = await register(data);
       console.log(response.data.message)
