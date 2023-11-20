@@ -3,7 +3,6 @@ import { Button, H2, Text, Input } from 'tamagui';
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
 
-
 export default function Register({ navigation }) {
   const [username, setUsername] = useAtom(userAtom);
   const [email, setEmail] = useAtom(emailAtom);
