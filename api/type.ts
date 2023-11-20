@@ -4,6 +4,11 @@ export interface UserProps {
     password: string;
 }
 
+export interface LoginProps {
+    usernameOrEmail: string;
+    password: string;
+}
+
 export interface GenerateProps {
     topic: string,
     nbQuestions: number

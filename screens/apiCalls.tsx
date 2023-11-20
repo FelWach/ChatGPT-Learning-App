@@ -1,8 +1,8 @@
 import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
+import { Button } from 'tamagui';
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
-import { generate, generate2, setConfiguration, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
+import { addUser, users, deleteUser, login, register, generate, generate2, setConfiguration, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
 
 export default function ApiCalls() {
   const [username, setUsername] = useAtom(userAtom);
@@ -61,6 +61,46 @@ export default function ApiCalls() {
        console.log(response.data.message)
   };
 
+  const handleAddUser = async () => {
+      const data = {
+             name: 'avocado',
+             email: 'avo@cado.com'
+             password: 'iloveavocados'
+      };
+      const response = await addUser(data);
+      console.log(response.data.message)
+  };
+
+  const handleUsers = async () => {
+      const response = await users();
+      console.log(response.data.message)
+  };
+
+  const handleDeleteUser = async () => {
+      const response = await deleteUser(2);
+      console.log(response.data.message)
+  };
+
+   const handleLogin = async () => {
+      const data = {
+               usernameOrEmail: 'Avocado',
+               password: '123'
+   };
+      const response = await login(data);
+      console.log(response.data.message)
+   };
+
+   const handleRegister = async () => {
+      const data = {
+               name: 'avocado',
+               email: 'avo@cado.com'
+               password: 'iloveavocados'
+   };
+      const response = await register(data);
+      console.log(response.data.message)
+   };
+
+
   return (
     <View>
       <Button onPress= {  handleGenerate }>Generate</Button>
@@ -71,6 +111,11 @@ export default function ApiCalls() {
       <Button onPress= {  handleEntriesUserTopic }>Get My Entries from Topic</Button>
       <Button onPress= {  handleEntry }>Get Entry</Button>
       <Button onPress= {  handleDeleteEntry }>Delete Entry</Button>
+      <Button onPress= {  handleAddUser }>Add User</Button>
+      <Button onPress= {  handleUsers }>Get Users</Button>
+      <Button onPress= {  handleDeleteUser }>Delete User</Button>
+      <Button onPress= {  handleLogin }>Login</Button>
+      <Button onPress= {  handleRegister }>Register</Button>
 
     </View>
   );

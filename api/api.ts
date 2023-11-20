@@ -1,11 +1,10 @@
 import axios from 'axios'
 // .env variables
-const openaiApiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
 const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps, GenerateProps, ConfigSettingsProps } from "./type"
+import { UserProps, LoginProps, GenerateProps, ConfigSettingsProps } from "./type"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
@@ -16,6 +15,50 @@ const baseUrl = `http://${localhost}:${port}`
 export async function addUser(data: UserProps) {
     try{
         const response = await axios.post(`${baseUrl}/addUser`,  data, {headers: { 'Content-Type': 'application/json'}});
+        return response
+    }
+    catch (error) {
+        console.log('Error: ' + error)
+    }
+}
+
+// get users: for getting all users
+export async function users() {
+    try{
+        const response = await axios.get(`${baseUrl}/users`,  {headers: { 'Content-Type': 'application/json'}});
+        return response
+    }
+    catch (error) {
+        console.log('Error: ' + error)
+    }
+}
+
+// delete user: for deleting a user
+export async function deleteUser(userId: number) {
+    try{
+        const response = await axios.delete(`${baseUrl}/deleteUser`,  {params: {userId: userId}}, {headers: { 'Content-Type': 'application/json'}});
+        return response
+    }
+    catch (error) {
+        console.log('Error: ' + error)
+    }
+}
+
+// post login: for login
+export async function login(data: LoginProps) {
+    try{
+        const response = await axios.post(`${baseUrl}/login`,  data, {headers: { 'Content-Type': 'application/json'}});
+        return response
+    }
+    catch (error) {
+        console.log('Error: ' + error)
+    }
+}
+
+// post register: for registration
+export async function register(data: UserProps) {
+    try{
+        const response = await axios.post(`${baseUrl}/register`,  data, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
