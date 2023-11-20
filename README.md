@@ -25,9 +25,7 @@ _feature/{page or feature or both: page-feature}_
 Example: _feature/login-page_
 
 #### .ENV
-Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei jedem push die api calls gechanged werden müssen in dev
-
-`OPENAI_API_KEY`
+Bitte speichert euch folgende Environment-Variablen in die .env*.local
 
 `IP_ADDRESS` wenn localhost oder 10.0.2.2 nicht klappt
 
