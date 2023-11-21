@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SaveAreaView } from "../components/SafeAreaView";
 import { Progress, SizeTokens, YStack, Card, Text, View} from 'tamagui';
-import { getEntries } from '../api/api';
+import { getUserEntries } from '../api/api';
 
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
@@ -21,7 +21,7 @@ const isFrontAtom = atom(true);
 const isFinishedAtom = atom(false);
 
 
-export default function Learning({ navigation}) {
+export default function Learning({ navigation }) {
 
   const [data, setData] = useAtom(dataAtom);
   const [currID, setCurrID]= useAtom(currIDAtom);
@@ -44,10 +44,9 @@ export default function Learning({ navigation}) {
   }, []);
 
   const loadQuestions = async () => {
-      const response = await getEntries();
+      const response = await getUserEntries(1);
       
       if (response && response.data.length != 0) {
-        console.log(response.data)
         setData(response.data);
         setDataLength(response.data.length);
         setCurrID(response.data[0].id);
@@ -176,7 +175,7 @@ export default function Learning({ navigation}) {
           <View>
             {
               isFinished &&
-              <Text textAlign='center' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
+              <Text textAlign='center' margin='$3' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
             }
             <Swipeable
               ref={(ref) => (swipeableRef = ref)}
