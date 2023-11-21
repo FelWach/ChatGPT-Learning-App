@@ -3,10 +3,11 @@ import { TopicsCard } from "../../components/TopicCards/TopicsCard";
 import { TopicCardProps } from "../../components/TopicCards/types";
 import { atom, useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
+import TabNavigator from '../../components/TabNavigator/TabNavigator'
 
 const dataAtom = atom<TopicCardProps[]>([]);
 
-export function TopicsOverview() {
+export function TopicsOverview({ navigation }) {
 
   const [data, setData] = useAtom(dataAtom);
 
@@ -62,6 +63,9 @@ useHydrateAtoms([[dataAtom, dummyData]])
             onPress={() => { console.log('pressed') }}
           />
         ))}
+      </XStack>
+      <XStack  flexDirection='column' alignItems='center' padding='$4'>
+            <TabNavigator navigation={navigation} value={'topicsOverview'} />
       </XStack>
     </ScrollView>
   );

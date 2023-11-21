@@ -1,10 +1,11 @@
-import { Button, H1, ScrollView, View, XStack, YStack, Accordion } from "tamagui";
+import { Button, H1, ScrollView, View, XStack, Accordion } from "tamagui";
 import { Trash, Edit, Plus, ArrowLeft } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { QuestionsAccordionItemProps } from "./type";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
+import { SaveAreaView } from "../../components/SafeAreaView";
 
 const dataAtom = atom<QuestionsAccordionItemProps[]>([]);
 
@@ -51,8 +52,6 @@ export function Learnset({ navigation }) {
 
     useHydrateAtoms([[dataAtom, dummyData]])
 
-    const windowHeight = Dimensions.get('window').height;
-
     function deleteSet(): void {
         // Display an alert to confirm the deletion
         Alert.alert(
@@ -79,17 +78,17 @@ export function Learnset({ navigation }) {
        // TODO: implement edit operation
     }
 
+    // TODO: fix small arrow margin
     // TODO: add back button functionality
-    // TODO: fix learn button position
     return (
-        <View height={windowHeight - 50}>
+        <SaveAreaView>
             <ScrollView>
                 <Button icon={ArrowLeft} size="$5" width="$4" height="$4" marginTop="$6"></Button>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
                     <H1 size="$9" paddingVertical="$4">Geografie</H1>
                     <XStack>
-                        <Button icon={Trash} size="$5" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
-                        <Button icon={Edit} size="$5" width="$4" height="$4" chromeless onPress={editSet}></Button>
+                        <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
+                        <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={editSet}></Button>
                     </XStack>
                 </XStack>
 
@@ -99,19 +98,20 @@ export function Learnset({ navigation }) {
                     ))}
                 </Accordion>
 
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$12">
+                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15">
                     Add Questions
                 </Button>
             </ScrollView >
 
-            <Button size="$5" style={
+            <Button size="$6" theme="active" style={
                 {
                     position: "absolute",
-                    bottom: 0,
+                    bottom: 40,
                     right: 0,
-                    left: 0
+                    left: 0,
+                    marginHorizontal: 10,
                 }}>Lernen</Button> 
-        </View>
+        </SaveAreaView>
     )
     // TODO: add learn button functionality
 }

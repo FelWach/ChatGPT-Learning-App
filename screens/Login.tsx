@@ -1,11 +1,7 @@
-import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Button, H2, Text, Input, YStack } from 'tamagui';
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom } from '../state/atoms'
 
-
-//const Tab = createBottomTabNavigator();
 
 export default function Login({ /*route,*/ navigation }) {
   const [username, setUsername] = useAtom(userAtom);
@@ -17,8 +13,7 @@ export default function Login({ /*route,*/ navigation }) {
   };
 
   return (
-    <View>
-
+    <YStack space>
       <H2>Welcome back!</H2>
       <Text>Login below or create an account</Text>
       <Input
@@ -34,14 +29,8 @@ export default function Login({ /*route,*/ navigation }) {
       />
       <Button onPress={handleLogin, () => navigation.navigate('StartScreen')}>Sign in</Button>
       <Text>Forgot Password?</Text>
+    </YStack>
 
-{/*}
-      <Tab.Navigator>
-            <Tab.Screen name="LearnSet" component={Register} />
-            <Tab.Screen name="Profile" component={Register} />
-          </Tab.Navigator>
-{*/}
 
-    </View>
   );
 };
