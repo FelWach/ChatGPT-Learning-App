@@ -35,6 +35,10 @@ Bitte speichert euch folgende Environment-Variablen in die .env*.local
 
 ### Generation
 
+POST /upload 
+
+benötigt uri, name, size im req.body umd PDF an backend zu senden
+
 POST /generate
 
 generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
