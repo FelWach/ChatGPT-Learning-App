@@ -1,10 +1,13 @@
 import {atom} from 'jotai';
 import { DropdownMenuItem } from '../../components/DropdownMenu/types';
 
-export const accuratenessAtom = atom<number>(50);
+export const creativityAtom = atom<number>(50);
 export const questionAtom = atom<string>('10');
 export const languageAtom = atom<string>('en');
 export const languageStyleAtom = atom<string>('normal');
+export const difficultyAtom = atom<string>('normal');
+
+export const topicAtom = atom<string>('');
 
 // read-only atoms
 export const dropdownMenuLanguageAtom = atom<DropdownMenuItem[]>((get) =>[
@@ -17,6 +20,11 @@ export const dropdownMenuLanguageStyleAtom = atom<DropdownMenuItem[]>((get) => [
         { value: 'academic', name: 'Academic', id: 'academic' },
         { value: 'elementary', name: 'Elementary', id: 'elementary' },
         { value: 'simplified', name: 'Simplified', id: 'simplified' },
+])
+export const dropdownMenuDifficultyAtom = atom<DropdownMenuItem[]>((get) => [
+        { value: 'easy', name: 'Easy', id: 'easy' },
+        { value: 'normal', name: 'Normal', id: 'normal' },
+        { value: 'hard', name: 'Hard', id: 'hard' },
 ])
 export const dropdownMenuQuestionAtom = atom<DropdownMenuItem[]>((get) =>[
         { value: '1', name: '1', id: '1' },

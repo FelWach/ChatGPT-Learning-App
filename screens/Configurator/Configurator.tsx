@@ -3,11 +3,13 @@ import { DropdownMenu } from "../../components/DropdownMenu/DropdownMenu";
 import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
 import { filesArray } from "../../components/DocumentSelect/atoms";
-import { accuratenessAtom, languageAtom, languageStyleAtom, questionAtom, dropdownMenuLanguageAtom, dropdownMenuLanguageStyleAtom, dropdownMenuQuestionAtom } from "./atoms";
+import { creativityAtom, languageAtom, languageStyleAtom, questionAtom, dropdownMenuLanguageAtom, dropdownMenuLanguageStyleAtom, dropdownMenuQuestionAtom, difficultyAtom, dropdownMenuDifficultyAtom, topicAtom } from "./atoms";
 import { Lock, Brush } from '@tamagui/lucide-icons'
 import { SafeAreaView } from "react-native-safe-area-context";
+import { GenerateProps, ConfigSettingsProps } from "../../api/type";
+import { generate, setConfiguration } from "../../api/api";
 
-const selectedValueAtom = atom("1");
+const selectedValueAtom = atom("Topic");
 
 export function Configurator() {
 
@@ -16,18 +18,37 @@ export function Configurator() {
     const [question, setQuestion] = useAtom(questionAtom);
     const [language, setLanguage] = useAtom(languageAtom);
     const [languageStyle, setLanguageStyle] = useAtom(languageStyleAtom);
-    const [accurateness, setAccurateness] = useAtom(accuratenessAtom);
+    const [creativity, setCreativity] = useAtom(creativityAtom);
+    const [difficulty, setDifficulty] = useAtom(difficultyAtom);
+    const [topic, setTopic] = useAtom(topicAtom);
 
     const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
 
-    const generate = () => {
-        console.log("generate")
-        console.log(question)
-        console.log(language)
-        console.log(languageStyle)
-        console.log(accurateness)
-        if (files.length === 0) {
-            console.log("no files selected")
+    const generateQuestions = async () => {
+        const config: ConfigSettingsProps = {
+            language: language,
+            languageLevel: languageStyle,
+            temperature: creativity,
+            difficulty: difficulty
+        }
+        console.log(config);
+        const response = await setConfiguration(config);
+        console.log(response?.data);
+        if (response === undefined) {
+            console.log("no response, could not configure");
+        } else {
+            if (selectedValue === "Topic") {
+                const generateConfig: GenerateProps = {
+                    topic: topic,
+                    nbQuestions: Number(question)
+                }
+                console.log(generateConfig);
+                const response = await generate(generateConfig);
+                console.log(response?.data);
+                response ? undefined : console.log("no response, could not generate");
+            } else {
+                console.log("no files endpoint yet");
+            }
         }
     }
     return (
@@ -35,26 +56,26 @@ export function Configurator() {
             <SafeAreaView>
                 <XStack display="flex" justifyContent="center">
                     <ToggleGroup type="single" value={selectedValue} onValueChange={setSelectedValue} >
-                        <ToggleGroup.Item value="1">
+                        <ToggleGroup.Item value="Topic">
                             <Text>Choose Topic</Text>
                         </ToggleGroup.Item>
-                        <ToggleGroup.Item value="2">
+                        <ToggleGroup.Item value="Files">
                             <Text>Upload PDF</Text>
                         </ToggleGroup.Item>
                     </ToggleGroup>
                 </XStack>
                 <YStack paddingTop={30} paddingBottom={20}>
-                    {selectedValue === "1" ? (
+                    {selectedValue === "Topic" ? (
                         <>
                             <Label paddingBottom={10}>Topic</Label>
-                            <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} />
+                            <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={setTopic} />
                         </>
                     ) : (
                         <DocumentSelect />
                     )}
                 </YStack>
                 <ConfiguratorBasis />
-                <Button size="$6" theme="active" marginVertical={30} onPress={generate}>Generate</Button>
+                <Button size="$6" theme="active" marginVertical={30} onPress={generateQuestions}>Generate</Button>
             </SafeAreaView>
         </ScrollView>
     )
@@ -63,8 +84,9 @@ export function Configurator() {
 function ConfiguratorBasis() {
     const [questions] = useAtom(dropdownMenuQuestionAtom);
     const [languages] = useAtom(dropdownMenuLanguageAtom);
+    const [difficulties] = useAtom(dropdownMenuDifficultyAtom);
     const [languageStyles] = useAtom(dropdownMenuLanguageStyleAtom);
-    const [accurateness, setAccurateness] = useAtom(accuratenessAtom);
+    const [accurateness, setAccurateness] = useAtom(creativityAtom);
 
     return (
         <YStack space>
@@ -80,6 +102,11 @@ function ConfiguratorBasis() {
             <YStack space={10}>
                 <Label>Language Style</Label>
                 <DropdownMenu items={languageStyles} label={"Language style"} atom={languageStyleAtom}
+                />
+            </YStack>
+            <YStack space={10}>
+                <Label>Difficulty</Label>
+                <DropdownMenu items={difficulties} label={"Language style"} atom={difficultyAtom}
                 />
             </YStack>
             <YStack paddingTop={20}>
