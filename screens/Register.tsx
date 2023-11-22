@@ -72,8 +72,6 @@ export default function Register({ navigation }) {
     // errors per field
     fieldErrors,
     // form error
-    error,
-    // handle change of value per field
     handleOnChange,
     // handle blur event per field
     handleOnBlur,
@@ -90,7 +88,6 @@ export default function Register({ navigation }) {
       password: values.password,
     };
 
-
     if (isValid) {
       try {
         const response = await axios.post(
@@ -104,6 +101,12 @@ export default function Register({ navigation }) {
         );
         console.log(response.data);
         navigation.navigate('Login');
+        
+        //reset form
+        handleOnChange('name')('');
+        handleOnChange('email')('');
+        handleOnChange('password')('');
+        handleOnChange('repeatPassword')('');
       } catch (error: any) {
         console.error('Error:', error);
         if (error.response && error.response.data && error.response.data.message) {
