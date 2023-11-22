@@ -6,7 +6,7 @@ import { filesArray } from "../../components/DocumentSelect/atoms";
 import { creativityAtom, languageAtom, languageStyleAtom, questionAtom, dropdownMenuLanguageAtom, dropdownMenuLanguageStyleAtom, dropdownMenuQuestionAtom, difficultyAtom, dropdownMenuDifficultyAtom, topicAtom } from "./atoms";
 import { Lock, Brush } from '@tamagui/lucide-icons'
 import { SafeAreaView } from "react-native-safe-area-context";
-import { GenerateProps, ConfigSettingsProps } from "../../api/type";
+import { GenerateProps, ConfigSettingsProps } from "../../api/types";
 import { generate, setConfiguration } from "../../api/api";
 
 const selectedValueAtom = atom("Topic");
