@@ -24,33 +24,45 @@ export function Configurator() {
 
     const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
 
-    const generateQuestions = async () => {
+    const configureSettings = async () => {
         const config: ConfigSettingsProps = {
             language: language,
             languageLevel: languageStyle,
             temperature: creativity,
             difficulty: difficulty
-        }
+        };
         console.log(config);
+
         const response = await setConfiguration(config);
-        console.log(response?.data);
-        if (response === undefined) {
-            console.log("no response, could not configure");
+        if (!response) console.log("No response, could not configure");
+        return response?.data;
+    };
+
+    const generateQuestions = async () => {
+        const generateConfig: GenerateProps = {
+            topic: topic,
+            nbQuestions: Number(question)
+        };
+        console.log(generateConfig);
+
+        const response = await generate(generateConfig);
+        if (!response) console.log("No response, could not generate");
+        return response?.data;
+    };
+
+    const configureAndGenerate = async () => { 
+        const response = await configureSettings();
+        console.log(response);
+
+        if (selectedValue === "Topic") {
+            const response = await generateQuestions();
+            console.log(response);
         } else {
-            if (selectedValue === "Topic") {
-                const generateConfig: GenerateProps = {
-                    topic: topic,
-                    nbQuestions: Number(question)
-                }
-                console.log(generateConfig);
-                const response = await generate(generateConfig);
-                console.log(response?.data);
-                response ? undefined : console.log("no response, could not generate");
-            } else {
-                console.log("no files endpoint yet");
-            }
+            console.log("No files endpoint yet");
+            console.log(files);
         }
-    }
+    };
+
     return (
         <ScrollView>
             <SafeAreaView>
@@ -75,7 +87,7 @@ export function Configurator() {
                     )}
                 </YStack>
                 <ConfiguratorBasis />
-                <Button size="$6" theme="active" marginVertical={30} onPress={generateQuestions}>Generate</Button>
+                <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate}>Generate</Button>
             </SafeAreaView>
         </ScrollView>
     )
