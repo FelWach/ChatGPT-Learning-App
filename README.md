@@ -25,9 +25,7 @@ _feature/{page or feature or both: page-feature}_
 Example: _feature/login-page_
 
 #### .ENV
-Bitte speichert euch folgende Environment-Variablen in die .env damit nicht bei jedem push die api calls gechanged werden müssen in dev
-
-`OPENAI_API_KEY`
+Bitte speichert euch folgende Environment-Variablen in die .env*.local
 
 `IP_ADDRESS` wenn localhost oder 10.0.2.2 nicht klappt
 
@@ -95,3 +93,7 @@ fügt neuen Nutzer mit name (user name), email, password hinzu
 DELETE /deleteUser/:id
 
 Löscht einen Nutzer mit der ID
+
+PUT /updateUser/:id
+
+Updatet einen User mit der ID --> Benötigt im req body jeweils das zu updatende attribut name oder email oder password. Falls password geupdatet werden soll muss zudem oldPassword im req body angegeben werden. 

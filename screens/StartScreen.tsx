@@ -1,28 +1,40 @@
-import { View } from 'react-native';
-import { Button, H2, Image, Text, Input } from 'tamagui';
-import { useAtom } from 'jotai'
-import { userIdAtom } from '../state/atoms'
+
+import { Save } from '@tamagui/lucide-icons';
+import { Button, H2, Text, View, YStack, TextArea, Input } from 'tamagui';
+import { SaveAreaView } from '../components/SafeAreaView';
+
 
 export default function StartScreen({ navigation }) {
 
-     const [id, setId] = useAtom(userIdAtom);
-
-     return (
-          <View>
-               <H2>Learning App</H2>
-               <H2>id: {id}</H2>
-               <Button onPress={() => navigation.navigate('Login')}>
-                    <Text>Login</Text>
-               </Button>
-               <Button onPress={() => navigation.navigate('Register')}>
-                    <Text>Register</Text>
-               </Button>
-               <Button onPress={() => navigation.navigate('LearnSet')}>
-                    <Text>Learnset</Text>
-               </Button>
-               <Button onPress={() => navigation.navigate('TopicsOverview')}>
-                    <Text>Topics Overview</Text>
-               </Button>
-          </View>
-     )
+  return (
+    <SaveAreaView>
+      <YStack space>
+        <H2>Learning App</H2>
+        <Button onPress={ () => navigation.navigate('Login')}>
+            <Text>Login</Text>
+        </Button>
+        <Button onPress={() => navigation.navigate('Register')} >
+          <Text>Register</Text>
+        </Button>
+        <Button onPress={() => navigation.navigate('LearnSet')} >
+          <Text>Learnset</Text>
+        </Button>
+        <Button onPress={() => navigation.navigate('UserSettings')}>
+             <Text>User Settings</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Learning')}>
+             <Text>Learning</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('TopicsOverview')}>
+             <Text>Topics Overview</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Api')}>
+             <Text>Api</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Profile')}>
+             <Text>Profile</Text>
+        </Button>
+      </YStack>
+    </SaveAreaView>
+  )
 }

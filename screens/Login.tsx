@@ -1,18 +1,14 @@
 import { View } from 'react-native';
-import { Button, H2, Text, Input } from 'tamagui';
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Button, H2, Text, Input, YStack } from 'tamagui';
 import { atom, useAtom } from 'jotai'
 import { userIdAtom, usernameOrEmailAtom, passwordAtom } from '../state/atoms'
 import axios from 'axios';
-
-//const Tab = createBottomTabNavigator();
 
 const errorAtom = atom<string>('');
 
 export default function Login({ /*route,*/ navigation }) {
   const [usernameOrEmail, setUsernameOrEmail] = useAtom(usernameOrEmailAtom);
   const [password, setPassword] = useAtom(passwordAtom);
-  //const { usernameParam } = route.params;
   const [id, setId] = useAtom(userIdAtom);
 
   const [error, setError] = useAtom(errorAtom);
@@ -54,7 +50,7 @@ export default function Login({ /*route,*/ navigation }) {
   };
 
   return (
-    <View>
+    <YStack space>
       <H2>Welcome back!</H2>
       <Text>Login below or create an account</Text>
       <Input
@@ -75,14 +71,6 @@ export default function Login({ /*route,*/ navigation }) {
         Sign in
       </Button>
       <Text>Forgot Password?</Text>
-
-      {/*}
-      <Tab.Navigator>
-            <Tab.Screen name="LearnSet" component={Register} />
-            <Tab.Screen name="Profile" component={Register} />
-          </Tab.Navigator>
-{*/}
-
-    </View>
+    </YStack>
   );
 };
