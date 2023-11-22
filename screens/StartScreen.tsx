@@ -1,5 +1,6 @@
+
 import { View } from 'react-native';
-import { Button, H2, Image, Text, Input, YStack } from 'tamagui';
+import { Button, H2, Image, Text, Input, YStack, TextArea, Input } from 'tamagui';
 import { SaveAreaView } from '../components/SafeAreaView';
 
 export default function StartScreen({ navigation }) {
@@ -25,6 +26,12 @@ export default function StartScreen({ navigation }) {
         </Button>
         <Button onPress={ () => navigation.navigate('TopicsOverview')}>
              <Text>Topics Overview</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Api')}>
+             <Text>Api</Text>
+        </Button>
+        <Button onPress={ () => navigation.navigate('Profile')}>
+             <Text>Profile</Text>
         </Button>
         <Button onPress={ () => navigation.navigate('Configurator')}>
              <Text>Configurator</Text>
