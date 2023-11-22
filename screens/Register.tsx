@@ -1,16 +1,24 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, H2, Input, Text } from 'tamagui';
-import { useAtom, useAtomValue } from 'jotai';
+import { atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate, atomWithFormControls } from 'jotai-form';
 import axios from 'axios';
 import * as Yup from 'yup';
 
-export const nameSchema = Yup.string().required();
-export const emailSchema = Yup.string().email().required();
-export const passwordSchema = Yup.string().min(8).required();
+export const nameSchema = Yup.string()
+  .required('Please enter your name.');
+
+export const emailSchema = Yup.string()
+  .email('Please enter a valid email address.')
+  .required('Please enter your email address.');
+
+export const passwordSchema = Yup.string()
+  .min(8, 'Password must be at least 8 characters long.')
+  .required('Please enter your password.');
+
 export const repeatPasswordSchema = Yup.string()
-  .required('Please retype your password.')
+  .required().oneOf([Yup.ref('values.password'), null], 'Passwords must match');
 
 const nameAtom = atomWithValidate('', {
   validate: async (v) => {
@@ -47,14 +55,9 @@ const formControlAtom = atomWithFormControls(
     password: passwordAtom,
     repeatPassword: repeatPasswordAtom,
   },
-  {
-    validate: (values) => {
-      if (values.password !== values.repeatPassword) {
-        throw new Error('Passwords do not match.');
-      }
-    }
-  }
 );
+
+const repeatPasswordErrorAtom = atom(false);
 
 export default function Register({ navigation }) {
 
@@ -78,6 +81,8 @@ export default function Register({ navigation }) {
     // handle focus event per field
     handleOnFocus,
   } = useAtomValue(formControlAtom);
+
+  const [repeatPasswordError, setRepeatPasswordError] = useAtom(repeatPasswordErrorAtom);
 
   const handleRegister = async () => {
 
@@ -164,21 +169,33 @@ export default function Register({ navigation }) {
           handleOnChange('repeatPassword')(e);
         }}
         //onFocus={handleOnFocus('repeatPassword')}
-        onBlur={handleOnBlur('repeatPassword')}
+        onBlur={() => {
+          if (values.password !== values.repeatPassword) {
+            setRepeatPasswordError(true);
+          } else {
+            setRepeatPasswordError(false);
+          }
+        }
+        }
         secureTextEntry={true}
         placeholder='Repeat Password'
       />
-      <Text>
-        {fieldErrors.repeatPassword && touched.repeatPassword
-          ? `${fieldErrors.repeatPassword}`
-          : ''}
-      </Text>
+      {repeatPasswordError
+        ? <Text> Passwords do not match. </Text>
+        : null
+      }
+      {fieldErrors.repeatPassword && touched.repeatPassword
+        ? <Text> `${fieldErrors.repeatPassword}` </Text>
+        : null}
+
 
       <Text>{error?.toString()}</Text>
 
-      <Button onPress={() => {
-        handleRegister();
-      }}>
+      <Button
+        disabled={!isValid}
+        onPress={() => {
+          handleRegister();
+        }}>
         Register
       </Button>
     </View>
