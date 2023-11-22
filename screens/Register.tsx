@@ -18,7 +18,7 @@ export const passwordSchema = Yup.string()
   .required('Please enter your password.');
 
 export const repeatPasswordSchema = Yup.string()
-  .required().oneOf([Yup.ref('values.password'), null], 'Passwords must match');
+  .required('Please repeat your password.');
 
 const nameAtom = atomWithValidate('', {
   validate: async (v) => {
@@ -67,8 +67,6 @@ export default function Register({ navigation }) {
     // is the form valid
     isValid,
     // focused state per field
-    focused,
-    // touched state per field
     touched,
     // errors per field
     fieldErrors,
@@ -78,8 +76,6 @@ export default function Register({ navigation }) {
     handleOnChange,
     // handle blur event per field
     handleOnBlur,
-    // handle focus event per field
-    handleOnFocus,
   } = useAtomValue(formControlAtom);
 
   const [repeatPasswordError, setRepeatPasswordError] = useAtom(repeatPasswordErrorAtom);
@@ -105,6 +101,7 @@ export default function Register({ navigation }) {
           }
         );
         console.log(response.data);
+        navigation.navigate('Login');
       } catch (error) {
         console.error('Error:', error);
         alert(error);
@@ -128,7 +125,7 @@ export default function Register({ navigation }) {
       />
       <Text>
         {fieldErrors.name && touched.name
-          ? `${fieldErrors.name}`
+          ? `${fieldErrors.name.message}`
           : ''}
       </Text>
 
@@ -143,7 +140,7 @@ export default function Register({ navigation }) {
       />
       <Text>
         {fieldErrors.email && touched.email
-          ? `${fieldErrors.email}`
+          ? `${fieldErrors.email.message}`
           : ''}
       </Text>
 
@@ -159,7 +156,7 @@ export default function Register({ navigation }) {
       />
       <Text>
         {fieldErrors.password && touched.password
-          ? `${fieldErrors.password}`
+          ? `${fieldErrors.password.message}`
           : ''}
       </Text>
 
@@ -170,6 +167,7 @@ export default function Register({ navigation }) {
         }}
         //onFocus={handleOnFocus('repeatPassword')}
         onBlur={() => {
+          handleOnBlur('repeatPassword');
           if (values.password !== values.repeatPassword) {
             setRepeatPasswordError(true);
           } else {
@@ -180,16 +178,21 @@ export default function Register({ navigation }) {
         secureTextEntry={true}
         placeholder='Repeat Password'
       />
-      {repeatPasswordError
-        ? <Text> Passwords do not match. </Text>
-        : null
+      {repeatPasswordError ?
+        <Text>
+          {repeatPasswordError
+            ? 'Passwords must match'
+            : ''
+          }
+        </Text>
+        :
+        <Text>
+          {fieldErrors.repeatPassword && touched.password
+            ? `${fieldErrors.repeatPassword.message}`
+            : ''
+          }
+        </Text>
       }
-      {fieldErrors.repeatPassword && touched.repeatPassword
-        ? <Text> `${fieldErrors.repeatPassword}` </Text>
-        : null}
-
-
-      <Text>{error?.toString()}</Text>
 
       <Button
         disabled={!isValid}
