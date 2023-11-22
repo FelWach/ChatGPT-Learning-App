@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Button, H2, Input, Text } from 'tamagui';
+import { SaveAreaView } from '../components/SafeAreaView';
 import { atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate, atomWithFormControls } from 'jotai-form';
 import axios from 'axios';
@@ -58,6 +58,7 @@ const formControlAtom = atomWithFormControls(
 );
 
 const repeatPasswordErrorAtom = atom(false);
+const errorAtom = atom('');
 
 export default function Register({ navigation }) {
 
@@ -79,6 +80,7 @@ export default function Register({ navigation }) {
   } = useAtomValue(formControlAtom);
 
   const [repeatPasswordError, setRepeatPasswordError] = useAtom(repeatPasswordErrorAtom);
+  const [errorState, setErrorState] = useAtom(errorAtom);
 
   const handleRegister = async () => {
 
@@ -102,16 +104,20 @@ export default function Register({ navigation }) {
         );
         console.log(response.data);
         navigation.navigate('Login');
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error:', error);
-        alert(error);
+        if (error.response && error.response.data && error.response.data.message) {
+          setErrorState(error.response.data.message);
+        } else {
+          // Handle other types of errors or display a generic error message
+          setErrorState('An error occurred during registration.');
+        }
       }
     }
-
   };
 
   return (
-    <View>
+    <SaveAreaView>
       <H2>Create an account</H2>
 
       <Input
@@ -194,6 +200,10 @@ export default function Register({ navigation }) {
         </Text>
       }
 
+      <Text>
+        {errorState ? errorState : ''}
+      </Text>
+
       <Button
         disabled={!isValid}
         onPress={() => {
@@ -201,6 +211,6 @@ export default function Register({ navigation }) {
         }}>
         Register
       </Button>
-    </View>
+    </SaveAreaView>
   );
 };
