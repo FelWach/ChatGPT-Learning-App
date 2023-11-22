@@ -107,7 +107,7 @@ export default function Register({ navigation }) {
         console.log(response.data);
       } catch (error) {
         console.error('Error:', error);
-        alert('Error during registration. Please try again.');
+        alert(error);
       }
     }
 
