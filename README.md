@@ -39,6 +39,8 @@ POST /upload
 
 benötigt uri, name, size im req.body um PDF an backend zu senden.
 
+Gibt Anzahl der Seiten des PDF zurück-
+
 ---
 
 POST /generateFromPDF 
