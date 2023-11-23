@@ -37,7 +37,16 @@ Bitte speichert euch folgende Environment-Variablen in die .env*.local
 
 POST /upload 
 
-benötigt uri, name, size im req.body umd PDF an backend zu senden
+benötigt uri, name, size im req.body um PDF an backend zu senden.
+
+POST /generateFromPDF 
+
+generiert Fragen und Antworten zu dem zuvor geladenen PDF (/upload muss logischerweise zuerst gecallt werden).
+Benötigt nbQuestions, pageStart, pageEnd im req.body
+
+Falls pageStart **und** pageEnd gegeben sind, werden zu jeder Seite innerhalb pageStart und pageEnd nbQuestions Fragen/Antworten generiert.
+Falls **nur** pageStart gegeben ist, werden nbQuestions Fragen/Antworten über Seite pageStart generiert.
+Falls **weder** pageStart **noch** pageEnd gegeben ist, werden nbQuestions Fragen/Anwtorten zu random Seiten des PDF generiert.
 
 POST /generate
 
