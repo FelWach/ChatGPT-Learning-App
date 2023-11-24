@@ -1,9 +1,11 @@
 import { View } from 'react-native';
 import { Button, H2, Text, Input, YStack } from 'tamagui';
 import { atom, useAtom } from 'jotai'
-import { userIdAtom, usernameOrEmailAtom, passwordAtom } from '../state/atoms'
+import { userIdAtom } from '../state/atoms'
 import axios from 'axios';
 
+export const usernameOrEmailAtom = atom<string>('');
+export const passwordAtom = atom<string>('');
 const errorAtom = atom<string>('');
 
 export default function Login({ /*route,*/ navigation }) {
@@ -42,7 +44,7 @@ export default function Login({ /*route,*/ navigation }) {
         }
       );
       setId(response.data.userId);
-      navigation.navigate('StartScreen');
+      navigation.navigate('TopicsOverview');
     } catch (error) {
       console.error('Error:', error);
       setError(error.response.data.message);
