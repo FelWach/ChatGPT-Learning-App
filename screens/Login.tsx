@@ -1,8 +1,9 @@
-import { Button, H2, Text, Input, YStack } from 'tamagui';
+import { Button, H2, Text, Input, View } from 'tamagui';
 import { atom, useAtom } from 'jotai'
 import { userIdAtom } from '../state/atoms'
 import axios from 'axios';
 import { useEffect } from 'react';
+import { SaveAreaView } from '../components/SafeAreaView';
 
 const usernameOrEmailAtom = atom<string>('');
 const passwordAtom = atom<string>('');
@@ -62,9 +63,19 @@ export default function Login({ /*route,*/ navigation }) {
   };
 
   return (
-    <YStack space>
+    <SaveAreaView>
       <H2>Welcome back!</H2>
-      <Text>Login below or create an account</Text>
+      <View style={{ flexDirection: 'row' }}>
+        <Text>Login below or </Text>
+        <Text
+          onPress={() => {
+            navigation.navigate('Register');
+          }}
+          style={{ color: 'blue' }}>
+          create an account
+        </Text>
+      </View>
+
       <Input
         value={usernameOrEmail}
         onChangeText={(e) => {
@@ -91,6 +102,6 @@ export default function Login({ /*route,*/ navigation }) {
         Sign in
       </Button>
       <Text>Forgot Password?</Text>
-    </YStack>
+    </SaveAreaView>
   );
 };
