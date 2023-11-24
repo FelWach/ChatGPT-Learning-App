@@ -55,6 +55,10 @@ export default function Login({ /*route,*/ navigation }) {
         }
       );
       setId(response.data.userId);
+
+      setUsernameOrEmail('');
+      setPassword('');
+
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
       console.error('Error:', error);
