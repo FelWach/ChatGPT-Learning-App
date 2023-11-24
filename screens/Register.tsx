@@ -80,6 +80,23 @@ export default function Register({ navigation }) {
   const [repeatPasswordError, setRepeatPasswordError] = useAtom(repeatPasswordErrorAtom);
   const [errorState, setErrorState] = useAtom(errorAtom);
 
+  const checkPasswordMatch = (repeatPassword: string, password: string) => {
+    if (repeatPassword !== password) {
+      setRepeatPasswordError(true);
+    } else {
+      setRepeatPasswordError(false);
+    }
+  }
+
+  const resetForm = () => {
+    handleOnChange('name')('');
+    handleOnChange('email')('');
+    handleOnChange('password')('');
+    handleOnChange('repeatPassword')('');
+    setRepeatPasswordError(false);
+    setErrorState('');
+  }
+
   const handleRegister = async () => {
 
     const data = {
@@ -100,13 +117,8 @@ export default function Register({ navigation }) {
           }
         );
         console.log(response.data);
+        resetForm();
         navigation.navigate('Login');
-        
-        //reset form
-        handleOnChange('name')('');
-        handleOnChange('email')('');
-        handleOnChange('password')('');
-        handleOnChange('repeatPassword')('');
       } catch (error: any) {
         console.error('Error:', error);
         if (error.response && error.response.data && error.response.data.message) {
@@ -128,7 +140,6 @@ export default function Register({ navigation }) {
         onChangeText={(e) => {
           handleOnChange('name')(e);
         }}
-        //onFocus={handleOnFocus('name')}
         onBlur={handleOnBlur('name')}
         placeholder={'Name'}
       />
@@ -143,7 +154,6 @@ export default function Register({ navigation }) {
         onChangeText={(e) => {
           handleOnChange('email')(e);
         }}
-        //onFocus={handleOnFocus('email')}
         onBlur={handleOnBlur('email')}
         placeholder={'Email'}
       />
@@ -158,7 +168,6 @@ export default function Register({ navigation }) {
         onChangeText={(e) => {
           handleOnChange('password')(e);
         }}
-        //onFocus={handleOnFocus('password')}
         onBlur={handleOnBlur('password')}
         secureTextEntry={true}
         placeholder='Password'
@@ -174,14 +183,9 @@ export default function Register({ navigation }) {
         onChangeText={(e) => {
           handleOnChange('repeatPassword')(e);
         }}
-        //onFocus={handleOnFocus('repeatPassword')}
         onBlur={() => {
           handleOnBlur('repeatPassword');
-          if (values.password !== values.repeatPassword) {
-            setRepeatPasswordError(true);
-          } else {
-            setRepeatPasswordError(false);
-          }
+          checkPasswordMatch(values.repeatPassword, values.password);
         }
         }
         secureTextEntry={true}
@@ -196,7 +200,7 @@ export default function Register({ navigation }) {
         </Text>
         :
         <Text>
-          {fieldErrors.repeatPassword && touched.password
+          {fieldErrors.repeatPassword && touched.repeatPassword
             ? `${fieldErrors.repeatPassword.message}`
             : ''
           }
