@@ -63,8 +63,7 @@ export async function register(data: UserProps) {
             headers: { 'Content-Type': 'application/json' }
         });
         return response.data
-    }
-    catch (error: any) {
+    } catch (error: any) {
         throw error.response.data
     }
 }
