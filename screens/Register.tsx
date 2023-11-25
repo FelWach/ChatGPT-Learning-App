@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, H2, Input, Text } from 'tamagui';
 import { SaveAreaView } from '../components/SafeAreaView';
+import { UserProps } from '../api/type';
+import { register } from '../api/api';
 import { atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate, atomWithFormControls } from 'jotai-form';
-import axios from 'axios';
 import * as Yup from 'yup';
 
 export const nameSchema = Yup.string()
@@ -99,7 +100,7 @@ export default function Register({ navigation }) {
 
   const handleRegister = async () => {
 
-    const data = {
+    const data: UserProps = {
       name: values.name,
       email: values.email,
       password: values.password,
@@ -107,24 +108,14 @@ export default function Register({ navigation }) {
 
     if (isValid) {
       try {
-        const response = await axios.post(
-          'http://10.0.2.2:3000/register',
-          data,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        console.log(response.data);
+        const response = await register(data);
         resetForm();
         navigation.navigate('Login');
       } catch (error: any) {
         console.error('Error:', error);
-        if (error.response && error.response.data && error.response.data.message) {
-          setErrorState(error.response.data.message);
+        if (error.message) {
+          setErrorState(error.message);
         } else {
-          // Handle other types of errors or display a generic error message
           setErrorState('An error occurred during registration.');
         }
       }

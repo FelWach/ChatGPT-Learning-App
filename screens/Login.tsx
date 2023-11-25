@@ -1,7 +1,8 @@
 import { Button, H2, Text, Input, View } from 'tamagui';
 import { atom, useAtom } from 'jotai'
 import { userIdAtom } from '../state/atoms'
-import axios from 'axios';
+import { LoginProps } from '../api/type';
+import { login } from '../api/api';
 import { useEffect } from 'react';
 import { SaveAreaView } from '../components/SafeAreaView';
 
@@ -39,30 +40,23 @@ export default function Login({ /*route,*/ navigation }) {
       return;
     }
     // Handle login logic here
-    const data = {
+    const data: LoginProps = {
       usernameOrEmail: usernameOrEmail,
       password: password,
     };
 
     try {
-      const response = await axios.post(
-        'http://10.0.2.2:3000/login',
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      setId(response.data.userId);
-
+      const response = await login(data);
+      // Handle success
+      setId(response.userId);
+      console.log('id: ', response.userId);
       setUsernameOrEmail('');
       setPassword('');
-
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
+      // Handle error
       console.error('Error:', error);
-      setError(error.response.data.message);
+      setError(error.message); // Assuming your error response has a 'message' property
     }
   };
 
@@ -88,6 +82,7 @@ export default function Login({ /*route,*/ navigation }) {
         }}
         placeholder={'Username'}
       />
+
       <Input
         value={password}
         onChangeText={(e) => {
@@ -97,7 +92,9 @@ export default function Login({ /*route,*/ navigation }) {
         placeholder={'Password'}
         secureTextEntry={true}
       />
+
       {error !== '' && <Text>{error}</Text>}
+
       <Button
         disabled={!isValid}
         onPress={() => {
