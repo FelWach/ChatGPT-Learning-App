@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Button } from 'tamagui';
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
-import { addUser, users, deleteUser, login, register, generate, generate2, setConfiguration, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
+import { addUser, users, deleteUser, login, register, updateUser, generate, generate2, setConfiguration, upload, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
 
 export default function ApiCalls() {
   const [username, setUsername] = useAtom(userAtom);
@@ -77,7 +77,7 @@ export default function ApiCalls() {
   };
 
   const handleDeleteUser = async () => {
-      const response = await deleteUser(16);
+      const response = await deleteUser(17);
       console.log(response.data.message)
   };
 
@@ -95,14 +95,44 @@ export default function ApiCalls() {
                name: 'banana',
                email: 'ba@nana.com',
                password: 'ilovebananas'
-   };
+      };
       const response = await register(data);
       console.log(response.data.message)
+   };
+
+   const handleUpdateUser = async () => {
+      const data = {
+         name: 'banana'
+      };
+      try {
+        const response = await updateUser(18, data);
+        console.log(response.message)
+      }
+      catch(error: any){
+        console.log(error.message + '! ' + error.error)
+      }
+   };
+
+   const handleUpload = async () => {
+      const data = {
+           uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+           name: 'dummyPDF',
+           size: 13
+      };
+      const response = await upload(data);
+      if (response.error){
+        console.log(response.error)
+      }
+      else {
+        console.log(response.message)
+        console.log('Number of Pages: ' + response.pages)
+      }
    };
 
 
   return (
     <View>
+    {/*}
       <Button onPress= {  handleGenerate }>Generate</Button>
       <Button onPress= {  handleGenerateTopic }>Generate Topic</Button>
       <Button onPress= {  handleSetConfiguration }>Set Configurations</Button>
@@ -116,6 +146,9 @@ export default function ApiCalls() {
       <Button onPress= {  handleDeleteUser }>Delete User</Button>
       <Button onPress= {  handleLogin }>Login</Button>
       <Button onPress= {  handleRegister }>Register</Button>
+      {*/}
+      <Button onPress= {  handleUpdateUser }>Update User</Button>
+      <Button onPress= {  handleUpload }>Upload</Button>
 
     </View>
   );

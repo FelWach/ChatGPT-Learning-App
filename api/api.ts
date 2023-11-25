@@ -4,13 +4,13 @@ const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps, LoginProps, GenerateProps, ConfigSettingsProps } from "./type"
+import { UserProps, UpdatedUserProps, LoginProps, GenerateProps, GenerateFromDocsProps, ConfigSettingsProps, UploadProps } from "./type"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
 
 
-// user routes
+// USER ROUTES
 // post addUser: for registration process
 export async function addUser(data: UserProps) {
     try{
@@ -66,7 +66,44 @@ export async function register(data: UserProps) {
     }
 }
 
-// entry routes
+// put updateUser: for updating a user
+export async function updateUser(id: number, data: UpdatedUserProps) {
+    try{
+        const response = await axios.put(`${baseUrl}/updateUser/${id}`,  data, {headers: { 'Content-Type': 'application/json'}});
+        return response.data
+    }
+    catch (error: any) {
+        throw error.response.data
+    }
+}
+
+// LANGCHAIN ROUTES
+// post upload: to upload the pdf, returns the number of pages
+// Todo: muss noch getestet werden
+export async function upload(data: UploadProps) {
+    try{
+        const response = await axios.post(`${baseUrl}/upload`,  data, {headers: { 'Content-Type': 'application/json'}});
+        return response.data
+    }
+    catch (error: any) {
+        throw 'Error: ' + 'Status: ' + error.response.status + ', ' +  error.response.data.error
+    }
+}
+
+// post generateFromDocs: for generating Q&As after uploading a pdf
+export async function generateFromDocs(uploadData: UploadProps, data: GenerateFromDocsProps) {
+    try{
+        const upload= await upload(uploadData)
+        const response = await axios.post(`${baseUrl}/generateFromDocs`,  data, {headers: { 'Content-Type': 'application/json'}});
+        return response
+    }
+    catch (error: any) {
+        console.log('Error: ' + error)
+        throw error.response.data;
+    }
+}
+
+
 // post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic in request body
 export async function generate(data: GenerateProps) {
     try{
@@ -100,6 +137,7 @@ export async function setConfiguration(settings: ConfigSettingsProps ) {
     }
 }
 
+// ENTRY ROUTES
 // get entries: returns all Q&As with id and topic
 export async function getEntries() {
     try{
