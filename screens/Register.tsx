@@ -7,18 +7,18 @@ import { atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate, atomWithFormControls } from 'jotai-form';
 import * as Yup from 'yup';
 
-export const nameSchema = Yup.string()
+const nameSchema = Yup.string()
   .required('Please enter your name.');
 
-export const emailSchema = Yup.string()
+const emailSchema = Yup.string()
   .email('Please enter a valid email address.')
   .required('Please enter your email address.');
 
-export const passwordSchema = Yup.string()
+const passwordSchema = Yup.string()
   .min(8, 'Password must be at least 8 characters long.')
   .required('Please enter your password.');
 
-export const repeatPasswordSchema = Yup.string()
+const repeatPasswordSchema = Yup.string()
   .required('Please repeat your password.');
 
 const nameAtom = atomWithValidate('', {
@@ -64,17 +64,11 @@ const errorAtom = atom('');
 export default function Register({ navigation }) {
 
   const {
-    // Values per field
     values,
-    // is the form valid
     isValid,
-    // focused state per field
     touched,
-    // errors per field
     fieldErrors,
-    // form error
     handleOnChange,
-    // handle blur event per field
     handleOnBlur,
   } = useAtomValue(formControlAtom);
 
