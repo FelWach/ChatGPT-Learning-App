@@ -1,4 +1,4 @@
-import { Button, H2, Text, Input, View } from 'tamagui';
+import { Button, H2, Text, Input, XStack } from 'tamagui';
 import { atom, useAtom } from 'jotai'
 import { userIdAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
@@ -54,17 +54,17 @@ export default function Login({ /*route,*/ navigation }) {
       setPassword('');
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
-      // Handle error
-      console.error('Error:', error);
-      setError(error.message); // Assuming your error response has a 'message' property
+      setError('Invalid username, email or password.');
     }
   };
 
   return (
     <SaveAreaView>
       <H2>Welcome back!</H2>
-      <View style={{ flexDirection: 'row' }}>
-        <Text>Login below or </Text>
+      <XStack>
+        <Text
+          style={{ marginBottom: 10 }}>
+          Login below or </Text>
         <Text
           onPress={() => {
             navigation.navigate('Register');
@@ -72,7 +72,7 @@ export default function Login({ /*route,*/ navigation }) {
           style={{ color: 'blue' }}>
           create an account
         </Text>
-      </View>
+      </XStack>
 
       <Input
         value={usernameOrEmail}
@@ -82,6 +82,7 @@ export default function Login({ /*route,*/ navigation }) {
         }}
         placeholder={'Username'}
         autoCapitalize='none'
+        style={{ marginBottom: 10 }}
       />
 
       <Input
@@ -93,9 +94,10 @@ export default function Login({ /*route,*/ navigation }) {
         placeholder={'Password'}
         secureTextEntry={true}
         autoCapitalize='none'
+        style={{ marginBottom: 10 }}
       />
 
-      {error !== '' && <Text>{error}</Text>}
+      {error !== '' && <Text style={{ marginBottom: 10 }}>{error}</Text>}
 
       <Button
         disabled={!isValid}
