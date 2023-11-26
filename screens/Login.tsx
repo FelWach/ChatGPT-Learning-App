@@ -101,6 +101,7 @@ export default function Login({ /*route,*/ navigation }) {
 
       <Button
         disabled={!isValid}
+        style={{ opacity: isValid ? 1 : 0.7 }}
         onPress={() => {
           handleLogin()
         }}>

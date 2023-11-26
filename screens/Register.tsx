@@ -196,12 +196,13 @@ export default function Register({ navigation }) {
         </Text>
       }
 
-      <Text>
+      <Text style={{ marginBottom: 10 }}>
         {errorState ? errorState : ''}
       </Text>
 
       <Button
         disabled={!isValid}
+        style={{ opacity: isValid ? 1 : 0.7 }}
         onPress={() => {
           handleRegister();
         }}>
