@@ -127,6 +127,7 @@ export default function Register({ navigation }) {
         }}
         onBlur={handleOnBlur('name')}
         placeholder={'Name'}
+        autoCapitalize='none'
       />
       <Text>
         {fieldErrors.name && touched.name
@@ -141,6 +142,7 @@ export default function Register({ navigation }) {
         }}
         onBlur={handleOnBlur('email')}
         placeholder={'Email'}
+        autoCapitalize='none'
       />
       <Text>
         {fieldErrors.email && touched.email
@@ -156,6 +158,7 @@ export default function Register({ navigation }) {
         onBlur={handleOnBlur('password')}
         secureTextEntry={true}
         placeholder='Password'
+        autoCapitalize='none'
       />
       <Text>
         {fieldErrors.password && touched.password
@@ -175,6 +178,7 @@ export default function Register({ navigation }) {
         }
         secureTextEntry={true}
         placeholder='Repeat Password'
+        autoCapitalize='none'
       />
       {repeatPasswordError ?
         <Text>

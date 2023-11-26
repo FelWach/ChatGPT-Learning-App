@@ -81,6 +81,7 @@ export default function Login({ /*route,*/ navigation }) {
           setUsernameOrEmail(e);
         }}
         placeholder={'Username'}
+        autoCapitalize='none'
       />
 
       <Input
@@ -91,6 +92,7 @@ export default function Login({ /*route,*/ navigation }) {
         }}
         placeholder={'Password'}
         secureTextEntry={true}
+        autoCapitalize='none'
       />
 
       {error !== '' && <Text>{error}</Text>}
