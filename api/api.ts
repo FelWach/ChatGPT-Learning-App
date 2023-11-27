@@ -15,10 +15,10 @@ const baseUrl = `http://${localhost}:${port}`
 export async function addUser(data: UserProps) {
     try{
         const response = await axios.post(`${baseUrl}/addUser`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -26,10 +26,10 @@ export async function addUser(data: UserProps) {
 export async function users() {
     try{
         const response = await axios.get(`${baseUrl}/users`,  {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -37,10 +37,10 @@ export async function users() {
 export async function deleteUser(id: number) {
     try{
         const response = await axios.delete(`${baseUrl}/deleteUser/${id}`, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -48,10 +48,10 @@ export async function deleteUser(id: number) {
 export async function login(data: LoginProps) {
     try{
         const response = await axios.post(`${baseUrl}/login`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -59,10 +59,10 @@ export async function login(data: LoginProps) {
 export async function register(data: UserProps) {
     try{
         const response = await axios.post(`${baseUrl}/register`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -86,7 +86,7 @@ export async function upload(data: UploadProps) {
         return response.data
     }
     catch (error: any) {
-        throw 'Error: ' + 'Status: ' + error.response.status + ', ' +  error.response.data.error
+        throw error.response.data
     }
 }
 
@@ -95,10 +95,9 @@ export async function generateFromDocs(uploadData: UploadProps, data: GenerateFr
     try{
         const upload= await upload(uploadData)
         const response = await axios.post(`${baseUrl}/generateFromDocs`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error: any) {
-        console.log('Error: ' + error)
         throw error.response.data;
     }
 }
@@ -111,7 +110,7 @@ export async function generate(data: GenerateProps) {
         return response
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw 'Error occured while generating Q&As'
     }
 }
 
@@ -122,7 +121,7 @@ export async function generate2(topic: string) {
         return response
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw 'Error occured while generating Q&As'
     }
 }
 
@@ -130,10 +129,10 @@ export async function generate2(topic: string) {
 export async function setConfiguration(settings: ConfigSettingsProps ) {
     try{
         const response = await axios.post(`${baseUrl}/setConfiguration`, settings, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw 'Error occured while generating Q&As'
     }
 }
 
@@ -142,10 +141,10 @@ export async function setConfiguration(settings: ConfigSettingsProps ) {
 export async function getEntries() {
     try{
         const response = await axios.get(`${baseUrl}/entries`, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -153,10 +152,10 @@ export async function getEntries() {
 export async function getUserEntries(userId: number) {
     try{
         const response = await axios.get(`${baseUrl}/entries`, {params: {userId: userId}}, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -164,10 +163,10 @@ export async function getUserEntries(userId: number) {
 export async function getEntriesWithTopic(userId: number, topic: string) {
     try{
         const response = await axios.get(`${baseUrl}/entries`, {params: {userId: userId, topic: topic}}, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -175,10 +174,10 @@ export async function getEntriesWithTopic(userId: number, topic: string) {
 export async function getEntry(id: number) {
     try{
         const response = await axios.get(`${baseUrl}/entry/${id}`, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -186,9 +185,9 @@ export async function getEntry(id: number) {
 export async function deleteEntry(id: number) {
     try{
         const response = await axios.delete(`${baseUrl}/deleteEntry/${id}`, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }

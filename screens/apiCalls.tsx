@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Button } from 'tamagui';
 import { useAtom  } from 'jotai'
 import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
-import { addUser, users, deleteUser, login, register, updateUser, generate, generate2, setConfiguration, upload, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
+import { addUser, users, deleteUser, login, register, updateUser, generate, generate2, generateFromDocs, setConfiguration, upload, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
 
 export default function ApiCalls() {
   const [username, setUsername] = useAtom(userAtom);
@@ -12,17 +12,27 @@ export default function ApiCalls() {
 
 
   const handleGenerate = async () => {
-  const data = {
-       topic: 'avocado',
-       nbQuestions: 3
-  };
-      const response = await generate(data);
-      console.log(response.data)
+      const data = {
+           topic: 'avocado',
+           nbQuestions: 3
+      };
+      try {
+          const response = await generate(data);
+          console.log(response)
+      }
+      catch(error: any){
+          console.log(error)
+      }
   };
 
   const handleGenerateTopic = async () => {
-      const response = await generate2('avocado');
-      console.log(response.data)
+      try {
+          const response = await generate2('avocado');
+          console.log(response)
+      }
+      catch(error: any){
+        console.log(error)
+      }
   };
 
   const handleSetConfiguration = async () => {
@@ -32,33 +42,64 @@ export default function ApiCalls() {
             difficulty: 'medium',
             temperature: 3
       };
-      const response = await setConfiguration(settings);
-      console.log(response.data.message)
+
+      try {
+          const response = await setConfiguration(settings);
+          console.log(response.message)
+      }
+      catch(error: any){
+        console.log(error)
+      }
   };
 
   const handleAllEntries = async () => {
-      const response = await getEntries();
-      console.log(response.data)
+      try {
+          const response = await getEntries();
+          console.log(response)
+      }
+      catch (error: any){
+        console.log(error.message)
+      }
   };
 
   const handleEntriesUser = async () => {
-      const response = await getUserEntries(1);
-      console.log(response.data)
+      try {
+          const response = await getUserEntries(1);
+          console.log(response)
+      }
+      catch(error: any){
+        console.log(error.message)
+      }
   };
 
   const handleEntriesUserTopic = async () => {
-       const response = await getEntriesWithTopic(1, 'avocado');
-       console.log(response.data)
+      try {
+           const response = await getEntriesWithTopic(1, 'avocado');
+           console.log(response)
+      }
+      catch(error: any){
+      console.log(error.message)
+      }
   };
 
   const handleEntry = async () => {
-       const response = await getEntry(27);
-       console.log(response.data)
+      try {
+           const response = await getEntry(27);
+           console.log(response)
+      }
+      catch(error: any){
+        console.log(error.message)
+      }
   };
 
   const handleDeleteEntry = async () => {
-       const response = await deleteEntry(29);
-       console.log(response.data.message)
+      try {
+           const response = await deleteEntry(29);
+           console.log(response.message)
+      }
+      catch(error: any){
+        console.log(error.message)
+      }
   };
 
   const handleAddUser = async () => {
@@ -67,18 +108,34 @@ export default function ApiCalls() {
              email: 'avo@cado.com',
              password: 'iloveavocados'
       };
-      const response = await addUser(data);
-      console.log(response.data.message)
+
+      try {
+        const response = await addUser(data);
+        console.log(response.message)
+      }
+      catch(error: any){
+        console.log(error.message)
+      }
   };
 
   const handleUsers = async () => {
+  try {
       const response = await users();
-      console.log(response.data)
+      console.log(response)
+  }
+  catch(error: any){
+      console.log(error.message)
+  }
   };
 
   const handleDeleteUser = async () => {
+  try {
       const response = await deleteUser(17);
-      console.log(response.data.message)
+      console.log(response.message)
+  }
+  catch(error: any){
+      console.log(error.message)
+  }
   };
 
    const handleLogin = async () => {
@@ -86,8 +143,13 @@ export default function ApiCalls() {
                usernameOrEmail: 'banana',
                password: 'ilovebananas'
    };
+   try {
       const response = await login(data);
-      console.log(response.data)
+      console.log(response.message)
+   }
+   catch(error: any){
+      console.log(error.message)
+   }
    };
 
    const handleRegister = async () => {
@@ -96,8 +158,13 @@ export default function ApiCalls() {
                email: 'ba@nana.com',
                password: 'ilovebananas'
       };
-      const response = await register(data);
-      console.log(response.data.message)
+      try {
+        const response = await register(data);
+        console.log(response.message)
+      }
+      catch(error: any){
+        console.log(error.message)
+      }
    };
 
    const handleUpdateUser = async () => {
@@ -105,7 +172,7 @@ export default function ApiCalls() {
          name: 'banana'
       };
       try {
-        const response = await updateUser(18, data);
+        const response = await updateUser(180, data);
         console.log(response.message)
       }
       catch(error: any){
@@ -119,15 +186,29 @@ export default function ApiCalls() {
            name: 'dummyPDF',
            size: 13
       };
-      const response = await upload(data);
-      if (response.error){
-        console.log(response.error)
+      try {
+          const response = await upload(data);
+          console.log(response.message)
       }
-      else {
-        console.log(response.message)
-        console.log('Number of Pages: ' + response.pages)
+      catch (error: any){
+        console.log(error.error)
       }
    };
+
+   const handleGenerateFromDocs = async () => {
+         const data = {
+              uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+              name: 'dummyPDF',
+              size: 13
+         };
+         try {
+             const response = await generateFromDocs(data);
+             console.log(response.message)
+         }
+         catch (error: any){
+           console.log(error.error)
+         }
+      };
 
 
   return (
@@ -141,14 +222,16 @@ export default function ApiCalls() {
       <Button onPress= {  handleEntriesUserTopic }>Get My Entries from Topic</Button>
       <Button onPress= {  handleEntry }>Get Entry</Button>
       <Button onPress= {  handleDeleteEntry }>Delete Entry</Button>
+      {*/}
       <Button onPress= {  handleAddUser }>Add User</Button>
       <Button onPress= {  handleUsers }>Get Users</Button>
       <Button onPress= {  handleDeleteUser }>Delete User</Button>
       <Button onPress= {  handleLogin }>Login</Button>
       <Button onPress= {  handleRegister }>Register</Button>
-      {*/}
+
       <Button onPress= {  handleUpdateUser }>Update User</Button>
       <Button onPress= {  handleUpload }>Upload</Button>
+      <Button onPress= {  handleGenerateFromDocs }>Upload</Button>
 
     </View>
   );
