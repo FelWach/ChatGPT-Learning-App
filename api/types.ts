@@ -20,4 +20,8 @@ export interface ConfigSettingsProps {
     difficulty: string,
     temperature: number
 }
+export interface UploadProps {
+    uri: string,
+    name: string
+}
 

@@ -4,7 +4,7 @@ const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps, LoginProps, GenerateProps, ConfigSettingsProps } from "./types"
+import { UserProps, LoginProps, GenerateProps, ConfigSettingsProps, Uploadprops, UploadProps } from "./types"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
@@ -93,6 +93,17 @@ export async function generate2(topic: string) {
 export async function setConfiguration(settings: ConfigSettingsProps ) {
     try{
         const response = await axios.post(`${baseUrl}/setConfiguration`, settings, {headers: { 'Content-Type': 'application/json'}});
+        return response
+    }
+    catch (error) {
+        console.log('Error: ' + error)
+    }
+}
+
+// upload PDF file, returns message and possible number of pages
+export async function upload(data: UploadProps) {
+    try{
+        const response = await axios.post(`${baseUrl}/upload`, data, {headers: { 'Content-Type': 'application/json'}});
         return response
     }
     catch (error) {
