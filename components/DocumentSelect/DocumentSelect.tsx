@@ -1,12 +1,15 @@
 import { Upload, X } from '@tamagui/lucide-icons';
 import * as DocumentPicker from 'expo-document-picker';
-import { Button, Text, View, XStack } from 'tamagui';
-import { useAtom } from "jotai";
+import { Button, Spinner, Text, View, XStack } from 'tamagui';
+import { atom, useAtom } from "jotai";
 import { filesArray } from './atoms';
 import { PDFFile } from './types';
 
+const showSpinner = atom(false);
+
 export function DocumentSelect() {
     const [files, setFiles] = useAtom(filesArray);
+    const [spinner, setSpinner] = useAtom(showSpinner);
 
     const deleteFile = (index: number) => () => {
         const newFiles = [...files];
@@ -17,10 +20,12 @@ export function DocumentSelect() {
 
     const pickPdf = async () => {
         try {
+            setSpinner(true);
             const docRes = await DocumentPicker.getDocumentAsync({
                 type:
                     "application/pdf"
             });
+            setSpinner(false);
             const assets = docRes.assets;
             if (!assets) return;
 
@@ -56,6 +61,7 @@ export function DocumentSelect() {
                 )
             }
             )}
+            {spinner && <Spinner size="large" color="$blue10" />}
         </View>
     )
 }
