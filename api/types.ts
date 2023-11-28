@@ -22,6 +22,7 @@ export interface ConfigSettingsProps {
 }
 export interface UploadProps {
     uri: string,
-    name: string
+    name: string,
+    size: number,
 }
 

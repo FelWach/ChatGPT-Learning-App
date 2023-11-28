@@ -5,9 +5,9 @@ import { atom, useAtom } from "jotai";
 import { filesArray } from "../../components/DocumentSelect/atoms";
 import { creativityAtom, languageAtom, languageStyleAtom, questionAtom, dropdownMenuLanguageAtom, dropdownMenuLanguageStyleAtom, dropdownMenuQuestionAtom, difficultyAtom, dropdownMenuDifficultyAtom, topicAtom } from "./atoms";
 import { Lock, Brush } from '@tamagui/lucide-icons'
-import { SafeAreaView } from "react-native-safe-area-context";
-import { GenerateProps, ConfigSettingsProps } from "../../api/types";
-import { generate, setConfiguration } from "../../api/api";
+import { SaveAreaView } from "../../components/SafeAreaView";
+import { GenerateProps, ConfigSettingsProps, UploadProps } from "../../api/types";
+import { generate, setConfiguration, upload } from "../../api/api";
 
 const selectedValueAtom = atom("Topic");
 
@@ -38,7 +38,7 @@ export function Configurator() {
         return response?.data;
     };
 
-    const generateQuestions = async () => {
+    const generateFromTopic = async () => {
         const generateConfig: GenerateProps = {
             topic: topic,
             nbQuestions: Number(question)
@@ -50,22 +50,37 @@ export function Configurator() {
         return response?.data;
     };
 
-    const configureAndGenerate = async () => { 
+    const generateFromPDF = async () => {
+        const generateConfig: UploadProps = {
+            uri: files[0].uri,
+            name: files[0].name,
+            size: Number(files[0].size),
+        };
+        console.log(generateConfig);
+
+        const response = await upload(generateConfig);
+        // need to add generate after upload works
+        if (!response) console.log("No response.");
+        return response?.data;
+    };
+
+    const configureAndGenerate = async () => {
         const response = await configureSettings();
-        console.log(response);
+        console.log("Response: " + response);
 
         if (selectedValue === "Topic") {
-            const response = await generateQuestions();
-            console.log(response);
+            const response = await generateFromTopic();
+            console.log("Response: " + response);
         } else {
-            console.log("No files endpoint yet");
-            console.log(files);
+            const response = await generateFromPDF();
+            console.log("Response: " + response);
         }
     };
 
     return (
         <ScrollView>
-            <SafeAreaView>
+            <SaveAreaView>
+
                 <XStack display="flex" justifyContent="center">
                     <ToggleGroup type="single" value={selectedValue} onValueChange={setSelectedValue} >
                         <ToggleGroup.Item value="Topic">
@@ -88,7 +103,9 @@ export function Configurator() {
                 </YStack>
                 <ConfiguratorBasis />
                 <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate}>Generate</Button>
-            </SafeAreaView>
+
+
+            </SaveAreaView >
         </ScrollView>
     )
 }
