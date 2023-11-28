@@ -106,10 +106,10 @@ export async function setConfiguration(settings: ConfigSettingsProps) {
 export async function getEntries() {
     try {
         const response = await axios.get(`${baseUrl}/entries`, { headers: { 'Content-Type': 'application/json' } });
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
@@ -117,10 +117,10 @@ export async function getEntries() {
 export async function getUserEntries(userId: number) {
     try {
         const response = await axios.get(`${baseUrl}/entries`, { params: { userId: userId } }, { headers: { 'Content-Type': 'application/json' } });
-        return response
+        return response.data
     }
     catch (error) {
-        console.log('Error: ' + error)
+        throw error.response.data
     }
 }
 
