@@ -116,7 +116,7 @@ export async function getEntries() {
 // get entries: returns all Q&As from a user
 export async function getUserEntries(userId: number) {
     try {
-        const response = await axios.get(`${baseUrl}/entries`, { params: { userId: userId } }, { headers: { 'Content-Type': 'application/json' } });
+        const response = await axios.get(`${baseUrl}/entries/${userId}`,  { headers: { 'Content-Type': 'application/json' } });
         return response.data
     }
     catch (error) {
@@ -127,7 +127,7 @@ export async function getUserEntries(userId: number) {
 // get entries: returns all Q&As from a user for a specific topic
 export async function getEntriesWithTopic(userId: number, topic: string) {
     try {
-        const response = await axios.get(`${baseUrl}/entries`, { params: { userId: userId, topic: topic } }, { headers: { 'Content-Type': 'application/json' } });
+        const response = await axios.get(`${baseUrl}/entries/${userId}/${topic}`,  { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {

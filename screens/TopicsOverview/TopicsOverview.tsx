@@ -7,32 +7,37 @@ import TabNavigator from '../../components/TabNavigator/TabNavigator'
 import { getUserEntries, getEntries } from '../../api/api'
 import { userIdAtom, userEntriesAtom } from '../../state/atoms'
 import { useEffect } from 'react'
+import { SaveAreaView } from '../../components/SafeAreaView';
 
-const topicCardAtom = atom<TopicCardProps>([]);
+const topicCardAtom = atom<TopicCardProps[]>([]);
 
 export function TopicsOverview({ navigation }) {
   const [userEntries, setUserEntries] = useAtom(userEntriesAtom);
   const [topicCards, setTopicCards] = useAtom(topicCardAtom);
+  const [id, setId] = useAtom(userIdAtom);
 
-    // user Entries will be fetched when opening the topicsOverview screen for the first time
+  // user Entries will be fetched when opening the topicsOverview screen for the first time
   useEffect(() => {
         fetchData();
   }, []);
 
       const fetchData = async () => {
         try {
-            //const response = await getUserEntries(userIdAtom);
-            const response = await getEntries();
-            console.log(response)
-
-            if(response.length !== 0){
-                setUserEntries(response);
-
-                const topics =  await handleTopicCards();
-                setTopicCards(topics)
+            if(userEntries.length == 0){
+                const response = await getUserEntries(id);
+                if(response.length !== 0){
+                    //setUserEntries(response);
+                    const topics =  await handleTopicCards(response);
+                    setTopicCards(topics);
+                }
+                else {
+                    navigation.navigate('NoLearnsets')
+                }
             }
             else {
-                navigation.navigate('NoLearnsets')
+                console.log('hallo')
+                const topics =  await handleTopicCards(userEntries);
+                setTopicCards(topics);
             }
         }
         catch(error: any){
@@ -40,73 +45,29 @@ export function TopicsOverview({ navigation }) {
         }
       }
 
-      const handleTopicCards =  async () => {
+      const handleTopicCards =  async (entries) => {
               const topics: TopicCardProps[] = [];
-              const topicExists: boolean = false;
 
-              if (topics.length == 0){
-                  topics.push({headline: 'wasser', numberOfLearncards: 0});
-              }
-              for (i= 0; i < userEntries.length; i++) {
-                  for (x= 0; x < topics.length; x++) {
-                          if(topics[x].headline == userEntries[i].topic){
-                              topicExists = true;
-                              topics[x].numberOfLearncards++
-                              return
-                          }
-                          else {
-                              topicExists = false;
-                          }
+              for (let i = 0; i < entries.length; i++) {
+                    const existingTopicIndex = topics.findIndex((topic) => topic.headline === entries[i].topic);
+
+                    if (existingTopicIndex !== -1) {
+                      topics[existingTopicIndex].numberOfLearncards++;
+                    } else {
+                      topics.push({ headline: entries[i].topic, numberOfLearncards: 1 });
+                    }
                   }
-                  if(!topicExists){
-                      topics.push({headline: userEntries[i].topic, numberOfLearncards: 1})
-                  }
-              }
+              console.log(topics)
               return topics
         };
 
 
-
-  //useHydrateAtoms([[userEntries, ])
-
+//useHydrateAtoms([[userEntries, ])
 
 // TODO: Implement selecting learnset and navigating to learnset screen
 
-/*
-  const dummyData: TopicCardProps[] = [
-    {
-      headline: 'Geografie',
-      numberOfLearncards: 5
-    },
-    {
-      headline: 'Biologie',
-      numberOfLearncards: 6
-    },
-    {
-      headline: 'Chemie',
-      numberOfLearncards: 7
-    },
-    {
-      headline: 'Mathe',
-      numberOfLearncards: 8
-    },
-    {
-      headline: 'Informatik',
-      numberOfLearncards: 9
-    },
-    {
-      headline: 'Geschichte',
-      numberOfLearncards: 10
-    },
-    {
-      headline: 'Englisch',
-      numberOfLearncards: 11
-    }
-  ];
-*/
-
   return (
-
+    <SaveAreaView>
       <ScrollView>
         <H1 size="$9" marginVertical="$3">Deine Learnsets</H1>
         <XStack $sm={{ flexDirection: 'column' }} alignItems="center" space="$3">
@@ -131,6 +92,6 @@ export function TopicsOverview({ navigation }) {
               <TabNavigator navigation={navigation} value={'topicsOverview'} />
         </XStack>
       </ScrollView>
-
+    </SaveAreaView>
   );
 }

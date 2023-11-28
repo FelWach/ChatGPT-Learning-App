@@ -1,9 +1,10 @@
 import { H1, XStack, ScrollView, Text } from "tamagui";
 import TabNavigator from '../components/TabNavigator/TabNavigator'
+import { SaveAreaView } from '../components/SafeAreaView';
 
 export default function NoLearnsets({ navigation }) {
     return (
-
+        <SaveAreaView>
           <ScrollView>
             <H1 size="$9" marginVertical="$3">Du hast noch keine Lernsets generiert!</H1>
             <XStack $sm={{ flexDirection: 'column' }} alignItems="center" space="$3">
@@ -14,6 +15,6 @@ export default function NoLearnsets({ navigation }) {
                   <TabNavigator navigation={navigation} value={'topicsOverview'} />
             </XStack>
           </ScrollView>
-
+        </SaveAreaView>
       );
 }

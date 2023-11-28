@@ -6,4 +6,5 @@ import { UserEntriesProps } from '../screens/TopicsOverview/types'
 export const userIdAtom = atomWithStorage<string>('id', '');
 
 // global atom of fetched userEntries
-export const userEntriesAtom = atomWithStorage<UserEntriesProps>([]);
+// TODO: add trigger, when User generates new Q&As
+export const userEntriesAtom = atomWithStorage<UserEntriesProps>('userEntries', []);
