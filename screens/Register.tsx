@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, H2, Input, Text } from 'tamagui';
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SafeAreaView } from '../components/SafeAreaView';
 import { UserProps } from '../api/type';
 import { register } from '../api/api';
 import { atom, useAtom, useAtomValue } from 'jotai';
@@ -117,7 +117,7 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <SaveAreaView>
+    <SafeAreaView>
       <H2>Create an account</H2>
 
       <Input
@@ -208,6 +208,6 @@ export default function Register({ navigation }) {
         }}>
         Register
       </Button>
-    </SaveAreaView>
+    </SafeAreaView>
   );
 };

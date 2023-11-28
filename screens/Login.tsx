@@ -4,7 +4,7 @@ import { userIdAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
 import { login } from '../api/api';
 import { useEffect } from 'react';
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SafeAreaView } from '../components/SafeAreaView';
 
 const usernameOrEmailAtom = atom<string>('');
 const passwordAtom = atom<string>('');
@@ -59,7 +59,7 @@ export default function Login({ /*route,*/ navigation }) {
   };
 
   return (
-    <SaveAreaView>
+    <SafeAreaView>
       <H2>Welcome back!</H2>
       <XStack>
         <Text
@@ -108,6 +108,6 @@ export default function Login({ /*route,*/ navigation }) {
         Sign in
       </Button>
       <Text>Forgot Password?</Text>
-    </SaveAreaView>
+    </SafeAreaView>
   );
 };

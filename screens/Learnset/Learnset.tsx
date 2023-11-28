@@ -5,7 +5,7 @@ import { Alert, Dimensions } from "react-native";
 import { QuestionsAccordionItemProps } from "./type";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SafeAreaView } from "../../components/SafeAreaView";
 
 const dataAtom = atom<QuestionsAccordionItemProps[]>([]);
 
@@ -81,9 +81,9 @@ export function Learnset({ navigation }) {
     // TODO: fix small arrow margin
     // TODO: add back button functionality
     return (
-        <SaveAreaView>
+        <SafeAreaView>
             <ScrollView>
-                <Button icon={ArrowLeft} size="$5" width="$4" height="$4" marginTop="$6"></Button>
+                {/*}<Button icon={ArrowLeft} size="$5" width="$4" height="$4" marginTop="$6"></Button>{*/}
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
                     <H1 size="$9" paddingVertical="$4">Geografie</H1>
                     <XStack>
@@ -111,7 +111,7 @@ export function Learnset({ navigation }) {
                     left: 0,
                     marginHorizontal: 10,
                 }}>Lernen</Button> 
-        </SaveAreaView>
+        </SafeAreaView>
     )
     // TODO: add learn button functionality
 }
