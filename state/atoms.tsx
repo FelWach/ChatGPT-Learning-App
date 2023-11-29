@@ -7,4 +7,4 @@ export const userIdAtom = atomWithStorage<string>('id', '');
 
 // global atom of fetched userEntries
 // TODO: add trigger, when User generates new Q&As
-export const userEntriesAtom = atomWithStorage<UserEntriesProps>('userEntries', []);
+export const userEntriesAtom = atomWithStorage<UserEntriesProps[]>('userEntries', []);
