@@ -118,6 +118,12 @@ loggt den Nutzer mit name (user name) oder email und password ein und gibt desse
 
 ---
 
+GET /topics/:userId
+
+gibt alle Topics eines Users mit userId zurück
+
+---
+
 GET /users 
 
 gibt alle Nutzer aus dem Table user zurück
