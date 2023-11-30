@@ -32,7 +32,6 @@ export function TopicsOverview({ navigation }) {
                 }
             }
             else {
-                console.log('hallo')
                 const topics =  await handleTopicCards(userEntries);
                 setTopicCards(topics);
             }
@@ -54,7 +53,6 @@ export function TopicsOverview({ navigation }) {
                       topics.push({ headline: entries[i].topic, numberOfLearncards: 1 });
                     }
                   }
-              console.log(topics)
               return topics
         };
 
