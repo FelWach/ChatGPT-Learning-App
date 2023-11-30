@@ -43,7 +43,7 @@ Gibt Anzahl der Seiten des PDF zurück-
 
 ---
 
-POST /generateFromPDF 
+POST /generateFromDocs 
 
 generiert Fragen und Antworten zu dem zuvor geladenen PDF (/upload muss logischerweise zuerst gecallt werden).
 Benötigt nbQuestions, pageStart, pageEnd im req.body
