@@ -1,6 +1,6 @@
 import { Button, H2, Text, Input, XStack } from 'tamagui';
 import { useAtom } from 'jotai'
-import { userIdAtom } from '../state/atoms'
+import { userAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
 import { login } from '../api/api';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ export default function Login({ navigation }) {
 
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const [id, setId] = useAtom(userIdAtom);
+  const [user, setUser] = useAtom(userAtom);
 
   const onSubmit = async (data: any) => {
 
@@ -31,7 +31,11 @@ export default function Login({ navigation }) {
 
     try {
       const response = await login(userData);
-      setId(response.userId);
+      setUser({
+        name: response.name,
+        email: response.email,
+        id: response.userId,
+      });
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {
