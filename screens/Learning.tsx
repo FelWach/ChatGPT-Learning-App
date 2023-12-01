@@ -19,7 +19,7 @@ const numberQAtom = atom(1);
 const progressAtom = atom(0);
 const isFrontAtom = atom(true);
 const isFinishedAtom = atom(false);
-
+const correctAnswersAtom = atom(0);
 
 export default function Learning({ navigation }) {
 
@@ -29,6 +29,7 @@ export default function Learning({ navigation }) {
   const [currA, setCurrA] = useAtom(currAAtom);
   const [dataLength, setDataLength] = useAtom(dataLengthAtom);
   const [numberQ, setNumberQ] = useAtom(numberQAtom);
+  const [correctAnswers, setCorrectAnswers] = useAtom(correctAnswersAtom);
 
   let swipeableRef: { close: () => any; } | null = null;
 
@@ -85,6 +86,9 @@ export default function Learning({ navigation }) {
       setCurrID(currID + 1);
       setCurrQ(data[numberQ].Q);
       setCurrA(data[numberQ].A);
+      if (numberQ < dataLength) {
+        setCorrectAnswers(correctAnswers + 1);
+      }
     }
   }
 
@@ -171,14 +175,15 @@ export default function Learning({ navigation }) {
     <SaveAreaView>
     <View>
       <Text textAlign='center' margin='$3'>Question {numberQ} from {data.length}</Text>
-        <XStack>
-          <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
-          <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
-        </XStack>
         <View>
           {
-            isFinished &&
+            isFinished ?
             <Text textAlign='center' margin='$3' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
+            :
+            <XStack>
+              <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
+              <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
+            </XStack>
           }
           <Swipeable
             ref={(ref) => (swipeableRef = ref)}
@@ -195,7 +200,11 @@ export default function Learning({ navigation }) {
               <Card.Background alignItems="center">
                 <View style={styles.card}>
                 <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
-                  {isFinished ? "You're done!" : 
+                  {isFinished ? 
+                    (
+                      "You're done!" + "\n"
+                      + "You answered " + correctAnswers + " out of " + dataLength + " questions correctly on your first attempt!"
+                    ) : 
                     isFront ? currQ : currA
                   }
                 </Text>
