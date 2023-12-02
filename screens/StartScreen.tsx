@@ -34,6 +34,9 @@ export default function StartScreen({ navigation }) {
         <Button onPress={ () => navigation.navigate('Profile')}>
              <Text>Profile</Text>
         </Button>
+        <Button onPress={ () => navigation.navigate('Loading')}>
+             <Text>Loading</Text>
+        </Button>
       </YStack>
     </SaveAreaView>
   )

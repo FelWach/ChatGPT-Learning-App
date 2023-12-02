@@ -5,6 +5,7 @@ import Login from './screens/Login'
 import Register from './screens/Register'
 import UserSettings from './screens/UserSettings'
 import Learning from './screens/Learning'
+import Loading from './screens/Loading'
 import { Learnset } from './screens/Learnset/Learnset'
 import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview'
 import Profile from './screens/Profile'
@@ -40,6 +41,7 @@ export default function Routes() {
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false  }}  />
             <Stack.Screen name="UserSettings" component={UserSettings} options={{ title: "" }}  />
             <Stack.Screen name="Api" component={ApiCalls} options={{ title: "Api Calls" }}  />
+            <Stack.Screen name="Loading" component={Loading} options={{ headerShown: false }}  />
 
         </Stack.Navigator>
     )
