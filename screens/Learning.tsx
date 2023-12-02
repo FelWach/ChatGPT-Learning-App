@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SaveAreaView } from "../components/SafeAreaView";
 import { Progress, SizeTokens, YStack, Card, Text, View, XStack} from 'tamagui';
-import { getEntriesWithTopic } from '../api/api';
+import { getEntriesWithTopic, getEntries } from '../api/api';
 
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
@@ -45,14 +45,14 @@ export default function Learning({ navigation }) {
   }, []);
 
   const loadQuestions = async () => {
-      const response = await getEntriesWithTopic(1, 'avocado');
-      
-      if (response && response.data.length != 0) {
-        setData(response.data);
-        setDataLength(response.data.length);
-        setCurrID(response.data[0].id);
-        setCurrQ(response.data[0].Q);
-        setCurrA(response.data[0].A);
+      const response = await getEntries();
+      console.log(response);
+      if (response) {
+        setData(response);
+        setDataLength(response.length);
+        setCurrID(response[0].id);
+        setCurrQ(response[0].Q);
+        setCurrA(response[0].A);
       }
   };
 
