@@ -1,7 +1,7 @@
 import { Button, ScrollView, Text } from 'tamagui';
 import { H1, YStack } from 'tamagui';
 import { TopicsCard } from '../../components/TopicCards/TopicsCard';
-import { topicCardAtom, userIdAtom } from '../../state/atoms';
+import { topicAtom, topicCardAtom, userIdAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';
 import { SaveAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
@@ -9,6 +9,7 @@ import TabNavigator from '../../components/TabNavigator/TabNavigator';
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
+  const [, setCurrentTopic] = useAtom(topicAtom);
 
   // TODO: adjust spacing and other styling
   // TODO: add MenuButton to navigate to ProfileScreen
@@ -26,7 +27,10 @@ export function TopicsOverview({ navigation }) {
                     numberOfLearncards={topic.numberOfLearncards}
                     headline={topic.headline}
                     onPress={() => {
-                      console.log('pressed');
+                      setCurrentTopic(topic.headline);
+                      navigation.navigate('Learning', {
+                        navigation: navigation,
+                      });
                     }}
                   />
                 ))}
