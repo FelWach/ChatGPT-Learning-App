@@ -25,3 +25,6 @@ export const [topicCardAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
         }
     }
 }));
+
+export const emailAtom = atomWithStorage<string>('email', '');
+export const passwordAtom = atomWithStorage<string>('password', '');

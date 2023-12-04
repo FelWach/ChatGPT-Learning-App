@@ -5,6 +5,7 @@ import { topicCardAtom, userIdAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';
 import { SaveAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
+import TabNavigator from '../../components/TabNavigator/TabNavigator';
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
@@ -48,6 +49,7 @@ export function TopicsOverview({ navigation }) {
             </Button>
           </YStack>
         )}
+        <TabNavigator navigation={navigation} value={'topicsOverview'} />
       </SaveAreaView>
     </ScrollView>
   );
