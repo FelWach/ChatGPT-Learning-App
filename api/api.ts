@@ -188,6 +188,17 @@ export async function getEntry(id: number) {
     }
 }
 
+// get topics: returns all topics associated with a user
+export async function getTopics(id: number) {
+    try {
+        const response = await axios.get(`${baseUrl}/topics/${id}`, {headers: { 'Content-Type': 'application/json'}});
+        return response.data
+    }
+    catch(error: any) {
+        throw error.response.data
+    }
+}
+
 // delete entry: deletes a specific Q&A
 export async function deleteEntry(id: number) {
     try {
