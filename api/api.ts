@@ -102,14 +102,20 @@ export async function setConfiguration(settings: ConfigSettingsProps ) {
 
 // upload PDF file, returns message and possible number of pages
 export async function upload(data: UploadProps) {
-    try{
-        const response = await axios.post(`${baseUrl}/upload`, data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+    // use formData to send file
+    const formData = new FormData();
+    formData.append("uri", data.uri);
+    formData.append("name", data.name);
+    formData.append("size", String(data.size));
+  
+    try {
+      const response = await axios.post(`${baseUrl}/upload`, formData);
+      return response;
+    } catch (error) {
+      console.log('Error: ' + error);
     }
-    catch (error) {
-        console.log('Error: ' + error)
-    }
-}
+  }
+  
 
 // get entries: returns all Q&As with id and topic
 export async function getEntries() {
