@@ -5,18 +5,15 @@ import { topicCardAtom, userIdAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';
 import { SaveAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
-import { loadingAtom } from '../../state/atoms';
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
-  const [loading] = useAtom(loadingAtom);
 
   // TODO: adjust spacing and other styling
   // TODO: add MenuButton to navigate to ProfileScreen
   return (
     <ScrollView>
       <SaveAreaView>
-        {loading ? <Text>Loading...</Text> : null}
         {topicCards.length ? (
           <YStack>
             <YStack>
