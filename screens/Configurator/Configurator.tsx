@@ -51,6 +51,8 @@ export function Configurator() {
     };
 
     const generateFromPDF = async () => {
+        console.log("Generate from PDF");
+        
         const generateConfig: UploadProps = {
             uri: files[0].uri,
             name: files[0].name,
@@ -60,13 +62,13 @@ export function Configurator() {
 
         const response = await upload(generateConfig);
         // need to add generate after upload works
-        if (!response) console.log("No response.");
+        if (!response) console.log("No response from upload call");
         return response?.data;
     };
 
     const configureAndGenerate = async () => {
-        const response = await configureSettings();
-        console.log("Response: " + response);
+        //const response = await configureSettings();
+        //console.log("Response: " + response);
 
         if (selectedValue === "Topic") {
             const response = await generateFromTopic();
