@@ -28,9 +28,7 @@ export function TopicsOverview({ navigation }) {
                     headline={topic.headline}
                     onPress={() => {
                       setCurrentTopic(topic.headline);
-                      navigation.navigate('Learning', {
-                        navigation: navigation,
-                      });
+                      navigation.navigate('Learning');
                     }}
                   />
                 ))}

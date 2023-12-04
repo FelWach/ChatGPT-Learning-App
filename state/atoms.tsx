@@ -1,8 +1,10 @@
 import { PrimitiveAtom, atom, useAtom } from 'jotai'
 import { atomWithStorage, atomWithReducer } from 'jotai/utils'
 import { atomsWithQuery } from 'jotai-tanstack-query'
-import { getTopics } from '../api/api';
+import { getEntriesWithTopic, getTopics } from '../api/api';
 import { TopicCardProps } from '../components/TopicCards/types';
+import { DataType } from '../screens/Learning/types';
+import { AxiosResponse } from 'axios';
 
 export const userIdAtom = atomWithStorage<string>('id', '');
 
@@ -30,3 +32,17 @@ export const emailAtom = atomWithStorage<string>('email', '');
 export const passwordAtom = atomWithStorage<string>('password', '');
 
 export const topicAtom = atom<string>('');
+
+export const [responseAtom] = atomsWithQuery<AxiosResponse|undefined>((get) => ({
+    queryKey: ['questions', get(userIdAtom), get(topicAtom)],
+    queryFn: async ({ queryKey: [, id, topic] }) => {
+        try {
+            const response = await getEntriesWithTopic(Number(id), String(topic));
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+            return;
+        }
+    }
+}));

@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { SaveAreaView } from "../components/SafeAreaView";
-import { Progress, SizeTokens, YStack, Card, Text, View, XStack} from 'tamagui';
-import { getEntriesWithTopic } from '../api/api';
-
+import { SaveAreaView } from "../../components/SafeAreaView";
+import { Progress, SizeTokens, YStack, Card, Text, View, XStack } from 'tamagui';
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
+import { DataType } from './types';
+import { responseAtom } from '../../state/atoms';
 
-// atom states 
-type DataType = { id: number; Q: string; A: string };
 const dataAtom = atom<DataType[]>([]);
 const currIDAtom = atom(0);
 const currQAtom = atom("");
@@ -20,11 +18,10 @@ const progressAtom = atom(0);
 const isFrontAtom = atom(true);
 const isFinishedAtom = atom(false);
 
-
 export default function Learning({ navigation }) {
 
   const [data, setData] = useAtom(dataAtom);
-  const [currID, setCurrID]= useAtom(currIDAtom);
+  const [currID, setCurrID] = useAtom(currIDAtom);
   const [currQ, setCurrQ] = useAtom(currQAtom);
   const [currA, setCurrA] = useAtom(currAAtom);
   const [dataLength, setDataLength] = useAtom(dataLengthAtom);
@@ -38,22 +35,22 @@ export default function Learning({ navigation }) {
 
   const [isFront, setIsFront] = useAtom(isFrontAtom);
   const [isFinished, setIsFinished] = useAtom(isFinishedAtom);
+  const [response] = useAtom(responseAtom);
 
   useEffect(() => {
-      loadQuestions();
+    loadQuestions();
   }, []);
 
   const loadQuestions = async () => {
-      const response = await getEntriesWithTopic(1, 'avocado');
-      
-      if (response && response.data.length != 0) {
-        setData(response.data);
-        setDataLength(response.data.length);
-        setCurrID(response.data[0].id);
-        setCurrQ(response.data[0].Q);
-        setCurrA(response.data[0].A);
-      }
-  };
+    if (response) {
+      setData(response.data);
+      setDataLength(response.data.length);
+      setCurrID(response.data[0].id);
+      setCurrQ(response.data[0].Q);
+      setCurrA(response.data[0].A);
+    }
+  }
+
 
   const handleSwipeableOpen = (direction: string) => {
     if (swipeableRef) {
@@ -68,7 +65,7 @@ export default function Learning({ navigation }) {
   }
 
   const nextQuestion = () => {
-    setProgress((prev) => (prev + 100/dataLength));
+    setProgress((prev) => (prev + 100 / dataLength));
 
     if (numberQ === data.length) {
       setIsFront(true);
@@ -79,7 +76,7 @@ export default function Learning({ navigation }) {
     if (!isFront) {
       setIsFront(true);
     }
-    
+
     if (numberQ < data.length) {
       setNumberQ(numberQ + 1);
       setCurrID(currID + 1);
@@ -97,9 +94,9 @@ export default function Learning({ navigation }) {
   }
 
   const repeatOneQuestion = () => {
-    data.push({id: currID, Q: currQ, A: currA});
+    data.push({ id: currID, Q: currQ, A: currA });
     data.splice(currID - 1, 1);
-    
+
     if (numberQ < data.length) {
       setNumberQ(numberQ + 1);
       setCurrID(currID + 1);
@@ -128,7 +125,7 @@ export default function Learning({ navigation }) {
       return;
     }
     return (
-      <Card elevate size="$20" borderRadius="$10" style={{backgroundColor: "#901C1C"}}>
+      <Card elevate size="$20" borderRadius="$10" style={{ backgroundColor: "#901C1C" }}>
         <Card.Header padded>
         </Card.Header>
         <Card.Footer padded>
@@ -142,7 +139,7 @@ export default function Learning({ navigation }) {
           </View>
         </Card.Background>
       </Card>
-          )
+    )
   }
 
   const leftSwipeActions = () => {
@@ -150,7 +147,7 @@ export default function Learning({ navigation }) {
       return;
     }
     return (
-      <Card elevate size="$20" borderRadius="$10" style={{backgroundColor: "#0A9632"}}>
+      <Card elevate size="$20" borderRadius="$10" style={{ backgroundColor: "#0A9632" }}>
         <Card.Header padded>
         </Card.Header>
         <Card.Footer padded>
@@ -166,11 +163,11 @@ export default function Learning({ navigation }) {
       </Card>
     )
   }
-    
+
   return (
     <SaveAreaView>
-    <View>
-      <Text textAlign='center' margin='$3'>Question {numberQ} from {data.length}</Text>
+      <View>
+        <Text textAlign='center' margin='$3'>Question {numberQ} from {data.length}</Text>
         <XStack>
           <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
           <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
@@ -178,14 +175,14 @@ export default function Learning({ navigation }) {
         <View>
           {
             isFinished &&
-            <Text textAlign='center' margin='$3' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
+            <Text textAlign='center' margin='$3' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text>
           }
           <Swipeable
             ref={(ref) => (swipeableRef = ref)}
             renderLeftActions={leftSwipeActions}
             renderRightActions={rightSwipeActions}
             onSwipeableOpen={(event) => handleSwipeableOpen(event === 'right' ? 'right' : 'left')}
-            >
+          >
             <Card elevate size="$20" borderRadius="$10" onPress={() => handleCard()}>
               <Card.Header padded>
               </Card.Header>
@@ -194,31 +191,31 @@ export default function Learning({ navigation }) {
               </Card.Footer>
               <Card.Background alignItems="center">
                 <View style={styles.card}>
-                <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
-                  {isFinished ? "You're done!" : 
-                    isFront ? currQ : currA
-                  }
-                </Text>
+                  <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
+                    {isFinished ? "You're done!" :
+                      isFront ? currQ : currA
+                    }
+                  </Text>
                 </View>
               </Card.Background>
             </Card>
           </Swipeable>
         </View>
         {!isFinished &&
-        <View> 
-          {isFront ?
-            <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
-            :
-            <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
-          }
-        </View>
+          <View>
+            {isFront ?
+              <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
+              :
+              <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
+            }
+          </View>
         }
-      <YStack height={60} alignItems="center" space>
-        <Progress size={sizeProp} marginTop="$5" value={progress}>
-          <Progress.Indicator animation="bouncy" />
-        </Progress>
-      </YStack>
-    </View>
+        <YStack height={60} alignItems="center" space>
+          <Progress size={sizeProp} marginTop="$5" value={progress}>
+            <Progress.Indicator animation="bouncy" />
+          </Progress>
+        </YStack>
+      </View>
     </SaveAreaView>
   );
 }
