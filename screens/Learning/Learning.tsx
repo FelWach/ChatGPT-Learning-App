@@ -5,14 +5,12 @@ import { SaveAreaView } from "../../components/SafeAreaView";
 import { Progress, SizeTokens, YStack, Card, Text, View, XStack } from 'tamagui';
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
-import { DataType } from './types';
-import { responseAtom } from '../../state/atoms';
+import { questionsAnswersAtom } from '../../state/atoms';
 
-const dataAtom = atom<DataType[]>([]);
 const currIDAtom = atom(0);
 const currQAtom = atom("");
 const currAAtom = atom("");
-const dataLengthAtom = atom(0);
+const questionsAnswersLengthAtom = atom(0);
 const numberQAtom = atom(1);
 const progressAtom = atom(0);
 const isFrontAtom = atom(true);
@@ -20,11 +18,11 @@ const isFinishedAtom = atom(false);
 
 export default function Learning({ navigation }) {
 
-  const [data, setData] = useAtom(dataAtom);
+  const [questionsAnswers] = useAtom(questionsAnswersAtom);
   const [currID, setCurrID] = useAtom(currIDAtom);
   const [currQ, setCurrQ] = useAtom(currQAtom);
   const [currA, setCurrA] = useAtom(currAAtom);
-  const [dataLength, setDataLength] = useAtom(dataLengthAtom);
+  const [questionsAnswersLength, setquestionsAnswersLength] = useAtom(questionsAnswersLengthAtom);
   const [numberQ, setNumberQ] = useAtom(numberQAtom);
 
   let swipeableRef: { close: () => any; } | null = null;
@@ -35,20 +33,18 @@ export default function Learning({ navigation }) {
 
   const [isFront, setIsFront] = useAtom(isFrontAtom);
   const [isFinished, setIsFinished] = useAtom(isFinishedAtom);
-  const [response] = useAtom(responseAtom);
 
   useEffect(() => {
     loadQuestions();
   }, []);
 
   const loadQuestions = async () => {
-    if (response) {
-      setData(response.data);
-      setDataLength(response.data.length);
-      setCurrID(response.data[0].id);
-      setCurrQ(response.data[0].Q);
-      setCurrA(response.data[0].A);
-    }
+
+      setquestionsAnswersLength(questionsAnswers.length);
+      setCurrID(Number(questionsAnswers[0].id));
+      setCurrQ(questionsAnswers[0].Q);
+      setCurrA(questionsAnswers[0].A);
+  
   }
 
 
@@ -65,9 +61,9 @@ export default function Learning({ navigation }) {
   }
 
   const nextQuestion = () => {
-    setProgress((prev) => (prev + 100 / dataLength));
+    setProgress((prev) => (prev + 100 / questionsAnswersLength));
 
-    if (numberQ === data.length) {
+    if (numberQ === questionsAnswers.length) {
       setIsFront(true);
       setIsFinished(true);
       return;
@@ -77,11 +73,11 @@ export default function Learning({ navigation }) {
       setIsFront(true);
     }
 
-    if (numberQ < data.length) {
+    if (numberQ < questionsAnswers.length) {
       setNumberQ(numberQ + 1);
       setCurrID(currID + 1);
-      setCurrQ(data[numberQ].Q);
-      setCurrA(data[numberQ].A);
+      setCurrQ(questionsAnswers[numberQ].Q);
+      setCurrA(questionsAnswers[numberQ].A);
     }
   }
 
@@ -94,14 +90,14 @@ export default function Learning({ navigation }) {
   }
 
   const repeatOneQuestion = () => {
-    data.push({ id: currID, Q: currQ, A: currA });
-    data.splice(currID - 1, 1);
+    questionsAnswers.push({ id: String(currID), Q: currQ, A: currA });
+    questionsAnswers.splice(currID - 1, 1);
 
-    if (numberQ < data.length) {
+    if (numberQ < questionsAnswers.length) {
       setNumberQ(numberQ + 1);
       setCurrID(currID + 1);
-      setCurrQ(data[numberQ].Q);
-      setCurrA(data[numberQ].A);
+      setCurrQ(questionsAnswers[numberQ].Q);
+      setCurrA(questionsAnswers[numberQ].A);
     }
 
     if (isFront) {
@@ -167,7 +163,7 @@ export default function Learning({ navigation }) {
   return (
     <SaveAreaView>
       <View>
-        <Text textAlign='center' margin='$3'>Question {numberQ} from {data.length}</Text>
+        <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
         <XStack>
           <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
           <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>

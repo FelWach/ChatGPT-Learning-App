@@ -3,7 +3,7 @@ import { atomWithStorage, atomWithReducer } from 'jotai/utils'
 import { atomsWithQuery } from 'jotai-tanstack-query'
 import { getEntriesWithTopic, getTopics } from '../api/api';
 import { TopicCardProps } from '../components/TopicCards/types';
-import { DataType } from '../screens/Learning/types';
+import { QuestionsAnswersData } from '../screens/Learning/types';
 import { AxiosResponse } from 'axios';
 
 export const userIdAtom = atomWithStorage<string>('id', '');
@@ -33,16 +33,22 @@ export const passwordAtom = atomWithStorage<string>('password', '');
 
 export const topicAtom = atom<string>('');
 
-export const [responseAtom] = atomsWithQuery<AxiosResponse|undefined>((get) => ({
-    queryKey: ['questions', get(userIdAtom), get(topicAtom)],
+export const [questionsAnswersAtom] = atomsWithQuery<QuestionsAnswersData[]>((get) => ({
+    queryKey: ['questionsAnswers', get(userIdAtom), get(topicAtom)],
     queryFn: async ({ queryKey: [, id, topic] }) => {
         try {
             const response = await getEntriesWithTopic(Number(id), String(topic));
-            return response;
+            
+            const questions: QuestionsAnswersData[] = [];
+            for (let i = 0; i < response.length; i++) {
+                questions.push({ id: response[i].id, Q: response[i].Q, A: response[i].A });
+            }
+            
+            return questions;
         }
         catch (error) {
             console.log(error);
-            return;
+            return [];
         }
     }
 }));

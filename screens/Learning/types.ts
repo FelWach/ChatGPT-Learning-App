@@ -1,5 +1,5 @@
-export interface DataType { 
-    id: number,
+export interface QuestionsAnswersData { 
+    id: string,
     Q: string,
     A: string
 };
