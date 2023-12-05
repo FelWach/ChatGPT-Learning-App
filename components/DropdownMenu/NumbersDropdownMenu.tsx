@@ -84,7 +84,7 @@ export function NumbersDropdownMenu({ ...props }: SelectProps & { maxNumber: num
                                                 key={String(i+1)}
                                                 value={String(i+1)}
                                             >
-                                                <Select.ItemText>{String(i)}</Select.ItemText>
+                                                <Select.ItemText>{String(i+1)}</Select.ItemText>
                                                 <Select.ItemIndicator marginLeft="auto">
                                                     <Check size={16} />
                                                 </Select.ItemIndicator>

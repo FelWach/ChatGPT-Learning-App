@@ -60,12 +60,6 @@ export function DocumentSelect() {
     }
   };
 
-  function checkPageNumbers(): void {
-    if (parseInt(startPage) > parseInt(endPage)) {
-      setStartPage(endPage);
-    }
-  }
-
   const uploadButton = () => {
     return (
       <Button
@@ -106,11 +100,12 @@ export function DocumentSelect() {
               </Text>
               <Button icon={X} width="$3" height="$3" onPress={deleteFile(index)} />
             </XStack>
+            <Text fontSize="$4">{possiblePagesNumber} possible Pages were found.</Text>
             <XStack justifyContent="space-between" space alignItems="center">
               <Text fontSize="$4">From Page</Text>
-              <NumbersDropdownMenu label="From Page" maxNumber={possiblePagesNumber} atom={startPageAtom} onValueChange={() => checkPageNumbers()} />
+              <NumbersDropdownMenu label="From Page" maxNumber={possiblePagesNumber} atom={startPageAtom}  />
               <Text fontSize="$4">to</Text>
-              <NumbersDropdownMenu label="To Page" maxNumber={possiblePagesNumber} atom={endPageAtom} onValueChange={() => checkPageNumbers()}/>
+              <NumbersDropdownMenu label="To Page" maxNumber={possiblePagesNumber} atom={endPageAtom} />
             </XStack>
           </Card>
         );

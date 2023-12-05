@@ -38,16 +38,14 @@ import { generate, generateFromDocs, setConfiguration, upload } from "../../api/
 const selectedValueAtom = atom("Topic");
 
 export function Configurator() {
-  const [files, setFiles] = useAtom(filesAtom);
-
-  const [question, setQuestion] = useAtom(questionAtom);
-  const [language, setLanguage] = useAtom(languageAtom);
-  const [languageStyle, setLanguageStyle] = useAtom(languageStyleAtom);
-  const [creativity, setCreativity] = useAtom(creativityAtom);
-  const [difficulty, setDifficulty] = useAtom(difficultyAtom);
+  const [question] = useAtom(questionAtom);
+  const [language] = useAtom(languageAtom);
+  const [languageStyle] = useAtom(languageStyleAtom);
+  const [creativity] = useAtom(creativityAtom);
+  const [difficulty] = useAtom(difficultyAtom);
   const [topic, setTopic] = useAtom(topicAtom);
-  const [startPage, setStartPage] = useAtom(startPageAtom);
-  const [endPage, setEndPage] = useAtom(endPageAtom);
+  const [startPage] = useAtom(startPageAtom);
+  const [endPage] = useAtom(endPageAtom);
 
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
 
@@ -80,8 +78,8 @@ export function Configurator() {
   const generateFromPDF = async () => {
     const generateConfig: GenerateFromDocsProps = {
       nbQuestions: Number(question),
-      pageStart: 1,
-      pageEnd: 5,
+      pageStart: Number(startPage),
+      pageEnd: Number(endPage),
     };
     console.log(generateConfig);
 
@@ -91,6 +89,7 @@ export function Configurator() {
   };
 
   const configureAndGenerate = async () => {
+    if (!validate()) return;
     const response = await configureSettings();
     console.log("Response: " + response);
 
@@ -102,6 +101,14 @@ export function Configurator() {
       console.log("Response: " + response);
     }
   };
+
+  function validate(): boolean {
+    if (startPage > endPage) {
+      alert("Start page must be smaller than end page")
+      return false;
+    }
+    return true;
+  }
 
   return (
     <ScrollView>
