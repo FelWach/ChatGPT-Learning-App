@@ -1,12 +1,7 @@
 import { PrimitiveAtom, atom, splitAtom  } from 'jotai'
 import { atomWithStorage, atomWithReducer } from 'jotai/utils'
+import { UserProps } from './types'
 import { UserEntriesProps } from '../screens/TopicsOverview/types'
-
-type UserProps = {
-    name: string;
-    email: string;
-    id: string;
-}
 
 export const userAtom = atomWithStorage<UserProps>('user', {
     name: '',

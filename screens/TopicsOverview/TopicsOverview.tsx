@@ -5,7 +5,7 @@ import { atom, useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 import TabNavigator from '../../components/TabNavigator/TabNavigator'
 import { getUserEntries, getEntries } from '../../api/api'
-import { userIdAtom, userEntriesAtom } from '../../state/atoms'
+import { userAtom, userEntriesAtom } from '../../state/atoms'
 import { useEffect } from 'react'
 import { SaveAreaView } from '../../components/SafeAreaView';
 import {useWindowDimensions} from 'react-native';
@@ -15,7 +15,7 @@ const topicCardAtom = atom<TopicCardProps[]>([]);
 export function TopicsOverview({ navigation }) {
   const [userEntries, setUserEntries] = useAtom(userEntriesAtom);
   const [topicCards, setTopicCards] = useAtom(topicCardAtom);
-  const [id, setId] = useAtom(userIdAtom);
+  const [user, setUser] = useAtom(userAtom);
 
   // user Entries will be fetched when opening the topicsOverview screen for the first time
   useEffect(() => {
@@ -25,7 +25,7 @@ export function TopicsOverview({ navigation }) {
       const fetchData = async () => {
         try {
             if(userEntries.length == 0){
-                response = await getUserEntries(Number(id));
+                response = await getUserEntries(Number(user.id));
                 if(response.length !== 0){
                     const topics =  await handleTopicCards(response);
                     setTopicCards(topics);

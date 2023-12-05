@@ -1,13 +1,12 @@
 import { Button, H2, Input, View, XStack } from 'tamagui';
 import { useAtom  } from 'jotai'
-import { emailAtom, passwordAtom } from '../state/atoms'
+import { userAtom } from '../state/atoms'
 import TabNavigator from '../components/TabNavigator/TabNavigator'
 
 
 export default function Profile({ navigation }){
-  const [email, setEmail] = useAtom(emailAtom);
-  const [password, setPassword] = useAtom(passwordAtom);
-
+  
+  const [user, setUser] = useAtom(userAtom);
 
   return (
     <View>
