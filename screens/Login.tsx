@@ -32,10 +32,10 @@ export default function Login({ navigation }) {
     try {
       const response = await login(userData);
       setUser({
+        id: response.userId,
         name: response.name,
         email: response.email,
-        id: response.userId,
-      });
+      })
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {

@@ -6,12 +6,15 @@ import { useAtom } from 'jotai';
 import { atom } from 'jotai';
 import { userAtom } from '../state/atoms';
 
+const passwordAtom = atom<string>('');
+const repeatPasswordAtom = atom<string>('');
 const editingPasswordAtom = atom<boolean>(false);
 
 export default function UserSettings({ navigation }) {
     
-
     const [user, setUser] = useAtom(userAtom);
+    const [password, setPassword] = useAtom(passwordAtom);
+    const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
     const [isEditingPassword, setIsEditingPassword] = useAtom(editingPasswordAtom);
   
     const saveUserData = () => {
