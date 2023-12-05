@@ -2,15 +2,20 @@ import { Upload, X } from "@tamagui/lucide-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { Button, Card, Input, Spinner, Text, View, XStack } from "tamagui";
 import { atom, useAtom } from "jotai";
-import { filesArray } from "./atoms";
+import { endPageAtom, filesAtom, startPageAtom } from "./atoms";
 import { PDFFile } from "./types";
 import { upload } from "../../api/api";
+import { NumbersDropdownMenu } from "../DropdownMenu/NumbersDropdownMenu";
 
 const showSpinner = atom(false);
+const possiblePages = atom(0);
 
 export function DocumentSelect() {
-  const [files, setFiles] = useAtom(filesArray);
+  const [files, setFiles] = useAtom(filesAtom);
   const [spinner, setSpinner] = useAtom(showSpinner);
+  const [startPage, setStartPage] = useAtom(startPageAtom);
+  const [endPage, setEndPage] = useAtom(endPageAtom);
+  const [possiblePagesNumber, setPossiblePagesNumber] = useAtom(possiblePages);
 
   const deleteFile = (index: number) => () => {
     const newFiles = [...files];
@@ -44,6 +49,7 @@ export function DocumentSelect() {
       console.log(response.data);
       if (response.status === 200) {
         setFiles([...files, pdfFile]);
+        setPossiblePagesNumber(response.data.pages);
       }
       setSpinner(false);
 
@@ -53,6 +59,12 @@ export function DocumentSelect() {
       setSpinner(false);
     }
   };
+
+  function checkPageNumbers(): void {
+    if (parseInt(startPage) > parseInt(endPage)) {
+      setStartPage(endPage);
+    }
+  }
 
   const uploadButton = () => {
     return (
@@ -96,9 +108,9 @@ export function DocumentSelect() {
             </XStack>
             <XStack justifyContent="space-between" space alignItems="center">
               <Text fontSize="$4">From Page</Text>
-              <Input placeholder="1" width={80} />
+              <NumbersDropdownMenu label="From Page" maxNumber={possiblePagesNumber} atom={startPageAtom} onValueChange={() => checkPageNumbers()} />
               <Text fontSize="$4">to</Text>
-              <Input placeholder="50" width={80} />
+              <NumbersDropdownMenu label="To Page" maxNumber={possiblePagesNumber} atom={endPageAtom} onValueChange={() => checkPageNumbers()}/>
             </XStack>
           </Card>
         );

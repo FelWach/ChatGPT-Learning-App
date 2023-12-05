@@ -14,6 +14,12 @@ export interface GenerateProps {
     nbQuestions: number
 }
 
+export interface GenerateFromDocsProps {
+    nbQuestions: number;
+    pageStart?: number;
+    pageEnd?: number;
+}
+
 export interface ConfigSettingsProps {
     language: string,
     languageLevel: string,

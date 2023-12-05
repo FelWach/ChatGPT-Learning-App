@@ -4,7 +4,7 @@ const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps, LoginProps, GenerateProps, ConfigSettingsProps, UploadProps } from "./types"
+import { UserProps, LoginProps, GenerateProps, ConfigSettingsProps, UploadProps, GenerateFromDocsProps } from "./types"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
@@ -119,7 +119,19 @@ export async function upload(data: FormData) {
         console.log('Error: ' + error)
         throw error;
     }
-  }
+}
+
+// post generateFromDocs: for generating Q&As after uploading a pdf
+export async function generateFromDocs(data: GenerateFromDocsProps) {
+
+    try {
+        const response = await axios.post(`${baseUrl}/generateFromDocs`, data, { headers: { 'Content-Type': 'application/json' } });
+        return response.data
+    }
+    catch (error: any) {
+        throw error.response.data
+    }
+}
 
 
 // get entries: returns all Q&As with id and topic

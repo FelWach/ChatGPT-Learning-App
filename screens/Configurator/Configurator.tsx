@@ -12,7 +12,7 @@ import {
 import { DropdownMenu } from "../../components/DropdownMenu/DropdownMenu";
 import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
-import { filesArray } from "../../components/DocumentSelect/atoms";
+import { endPageAtom, filesAtom, startPageAtom } from "../../components/DocumentSelect/atoms";
 import {
   creativityAtom,
   languageAtom,
@@ -31,13 +31,14 @@ import {
   GenerateProps,
   ConfigSettingsProps,
   UploadProps,
+  GenerateFromDocsProps,
 } from "../../api/types";
-import { generate, setConfiguration, upload } from "../../api/api";
+import { generate, generateFromDocs, setConfiguration, upload } from "../../api/api";
 
 const selectedValueAtom = atom("Topic");
 
 export function Configurator() {
-  const [files, setFiles] = useAtom(filesArray);
+  const [files, setFiles] = useAtom(filesAtom);
 
   const [question, setQuestion] = useAtom(questionAtom);
   const [language, setLanguage] = useAtom(languageAtom);
@@ -45,6 +46,8 @@ export function Configurator() {
   const [creativity, setCreativity] = useAtom(creativityAtom);
   const [difficulty, setDifficulty] = useAtom(difficultyAtom);
   const [topic, setTopic] = useAtom(topicAtom);
+  const [startPage, setStartPage] = useAtom(startPageAtom);
+  const [endPage, setEndPage] = useAtom(endPageAtom);
 
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
 
@@ -74,65 +77,29 @@ export function Configurator() {
     return response?.data;
   };
 
-  // const generateFromPDF = async () => {
-  //     console.log("Generate from PDF");
+  const generateFromPDF = async () => {
+    const generateConfig: GenerateFromDocsProps = {
+      nbQuestions: Number(question),
+      pageStart: 1,
+      pageEnd: 5,
+    };
+    console.log(generateConfig);
 
-  //     const generateConfig: UploadProps = {
-  //         uri: files[0].uri,
-  //         name: files[0].name,
-  //         size: Number(files[0].size),
-  //     };
-  //     console.log(generateConfig);
-
-  //     const response = await upload(generateConfig);
-  //     // need to add generate after upload works
-  //     if (!response) console.log("No response from upload call");
-  //     return response?.data;
-  // };
-
-  // const generateFromPDF = async () => {
-  //     try {
-  //       const docRes = await DocumentPicker.getDocumentAsync({
-  //         type: "audio/*",
-  //       });
-
-  //       const formData = new FormData();
-  //       const assets = docRes.assets;
-  //       if (!assets) return;
-
-  //       const file = assets[0];
-
-  //       const audioFile = {
-  //         name: file.name.split(".")[0],
-  //         uri: file.uri,
-  //         type: file.mimeType,
-  //         size: file.size,
-  //       };
-
-  //       formData.append("audioFile", audioFile as any);
-
-  //       const { data } = await axios.post(apiUrl, formData, {
-  //         headers: {
-  //           Accept: "application/json",
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       });
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.log("Error while selecting file: ", error);
-  //     }
-  //   };
+    const response = await generateFromDocs(generateConfig);
+    if (!response) console.log("No response, could not generate");
+    return response?.data;
+  };
 
   const configureAndGenerate = async () => {
-    //const response = await configureSettings();
-    //console.log("Response: " + response);
+    const response = await configureSettings();
+    console.log("Response: " + response);
 
     if (selectedValue === "Topic") {
       const response = await generateFromTopic();
       console.log("Response: " + response);
     } else {
-      //const response = await generateFromPDF();
-      //console.log("Response: " + response);
+      const response = await generateFromPDF();
+      console.log("Response: " + response);
     }
   };
 
@@ -157,12 +124,7 @@ export function Configurator() {
           {selectedValue === "Topic" ? (
             <>
               <Label paddingBottom={10}>Topic</Label>
-              <Input
-                size="$4"
-                borderWidth={2}
-                placeholder="e.g. Javascript"
-                height={70}
-                onChangeText={setTopic}
+              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={setTopic}
               />
             </>
           ) : (
@@ -170,12 +132,7 @@ export function Configurator() {
           )}
         </YStack>
         <ConfiguratorBasis />
-        <Button
-          size="$6"
-          theme="active"
-          marginVertical={30}
-          onPress={configureAndGenerate}
-        >
+        <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
           Generate
         </Button>
       </SaveAreaView>
