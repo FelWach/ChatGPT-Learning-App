@@ -13,8 +13,8 @@ const baseUrl = `http://${localhost}:${port}`
 // user routes
 // post addUser: for registration process
 export async function addUser(data: UserProps) {
-    try{
-        const response = await axios.post(`${baseUrl}/addUser`,  data, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.post(`${baseUrl}/addUser`, data, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -24,8 +24,8 @@ export async function addUser(data: UserProps) {
 
 // get users: for getting all users
 export async function users() {
-    try{
-        const response = await axios.get(`${baseUrl}/users`,  {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.get(`${baseUrl}/users`, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -35,8 +35,8 @@ export async function users() {
 
 // delete user: for deleting a user
 export async function deleteUser(id: number) {
-    try{
-        const response = await axios.delete(`${baseUrl}/deleteUser/${id}`, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.delete(`${baseUrl}/deleteUser/${id}`, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -46,8 +46,8 @@ export async function deleteUser(id: number) {
 
 // post login: for login
 export async function login(data: LoginProps) {
-    try{
-        const response = await axios.post(`${baseUrl}/login`,  data, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.post(`${baseUrl}/login`, data, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -57,8 +57,8 @@ export async function login(data: LoginProps) {
 
 // post register: for registration
 export async function register(data: UserProps) {
-    try{
-        const response = await axios.post(`${baseUrl}/register`,  data, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.post(`${baseUrl}/register`, data, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -69,8 +69,8 @@ export async function register(data: UserProps) {
 // entry routes
 // post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic in request body
 export async function generate(data: GenerateProps) {
-    try{
-        const response = await axios.post(`${baseUrl}/generate`,  data, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.post(`${baseUrl}/generate`, data, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -80,8 +80,8 @@ export async function generate(data: GenerateProps) {
 
 // post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic as url param
 export async function generate2(topic: string) {
-    try{
-        const response = await axios.post(`${baseUrl}/generate`,  {params: {topic: topic}}, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.post(`${baseUrl}/generate`, { params: { topic: topic } }, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -90,9 +90,9 @@ export async function generate2(topic: string) {
 }
 
 // post setConfigurations: saves the configurator settings
-export async function setConfiguration(settings: ConfigSettingsProps ) {
-    try{
-        const response = await axios.post(`${baseUrl}/setConfiguration`, settings, {headers: { 'Content-Type': 'application/json'}});
+export async function setConfiguration(settings: ConfigSettingsProps) {
+    try {
+        const response = await axios.post(`${baseUrl}/setConfiguration`, settings, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -101,26 +101,31 @@ export async function setConfiguration(settings: ConfigSettingsProps ) {
 }
 
 // upload PDF file, returns message and possible number of pages
-export async function upload(data: UploadProps) {
-    // use formData to send file
-    const formData = new FormData();
-    formData.append("uri", data.uri);
-    formData.append("name", data.name);
-    formData.append("size", String(data.size));
-  
+export async function upload(data: FormData) {
+
     try {
-      const response = await axios.post(`${baseUrl}/upload`, formData);
-      return response;
+        const response = await axios.post(
+            `${baseUrl}/upload`,
+            data,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        return response
     } catch (error) {
-      console.log('Error: ' + error);
+        console.log('Error: ' + error)
+        throw error;
     }
   }
-  
+
 
 // get entries: returns all Q&As with id and topic
 export async function getEntries() {
-    try{
-        const response = await axios.get(`${baseUrl}/entries`, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.get(`${baseUrl}/entries`, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -130,8 +135,8 @@ export async function getEntries() {
 
 // get entries: returns all Q&As from a user
 export async function getUserEntries(userId: number) {
-    try{
-        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: userId}}, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.get(`${baseUrl}/entries`, { params: { userId: userId } }, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -141,8 +146,8 @@ export async function getUserEntries(userId: number) {
 
 // get entries: returns all Q&As from a user for a specific topic
 export async function getEntriesWithTopic(userId: number, topic: string) {
-    try{
-        const response = await axios.get(`${baseUrl}/entries`, {params: {userId: userId, topic: topic}}, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.get(`${baseUrl}/entries`, { params: { userId: userId, topic: topic } }, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -152,8 +157,8 @@ export async function getEntriesWithTopic(userId: number, topic: string) {
 
 // get entry: returns a specific Q&A
 export async function getEntry(id: number) {
-    try{
-        const response = await axios.get(`${baseUrl}/entry/${id}`, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.get(`${baseUrl}/entry/${id}`, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
@@ -163,8 +168,8 @@ export async function getEntry(id: number) {
 
 // delete entry: deletes a specific Q&A
 export async function deleteEntry(id: number) {
-    try{
-        const response = await axios.delete(`${baseUrl}/deleteEntry/${id}`, {headers: { 'Content-Type': 'application/json'}});
+    try {
+        const response = await axios.delete(`${baseUrl}/deleteEntry/${id}`, { headers: { 'Content-Type': 'application/json' } });
         return response
     }
     catch (error) {
