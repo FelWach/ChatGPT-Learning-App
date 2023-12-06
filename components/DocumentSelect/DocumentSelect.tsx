@@ -43,19 +43,20 @@ export function DocumentSelect() {
       };
 
       formData.append("pdfFile", pdfFile as any);
-      console.log(formData);
-
+      
       const response = await upload(formData);
-      console.log(response.data);
+
       if (response.status === 200) {
+        console.log("File uploaded successfully: ", response.data);
         setFiles([...files, pdfFile]);
         setPossiblePagesNumber(response.data.pages);
       }
-      setSpinner(false);
 
     } catch (error) {
       console.log("Error while selecting file: ", error);
       alert('Oopsi! An Error occurred while uploading the file. Please try again.')
+
+    } finally {
       setSpinner(false);
     }
   };
@@ -93,8 +94,8 @@ export function DocumentSelect() {
       {files.length < 1 ? uploadButton() : null}
       {files.map((file, index) => {
         return (
-          <Card padding="$3" bordered space>
-            <XStack key={index} alignItems="center" justifyContent="space-between" space>
+          <Card  key={index} padding="$3" bordered space>
+            <XStack alignItems="center" justifyContent="space-between" space>
               <Text width={250} fontSize="$5">
                 {file.name}
               </Text>

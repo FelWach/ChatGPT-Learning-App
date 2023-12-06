@@ -56,7 +56,7 @@ export function Configurator() {
       temperature: creativity,
       difficulty: difficulty,
     };
-    console.log(config);
+    console.log("Config in configureSettings:" + config);
 
     const response = await setConfiguration(config);
     if (!response) console.log("No response, could not configure");
@@ -68,7 +68,7 @@ export function Configurator() {
       topic: topic,
       nbQuestions: Number(question),
     };
-    console.log(generateConfig);
+    console.log("Generate Config Topic:" + generateConfig);
 
     const response = await generate(generateConfig);
     if (!response) console.log("No response, could not generate");
@@ -81,11 +81,15 @@ export function Configurator() {
       pageStart: Number(startPage),
       pageEnd: Number(endPage),
     };
-    console.log(generateConfig);
+    console.log("Generate Config PDF:" + generateConfig);
 
-    const response = await generateFromDocs(generateConfig);
-    if (!response) console.log("No response, could not generate");
-    return response?.data;
+    await generateFromDocs(generateConfig)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const configureAndGenerate = async () => {
@@ -97,8 +101,7 @@ export function Configurator() {
       const response = await generateFromTopic();
       console.log("Response: " + response);
     } else {
-      const response = await generateFromPDF();
-      console.log("Response: " + response);
+      await generateFromPDF();
     }
   };
 
@@ -117,7 +120,7 @@ export function Configurator() {
           <ToggleGroup
             type="single"
             value={selectedValue}
-            onValueChange={setSelectedValue}
+            onValueChange={(val) => {val && setSelectedValue(val)}}
           >
             <ToggleGroup.Item value="Topic">
               <Text>Choose Topic</Text>
@@ -152,7 +155,7 @@ function ConfiguratorBasis() {
   const [languages] = useAtom(dropdownMenuLanguageAtom);
   const [difficulties] = useAtom(dropdownMenuDifficultyAtom);
   const [languageStyles] = useAtom(dropdownMenuLanguageStyleAtom);
-  const [accurateness, setAccurateness] = useAtom(creativityAtom);
+  const [, setAccurateness] = useAtom(creativityAtom);
 
   return (
     <YStack space>
@@ -222,3 +225,4 @@ function ConfiguratorBasis() {
     </YStack>
   );
 }
+
