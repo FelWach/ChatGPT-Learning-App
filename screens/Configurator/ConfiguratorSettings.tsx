@@ -74,7 +74,7 @@ export function ConfiguratorSettings() {
               defaultValue={[50]}
               max={100}
               step={1}
-              onValueChange={(value) => setAccurateness(value[0])}
+              onValueChange={(value) => setAccurateness(value[0]/100)}
             >
               <Slider.Track>
                 <Slider.TrackActive />

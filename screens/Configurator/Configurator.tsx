@@ -49,7 +49,11 @@ export function Configurator() {
       temperature: creativity,
       difficulty: difficulty,
     };
-    console.log("Config in configureSettings:" + config);
+    console.log("Config");
+    console.log(config.language);
+    console.log(config.languageLevel);
+    console.log(config.temperature);
+    console.log(config.difficulty); 
 
     const response = await setConfiguration(config);
     if (!response) console.log("No response, could not configure");
@@ -61,7 +65,7 @@ export function Configurator() {
       topic: topic,
       nbQuestions: Number(question),
     };
-    console.log("Generate Config Topic:" + generateConfig);
+    console.log("Generate Config Topic: " + generateConfig);
 
     const response = await generate(generateConfig);
     if (!response) console.log("No response, could not generate");
@@ -74,7 +78,10 @@ export function Configurator() {
       pageStart: Number(startPage),
       pageEnd: Number(endPage),
     };
-    console.log("Generate Config PDF:" + generateConfig);
+    console.log("Generate Config PDF");
+    console.log("Number of questions: " + generateConfig.nbQuestions);
+    console.log("Page Start: " + generateConfig.pageStart);
+    console.log("Page End: " + generateConfig.pageEnd);
 
     await generateFromDocs(generateConfig)
       .then((response) => {
@@ -88,11 +95,11 @@ export function Configurator() {
   const configureAndGenerate = async () => {
     if (!validate()) return;
     const response = await configureSettings();
-    console.log("Response: " + response);
+    console.log("Response: from Config: " + response);
 
     if (selectedValue === "Topic") {
       const response = await generateFromTopic();
-      console.log("Response: " + response);
+      console.log("Response from Topic generate: " + response);
     } else {
       await generateFromPDF();
     }
