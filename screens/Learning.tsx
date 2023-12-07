@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SaveAreaView } from "../components/SafeAreaView";
-import { Progress, SizeTokens, YStack, Card, Text, View, XStack} from 'tamagui';
+import { Progress, SizeTokens, YStack, Card, Text, View, XStack, Button} from 'tamagui';
 import { getEntriesWithTopic, getEntries } from '../api/api';
 
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
+import { set } from 'react-hook-form';
 
 // atom states 
 type DataType = { id: number; Q: string; A: string };
@@ -98,6 +99,7 @@ export default function Learning({ navigation }) {
     setProgress(0);
     setIsFront(true);
     setIsFinished(false);
+    setCorrectAnswers(0);
   }
 
   const repeatOneQuestion = () => {
@@ -177,9 +179,7 @@ export default function Learning({ navigation }) {
       <Text textAlign='center' margin='$3'>Question {numberQ} from {data.length}</Text>
         <View>
           {
-            isFinished ?
-            <Text textAlign='center' margin='$3' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text> 
-            :
+            !isFinished &&
             <XStack>
               <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
               <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
@@ -197,30 +197,31 @@ export default function Learning({ navigation }) {
               <Card.Footer padded>
 
               </Card.Footer>
-              <Card.Background alignItems="center">
                 <View style={styles.card}>
                 <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
                   {isFinished ? 
                     (
                       "You're done!" + "\n"
-                      + "You answered " + correctAnswers + " out of " + dataLength + " questions correctly on your first attempt!"
+                      + "You answered " + correctAnswers + " out of " + dataLength + " questions correctly!"
                     ) : 
                     isFront ? currQ : currA
                   }
                 </Text>
                 </View>
-              </Card.Background>
             </Card>
           </Swipeable>
         </View>
-        {!isFinished &&
+        {!isFinished ?
         <View> 
           {isFront ?
             <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
             :
             <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
           }
-        </View>
+        </View> :
+          <Button margin='$3' onPress={() => repeatAllQuestions()}>
+            <Text>Fragen wiederholen</Text> 
+          </Button>
         }
       <YStack height={60} alignItems="center" space>
         <Progress size={sizeProp} marginTop="$5" value={progress}>
