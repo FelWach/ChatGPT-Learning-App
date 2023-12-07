@@ -64,7 +64,7 @@ export function TopicsOverview({ navigation }) {
                 <SaveAreaView>
                     <ScrollView>
                         <YStack justifyContent="space-between" height={useWindowDimensions().height -100} marginVertical="$4">
-                           <YStack alignItems="start"  space="$4" marginLeft="$4">
+                           <YStack space="$4" marginLeft="$4">
                            <H1 size="$9" color='#52A9FF'>Du hast noch keine Lernsets generiert!</H1>
                               <Text fontSize="$6" color='#52A9FF'>Leg los und kreiere dein erstes Lernset ganz nach deinen Belieben, indem du auf den Add Button klickst.</Text>
                               <Text fontSize="$6" color='#52A9FF' fontWeight='bold'>Viel Spaß!</Text>
@@ -82,7 +82,7 @@ export function TopicsOverview({ navigation }) {
                 <SaveAreaView>
                   <ScrollView>
                   <YStack justifyContent="space-between" height={useWindowDimensions().height -150} marginVertical="$4">
-                    <YStack alignItems="start"  space="$4" marginLeft="$4">
+                    <YStack space="$4" marginLeft="$4">
                         <H1 size="$9">Deine Learnsets</H1>
                         <XStack $sm={{ flexDirection: 'column' }} alignItems="center" space="$3">
 

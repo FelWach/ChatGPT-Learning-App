@@ -78,37 +78,6 @@ export async function updateUser(id: number, data: UpdatedUserProps) {
 }
 
 // LANGCHAIN ROUTES
-// post upload: to upload the pdf, returns the number of pages
-export async function upload(data: UploadProps) {
-    try {
-        const response = await axios.post(`${baseUrl}/upload`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response.data
-    }
-    catch (error: any) {
-        throw error.response.data
-    }
-}
-
-// post generateFromDocs: for generating Q&As after uploading a pdf
-export async function generateFromDocs(uploadData: UploadProps, data: GenerateFromDocsProps) {
-
-    try {
-        const response =  await upload(uploadData);
-        console.log(response.message)
-    }
-    catch(error: any){
-        console.log(error.error)
-    }
-
-    try {
-        const response = await axios.post(`${baseUrl}/generateFromDocs`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response.data
-    }
-    catch (error: any) {
-        throw error.response.data
-    }
-}
-
 
 // post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic in request body
 export async function generate(data: GenerateProps) {

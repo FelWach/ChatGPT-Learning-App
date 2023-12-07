@@ -7,6 +7,7 @@ import {
   XStack,
   Input,
   ToggleGroup,
+  Spinner,
 } from "tamagui";
 import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
@@ -29,8 +30,9 @@ import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 
 const selectedValueAtom = atom("Topic");
+const loadingAtom = atom(false);
 
-export function Configurator() {
+export function Configurator({ navigation }) {
   const [question] = useAtom(questionAtom);
   const [language] = useAtom(languageAtom);
   const [languageStyle] = useAtom(languageStyleAtom);
@@ -39,6 +41,7 @@ export function Configurator() {
   const [topic, setTopic] = useAtom(topicAtom);
   const [startPage] = useAtom(startPageAtom);
   const [endPage] = useAtom(endPageAtom);
+  const [loading, setLoading] = useAtom(loadingAtom);
 
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
 
@@ -50,14 +53,12 @@ export function Configurator() {
       difficulty: difficulty,
     };
     console.log("Config");
-    console.log(config.language);
-    console.log(config.languageLevel);
-    console.log(config.temperature);
-    console.log(config.difficulty); 
+    console.log("Language: " + config.language);
+    console.log("Language Level: " + config.languageLevel);
+    console.log("Temperature: " + config.temperature);
+    console.log("Difficulty: " + config.difficulty);
 
-    const response = await setConfiguration(config);
-    if (!response) console.log("No response, could not configure");
-    return response?.data;
+    return await setConfiguration(config);
   };
 
   const generateFromTopic = async () => {
@@ -65,11 +66,11 @@ export function Configurator() {
       topic: topic,
       nbQuestions: Number(question),
     };
-    console.log("Generate Config Topic: " + generateConfig);
+    console.log("Generate Config Topic: ");
+    console.log("Topic: " + generateConfig.topic);
+    console.log("Number of questions: " + generateConfig.nbQuestions);
 
-    const response = await generate(generateConfig);
-    if (!response) console.log("No response, could not generate");
-    return response?.data;
+    return await generate(generateConfig)
   };
 
   const generateFromPDF = async () => {
@@ -83,27 +84,50 @@ export function Configurator() {
     console.log("Page Start: " + generateConfig.pageStart);
     console.log("Page End: " + generateConfig.pageEnd);
 
-    await generateFromDocs(generateConfig)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return generateFromDocs(generateConfig)
   };
 
   const configureAndGenerate = async () => {
+    setLoading(true);
     if (!validate()) return;
-    const response = await configureSettings();
-    console.log("Response: from Config: " + response);
+    let configureSuccess = false;
 
-    if (selectedValue === "Topic") {
-      const response = await generateFromTopic();
-      console.log("Response from Topic generate: " + response);
-    } else {
-      await generateFromPDF();
+    await configureSettings()
+      .then((res) => {
+        console.log("Response from configure: " + res);
+        configureSuccess = true;
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Could not configure settings, please try again");
+      });
+
+    if (configureSuccess) {
+      if (selectedValue === "Topic") {
+        await generateFromTopic()
+          .then((res) => {
+            console.log("Response from Topic generate: " + res);
+            navigation.navigate("TopicsOverview");
+          }
+          ).catch((error) => {
+            console.log(error);
+            alert("Could not generate questions, please try again");
+          })
+          .finally(() => setLoading(false));
+      } else {
+        await generateFromPDF()
+          .then((res) => {
+            console.log("Response from PDF generate: " + res);
+            navigation.navigate("TopicsOverview");
+          }
+          ).catch((error) => {
+            console.log(error);
+            alert("Could not generate questions, please try again");
+          })
+          .finally(() => setLoading(false));
+      };
     }
-  };
+  }
 
   function validate(): boolean {
     if (startPage > endPage) {
@@ -113,14 +137,14 @@ export function Configurator() {
     return true;
   }
 
-  return (
-    <ScrollView>
-      <SaveAreaView>
-        <XStack display="flex" justifyContent="center">
+  function ConfiguratorTopicSelection() {
+    return (
+      <>
+        <XStack justifyContent="center">
           <ToggleGroup
             type="single"
             value={selectedValue}
-            onValueChange={(val) => {val && setSelectedValue(val)}}
+            onValueChange={(val) => { val && setSelectedValue(val) }}
           >
             <ToggleGroup.Item value="Topic">
               <Text>Choose Topic</Text>
@@ -131,23 +155,34 @@ export function Configurator() {
           </ToggleGroup>
         </XStack>
         <YStack paddingTop={30} paddingBottom={20}>
-
           {selectedValue === "Topic" ? (
             <>
               <Label paddingBottom={10}>Topic</Label>
-              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={setTopic}
-              />
+              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => {setTopic(text); console.log(topic)}}/>
+            
             </>
           ) : (
             <DocumentSelect />
           )}
         </YStack>
+      </>
+    )
+  }
 
-        <ConfiguratorSettings />
-
-        <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
-          Generate
-        </Button>
+  return (
+    <ScrollView>
+      <SaveAreaView>
+        {!loading ? (
+          <>
+            <ConfiguratorTopicSelection />
+            <ConfiguratorSettings />
+            <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
+              Generate
+            </Button>
+          </>)
+          :
+          <Spinner />
+        }
       </SaveAreaView>
     </ScrollView>
   );
