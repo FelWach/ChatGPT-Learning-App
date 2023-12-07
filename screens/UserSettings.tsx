@@ -1,23 +1,18 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { View } from 'react-native';
 import { Button, Text, Input, H1, XStack } from 'tamagui'; // Removed unused imports
 import { Pencil, X } from '@tamagui/lucide-icons';
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
-import {
-  userAtom,
-  passwordAtom,
-  emailAtom,
-  repeatPasswordAtom,
-} from '../state/atoms';
+import { userAtom } from '../state/atoms';
 
+const passwordAtom = atom<string>('');
+const repeatPasswordAtom = atom<string>('');
 const editingPasswordAtom = atom<boolean>(false);
 
 export default function UserSettings({ navigation }) {
     
-
-    const [username, setUsername] = useAtom(userAtom);
-    const [email, setEmail] = useAtom(emailAtom);
+    const [user, setUser] = useAtom(userAtom);
     const [password, setPassword] = useAtom(passwordAtom);
     const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
     const [isEditingPassword, setIsEditingPassword] = useAtom(editingPasswordAtom);
@@ -44,8 +39,8 @@ export default function UserSettings({ navigation }) {
         <H1>Your Profile</H1>
         <XStack alignItems="center" space="$2">
             <Input
-            value={username}
-            onChangeText={(value) => setUsername(value)}
+            value={user.name}
+            onChangeText={(value) => setUser({...user, name: value})}
             placeholder={'Username'}
             />
             <Button onPress={() => editUsername()}>
@@ -54,8 +49,8 @@ export default function UserSettings({ navigation }) {
         </XStack>
         <XStack alignItems="center" space="$2">
             <Input
-            value={email}
-            onChangeText={(value) => setEmail(value)}
+            value={user.email}
+            onChangeText={(value) => setUser({...user, email: value})}
             placeholder={'Email'}
             />
             <Button onPress={() => editEmail()}>

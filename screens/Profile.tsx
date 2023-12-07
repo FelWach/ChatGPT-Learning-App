@@ -1,13 +1,14 @@
 import { Button, H2, Input, View, XStack } from 'tamagui';
-import { useAtom  } from 'jotai'
-import { emailAtom, passwordAtom } from '../state/atoms'
+import { atom, useAtom  } from 'jotai'
+import { userAtom } from '../state/atoms'
 import TabNavigator from '../components/TabNavigator/TabNavigator'
 
+const passwordAtom = atom<string>('');
 
 export default function Profile({ navigation }){
-  const [email, setEmail] = useAtom(emailAtom);
+  
+  const [user, setUser] = useAtom(userAtom);
   const [password, setPassword] = useAtom(passwordAtom);
-
 
   return (
     <View>
@@ -15,8 +16,8 @@ export default function Profile({ navigation }){
 
         <XStack flexDirection='column' margin='$8' space>
           <Input
-            value={email}
-            onChangeText={setEmail}
+            value={user.email}
+            onChangeText={(e) => setUser({...user, email: e})}
             placeholder={'Email'}
           />
           <Input

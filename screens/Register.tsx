@@ -1,54 +1,154 @@
-import { Button, H2, Text, Input, YStack } from 'tamagui';
-import { SaveAreaView } from "../components/SafeAreaView";
-import { useAtom  } from 'jotai'
-import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
-import { addUser } from '../api/api'
+import React, { useState } from 'react';
+import { Button, H2, Input, Text } from 'tamagui';
+import { SaveAreaView } from '../components/SafeAreaView';
+import { UserProps } from '../api/type';
+import { register } from '../api/api';
+import { useForm, Controller } from 'react-hook-form';
+
+type FormData = {
+  name: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
 
 export default function Register({ navigation }) {
-  const [username, setUsername] = useAtom(userAtom);
-  const [email, setEmail] = useAtom(emailAtom);
-  const [password, setPassword] = useAtom(passwordAtom);
-  const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
 
+  const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
+    mode: 'onBlur',
+  });
 
-  const handleRegister = async () => {
-  const data = {
-       name: username,
-       email: email,
-       password: password
-  };
-      const response = await addUser(data);
-      console.log(response.status)
-  };
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const onSubmit = async (data: any) => {
+
+    const userData: UserProps = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      const response = await register(userData);
+      navigation.navigate('Login');
+    } catch (error: any) {
+      if (error.message) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('An error occurred during registration.');
+      }
+    }
+  }
 
   return (
     <SaveAreaView>
-    <YStack space>
-        <H2>Create an account</H2>
-      <Input
-        value={username}
-        onChangeText={setUsername}
-        placeholder={'Username'}
-      />
-      <Input
-        value={email}
-         onChangeText={setEmail}
-         placeholder={'Email'}
-      />
-      <Input
-        value={password}
-        onChangeText={setPassword}
-        placeholder={'Password'}
-        secureTextEntry={true}
-      />
-      <Input
-        value={repeatPassword}
-        onChangeText={setRepeatPassword}
-        placeholder={'Repeat Password'}
-      />
+      <H2>Create an account</H2>
 
-      <Button onPress= {  handleRegister }>Register</Button>
-    </YStack>
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Name is required',
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Name"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+          />
+        )}
+        name="name"
+      />
+      <Text>{errors.name?.message}</Text>
+
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Email is required',
+          },
+          pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: 'Please enter a valid email',
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+          />
+        )}
+        name="email"
+      />
+      <Text>{errors.email?.message}</Text>
+
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Password is required',
+          },
+          minLength: {
+            value: 8,
+            message: 'Password must have at least 8 characters',
+          }
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+            secureTextEntry={true}
+          />
+        )}
+        name="password"
+      />
+      <Text>{errors.password?.message}</Text>
+
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Please confirm your password',
+          },
+          validate: value =>
+            value === getValues('password') || 'The passwords do not match',
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Confirm password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+            secureTextEntry={true}
+          />
+        )}
+        name="repeatPassword"
+      />
+      <Text>{errors.repeatPassword?.message}</Text>
+
+      {errorMessage && <Text>{errorMessage}</Text>}
+
+      <Button
+        disabled={!isValid}
+        style={{ opacity: isValid ? 1 : 0.7 }}
+        onPress={handleSubmit(onSubmit)}>
+        Register
+      </Button>
     </SaveAreaView>
   );
 };
+
