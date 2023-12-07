@@ -7,10 +7,12 @@ import { TopicCardProps } from '../components/TopicCards/types';
 export const userIdAtom = atomWithStorage<string>('id', '');
 
 // TODO: optimize error handling -> will show "No Learnsets text' also if there was an error
-export const [topicCardAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
+export const [topicCardAtom, statusAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
     queryKey: ['topics', get(userIdAtom)],
     queryFn: async ({ queryKey: [, id] }) => {
         try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
             const response = await getTopics(Number(id));
             const topicCards: TopicCardProps[] = [];
             for (let i = 0; i < response.length; i++) {
@@ -25,6 +27,8 @@ export const [topicCardAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
         }
     }
 }));
+
+export const dataLoadingAtom = atom(false);
 
 export const emailAtom = atomWithStorage<string>('email', '');
 export const passwordAtom = atomWithStorage<string>('password', '');
