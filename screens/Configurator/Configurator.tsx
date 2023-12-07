@@ -136,11 +136,10 @@ export function Configurator({ navigation }) {
     }
     return true;
   }
-
-  function ConfiguratorTopicSelection() {
-    return (
-      <>
-        <XStack justifyContent="center">
+  return (
+    <ScrollView>
+      <SaveAreaView>
+          <XStack justifyContent="center">
           <ToggleGroup
             type="single"
             value={selectedValue}
@@ -165,24 +164,10 @@ export function Configurator({ navigation }) {
             <DocumentSelect />
           )}
         </YStack>
-      </>
-    )
-  }
-
-  return (
-    <ScrollView>
-      <SaveAreaView>
-        {!loading ? (
-          <>
-            <ConfiguratorTopicSelection />
             <ConfiguratorSettings />
             <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
               Generate
             </Button>
-          </>)
-          :
-          <Spinner />
-        }
       </SaveAreaView>
     </ScrollView>
   );
