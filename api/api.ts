@@ -83,7 +83,7 @@ export async function updateUser(id: number, data: UpdatedUserProps) {
 export async function generate(data: GenerateProps) {
     try {
         const response = await axios.post(`${baseUrl}/generate`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch(error: any) {
         throw 'Error occured while generating Q&As'

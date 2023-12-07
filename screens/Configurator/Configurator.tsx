@@ -42,6 +42,7 @@ export function Configurator({ navigation }) {
   const [startPage] = useAtom(startPageAtom);
   const [endPage] = useAtom(endPageAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
+  const [files, setFiles] = useAtom(filesAtom);
 
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
 
@@ -79,6 +80,7 @@ export function Configurator({ navigation }) {
       pageStart: Number(startPage),
       pageEnd: Number(endPage),
     };
+
     console.log("Generate Config PDF");
     console.log("Number of questions: " + generateConfig.nbQuestions);
     console.log("Page Start: " + generateConfig.pageStart);
@@ -94,7 +96,7 @@ export function Configurator({ navigation }) {
 
     await configureSettings()
       .then((res) => {
-        console.log("Response from configure: " + res);
+        console.log("Response from configure: " + res.message);
         configureSuccess = true;
       })
       .catch((error) => {
@@ -106,7 +108,7 @@ export function Configurator({ navigation }) {
       if (selectedValue === "Topic") {
         await generateFromTopic()
           .then((res) => {
-            console.log("Response from Topic generate: " + res);
+            console.log("Response from Topic generate: " + res.message);
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
@@ -124,7 +126,10 @@ export function Configurator({ navigation }) {
             console.log(error);
             alert("Could not generate questions, please try again");
           })
-          .finally(() => setLoading(false));
+          .finally(() => {
+            setLoading(false);
+            setFiles([]);
+          });
       };
     }
   }
@@ -139,7 +144,7 @@ export function Configurator({ navigation }) {
   return (
     <ScrollView>
       <SaveAreaView>
-          <XStack justifyContent="center">
+        <XStack justifyContent="center">
           <ToggleGroup
             type="single"
             value={selectedValue}
@@ -157,17 +162,16 @@ export function Configurator({ navigation }) {
           {selectedValue === "Topic" ? (
             <>
               <Label paddingBottom={10}>Topic</Label>
-              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => {setTopic(text); console.log(topic)}}/>
-            
+              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text); console.log(topic) }} />
             </>
           ) : (
             <DocumentSelect />
           )}
         </YStack>
-            <ConfiguratorSettings />
-            <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
-              Generate
-            </Button>
+        <ConfiguratorSettings />
+        <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
+          Generate
+        </Button>
       </SaveAreaView>
     </ScrollView>
   );
