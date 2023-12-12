@@ -7,10 +7,10 @@ export default function TabNavigator({ navigation, value }){
         <Tabs value={value}  >
             <Tabs.List>
               <Tabs.Tab value="profile">
-                  <Button unstyled={true} justifyContent='center' size='$4' icon={<User size='$2'/>} onPress={  () => navigation.navigate('Profile') } />
+                  <Button unstyled={true} alignItems='center' padding='$3' icon={<User size='$2' />} onPress={ () => navigation.navigate('Profile') } />
               </Tabs.Tab>
               <Tabs.Tab value="topicsOverview">
-                 <Button unstyled={true} justifyContent='center' size='$4' icon={<BookOpen size='$2'/>} onPress={ () => navigation.navigate('TopicsOverview') } />
+                 <Button unstyled={true} alignItems='center' padding='$3' icon={<BookOpen size='$2'/>} onPress={ () => navigation.navigate('TopicsOverview') } />
               </Tabs.Tab>
             </Tabs.List>
         </Tabs>

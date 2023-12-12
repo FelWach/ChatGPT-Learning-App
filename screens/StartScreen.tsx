@@ -19,9 +19,6 @@ export default function StartScreen({ navigation }) {
         <Button onPress={() => navigation.navigate('LearnSet')} >
           <Text>Learnset</Text>
         </Button>
-        <Button onPress={() => navigation.navigate('UserSettings')}>
-             <Text>User Settings</Text>
-        </Button>
         <Button onPress={ () => navigation.navigate('Learning')}>
              <Text>Learning</Text>
         </Button>
