@@ -19,7 +19,6 @@ export function TopicsOverview({ navigation }) {
     <ScrollView>
       <SaveAreaView>
         {topicCards.length ? (
-          <YStack>
             <YStack>
               <H1 size="$9" marginBottom="$4" marginTop="$6">Your Learnsets</H1>
               <YStack alignItems="center" space="$3">
@@ -36,7 +35,6 @@ export function TopicsOverview({ navigation }) {
                     }}
                   />
                 ))}
-              </YStack>
             </YStack>
           </YStack>
         ) : (
@@ -50,11 +48,11 @@ export function TopicsOverview({ navigation }) {
             <Text fontSize="$6" color="#52A9FF" fontWeight="bold">
               Have fun!
             </Text>
-            <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$15">
-                    Add Learnset
-            </Button>
           </YStack>
         )}
+         <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={() => navigation.navigate('Configurator')}>
+                    Add Learnset
+            </Button>
         <YStack alignSelf="center" height={useWindowDimensions().height - 100} justifyContent="flex-end" position="absolute">
         <TabNavigator navigation={navigation} value={'topicsOverview'} />
       </YStack>
