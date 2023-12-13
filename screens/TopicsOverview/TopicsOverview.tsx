@@ -7,10 +7,12 @@ import { SaveAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
 import { GlobalLoadingIndicator } from '../../App';
+import { useWindowDimensions } from 'react-native';
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
   const [, setCurrentTopic] = useAtom(topicAtom);
+
 
   // TODO: adjust spacing and other styling
   // TODO: add MenuButton to navigate to ProfileScreen
@@ -67,8 +69,9 @@ export function TopicsOverview({ navigation }) {
         ) : (
           <NoLearnsetsInfo />
         )}
-        <TabNavigator navigation={navigation} value={'topicsOverview'} />
-
+        <YStack alignSelf="center" height={useWindowDimensions().height - 100} justifyContent="flex-end" position="absolute">
+              <TabNavigator navigation={navigation} value={'topicsOverview'} />
+            </YStack>
       </SaveAreaView>
     </ScrollView >
   );

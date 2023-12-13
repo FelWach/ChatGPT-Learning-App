@@ -10,6 +10,7 @@ import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview'
 import Profile from './screens/Profile'
 // for testing
 import  ApiCalls  from './screens/apiCalls'
+import  Features  from './screens/Features'
 
 
 export default function Routes() {
@@ -28,8 +29,7 @@ export default function Routes() {
 */
 
     return (
-        <Stack.Navigator initialRouteName="StartScreen">    
-            {/*}{ screens.map((Stack) => { return Stack  }) } {*/}
+        <Stack.Navigator initialRouteName="StartScreen">            
             <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }}  />
             <Stack.Screen name="Login" component={Login} options={{ title: "" }}  />
             <Stack.Screen name="Register" component={Register} options={{ title: "" }}  />
@@ -38,8 +38,9 @@ export default function Routes() {
             <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }}  />
             <Stack.Screen name="Learning" component={Learning} options={{ title: "" }}  />
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false  }}  />
-            <Stack.Screen name="UserSettings" component={UserSettings} options={{ title: "" }}  />
             <Stack.Screen name="Api" component={ApiCalls} options={{ title: "Api Calls" }}  />
+            <Stack.Screen name="Features" component={Features} options={{ title: "" }}  />
+
         </Stack.Navigator>
     )
 }
