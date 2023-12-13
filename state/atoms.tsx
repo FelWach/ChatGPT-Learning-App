@@ -17,7 +17,7 @@ const userContent: UserProps = {
 export const userAtom = atomWithStorage('user', userContent, userStorage);
 
 // TODO: optimize error handling -> will show "No Learnsets text' also if there was an error
-export const [topicCardAtom, statusAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
+export const [topicCardAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
     queryKey: ['topics', get(userAtom)],
     queryFn: async ({ queryKey: [, user] }) => {
         try {

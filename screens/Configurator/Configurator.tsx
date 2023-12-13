@@ -29,6 +29,7 @@ import {
 import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 import { set } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 
 const selectedValueAtom = atom("Topic");
 const loadingAtom = atom(false);
@@ -44,8 +45,9 @@ export function Configurator({ navigation }) {
   const [endPage, setEndPage] = useAtom(endPageAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
   const [files, setFiles] = useAtom(filesAtom);
-
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
+
+  const queryClient = useQueryClient()
 
   const configureSettings = async () => {
     const config: ConfigSettingsProps = {
@@ -90,6 +92,13 @@ export function Configurator({ navigation }) {
     return generateFromDocs(generateConfig)
   };
 
+  const resetAtoms = () => {
+    setTopic("");
+    setStartPage("1");
+    setEndPage("1");
+    setFiles([]);
+  }
+
   const configureAndGenerate = async () => {
     setLoading(true);
     if (!validate()) return;
@@ -108,31 +117,32 @@ export function Configurator({ navigation }) {
     if (configureSuccess) {
       if (selectedValue === "Topic") {
         await generateFromTopic()
-          .then((res) => {
-            console.log("Response from Topic generate: " + res.message);
+          .then(async (res) => {
+            console.log("Response from Topic generate: " + res);
+            resetAtoms();
+            await queryClient.invalidateQueries({queryKey: ['topics']});
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
             console.log(error);
             alert("Could not generate questions, please try again");
+          }).finally(() => {
+            setLoading(false);
           })
-          .finally(() => setLoading(false));
       } else {
         await generateFromPDF()
-          .then((res) => {
+          .then(async (res) => {
             console.log("Response from PDF generate: " + res);
+            resetAtoms();
+            await queryClient.invalidateQueries({queryKey: ['topics']});
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
             console.log(error);
             alert("Could not generate questions, please try again");
-          })
-          .finally(() => {
+          }). finally(() => {
             setLoading(false);
-            setFiles([]);
-            setStartPage("1");
-            setEndPage("1");
-          });
+          })
       };
     }
   }
@@ -165,7 +175,7 @@ export function Configurator({ navigation }) {
           {selectedValue === "Topic" ? (
             <>
               <Label paddingBottom={10}>Topic</Label>
-              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text); console.log(topic) }} />
+              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text) }} />
             </>
           ) : (
             <DocumentSelect />
