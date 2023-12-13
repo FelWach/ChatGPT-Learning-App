@@ -28,6 +28,7 @@ import {
 } from "../../api/types";
 import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
+import { set } from "react-hook-form";
 
 const selectedValueAtom = atom("Topic");
 const loadingAtom = atom(false);
@@ -39,8 +40,8 @@ export function Configurator({ navigation }) {
   const [creativity] = useAtom(creativityAtom);
   const [difficulty] = useAtom(difficultyAtom);
   const [topic, setTopic] = useAtom(topicAtom);
-  const [startPage] = useAtom(startPageAtom);
-  const [endPage] = useAtom(endPageAtom);
+  const [startPage, setStartPage] = useAtom(startPageAtom);
+  const [endPage, setEndPage] = useAtom(endPageAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
   const [files, setFiles] = useAtom(filesAtom);
 
@@ -129,6 +130,8 @@ export function Configurator({ navigation }) {
           .finally(() => {
             setLoading(false);
             setFiles([]);
+            setStartPage("1");
+            setEndPage("1");
           });
       };
     }
