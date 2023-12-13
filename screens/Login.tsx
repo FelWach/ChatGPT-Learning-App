@@ -36,6 +36,9 @@ export default function Login({ navigation }) {
         name: response.name,
         email: response.email,
       })
+      console.log("User in Login: ");
+      console.log(user);
+            
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {

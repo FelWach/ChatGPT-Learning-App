@@ -12,7 +12,6 @@ export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
   const [, setCurrentTopic] = useAtom(topicAtom);
 
-
   // TODO: adjust spacing and other styling
   // TODO: add MenuButton to navigate to ProfileScreen
   // TODO: Connect to Configurator as soon as it is merged
