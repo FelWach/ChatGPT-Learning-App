@@ -78,43 +78,12 @@ export async function updateUser(id: number, data: UpdatedUserProps) {
 }
 
 // LANGCHAIN ROUTES
-// post upload: to upload the pdf, returns the number of pages
-export async function upload(data: UploadProps) {
-    try {
-        const response = await axios.post(`${baseUrl}/upload`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response.data
-    }
-    catch (error: any) {
-        throw error.response.data
-    }
-}
-
-// post generateFromDocs: for generating Q&As after uploading a pdf
-export async function generateFromDocs(uploadData: UploadProps, data: GenerateFromDocsProps) {
-
-    try {
-        const response =  await upload(uploadData);
-        console.log(response.message)
-    }
-    catch(error: any){
-        console.log(error.error)
-    }
-
-    try {
-        const response = await axios.post(`${baseUrl}/generateFromDocs`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response.data
-    }
-    catch (error: any) {
-        throw error.response.data
-    }
-}
-
 
 // post generate: generates Q&As and saves them in the database (currently only for 'user 1'), needs topic in request body
 export async function generate(data: GenerateProps) {
     try {
         const response = await axios.post(`${baseUrl}/generate`,  data, {headers: { 'Content-Type': 'application/json'}});
-        return response
+        return response.data
     }
     catch(error: any) {
         throw 'Error occured while generating Q&As'
@@ -138,12 +107,45 @@ export async function setConfiguration(settings: ConfigSettingsProps ) {
         const response = await axios.post(`${baseUrl}/setConfiguration`, settings, {headers: { 'Content-Type': 'application/json'}});
         return response.data
     }
-    catch(error: any) {
-        throw 'Error occured while generating Q&As'
+    catch (error) {
+        console.log('Error: ' + error)
     }
 }
 
-// ENTRY ROUTES
+// upload PDF file, returns message and possible number of pages
+export async function upload(data: FormData) {
+
+    try {
+        const response = await axios.post(
+            `${baseUrl}/upload`,
+            data,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        return response
+    } catch (error) {
+        console.log('Error: ' + error)
+        throw error;
+    }
+}
+
+// post generateFromDocs: for generating Q&As after uploading a pdf
+export async function generateFromDocs(data: GenerateFromDocsProps) {
+
+    try {
+        const response = await axios.post(`${baseUrl}/generateFromDocs`, data, { headers: { 'Content-Type': 'application/json' } });
+        return response.data
+    }
+    catch (error: any) {
+        throw error.response.data
+    }
+}
+
+
 // get entries: returns all Q&As with id and topic
 export async function getEntries() {
     try {

@@ -24,6 +24,7 @@
     "@types/react": "~18.2.14",
     "axios": "^1.6.2",
     "expo": "~49.0.15",
+    "expo-document-picker": "~11.5.4",
     "expo-status-bar": "~1.6.0",
     "jotai": "^2.5.1",
     "jotai-devtools": "^0.7.0",
