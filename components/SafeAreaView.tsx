@@ -1,7 +1,7 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View } from 'tamagui';
 
-export function SafeAreaView({children}) {
+export function SaveAreaView({children}) {
    
     const insets = useSafeAreaInsets();
    
