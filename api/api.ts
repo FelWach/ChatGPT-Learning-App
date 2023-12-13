@@ -170,7 +170,7 @@ export async function getUserEntries(userId: number) {
 export async function getEntriesWithTopic(userId: number, topic: string) {
     try {
         const response = await axios.get(`${baseUrl}/entries/${userId}/${topic}`,  { headers: { 'Content-Type': 'application/json' } });
-        return response
+        return response.data
     }
     catch(error: any) {
         throw error.response.data
