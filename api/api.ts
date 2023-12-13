@@ -192,9 +192,16 @@ export async function getEntry(id: number) {
 export async function getTopics(id: number) {
     try {
         const response = await axios.get(`${baseUrl}/topics/${id}`, {headers: { 'Content-Type': 'application/json'}});
+        console.log("Response in api ")
+        console.log(response);
+    
         return response.data
     }
     catch(error: any) {
+        console.log("Error in api ");
+        console.log(error);
+        
+
         throw error.response.data
     }
 }
