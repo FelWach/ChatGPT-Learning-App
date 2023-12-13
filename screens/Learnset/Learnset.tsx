@@ -6,11 +6,12 @@ import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
 import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
-import { questionsAnswersAtom } from "../../state/atoms";
+import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
 
 export function Learnset({ navigation }) {
 
     const [questions, setQuestions] = useAtom(questionsAnswersAtom);
+    const [topic] = useAtom(topicAtom);
 
     function deleteSet(): void {
         // Display an alert to confirm the deletion
@@ -44,7 +45,7 @@ export function Learnset({ navigation }) {
         <SaveAreaView>
             <ScrollView>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
-                    <H1 size="$9" paddingVertical="$4">Geografie</H1>
+                    <H1 size="$9" paddingVertical="$4">{topic}</H1>
                     <XStack>
                         <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
                         <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={editSet}></Button>
