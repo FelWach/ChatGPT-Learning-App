@@ -5,6 +5,7 @@ import { TopicCardProps } from '../components/TopicCards/types';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { UserProps } from './types'
+import { QuestionsAnswersData } from '../screens/Learning/types';
 
 const userStorage = createJSONStorage(() => AsyncStorage)
 const userContent: UserProps = {
@@ -48,10 +49,10 @@ export const passwordAtom = atomWithStorage<string>('password', '');
 export const topicAtom = atom<string>('');
 
 export const [questionsAnswersAtom] = atomsWithQuery<QuestionsAnswersData[]>((get) => ({
-    queryKey: ['questionsAnswers', get(userIdAtom), get(topicAtom)],
-    queryFn: async ({ queryKey: [, id, topic] }) => {
+    queryKey: ['questionsAnswers', get(userAtom), get(topicAtom)],
+    queryFn: async ({ queryKey: [, user, topic] }) => {
         try {
-            const response = await getEntriesWithTopic(Number(id), String(topic));
+            const response = await getEntriesWithTopic(Number(user.id), String(topic));
             
             const questions: QuestionsAnswersData[] = [];
             for (let i = 0; i < response.length; i++) {
