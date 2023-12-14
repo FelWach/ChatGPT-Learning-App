@@ -4,8 +4,9 @@ import StartScreen from './screens/StartScreen'
 import Login from './screens/Login'
 import Register from './screens/Register'
 import UserSettings from './screens/UserSettings'
-import Learning from './screens/Learning'
+import Learning from './screens/Learning/Learning'
 import { Learnset } from './screens/Learnset/Learnset'
+import { Configurator } from './screens/Configurator/Configurator'
 import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview'
 import Profile from './screens/Profile'
 
@@ -13,11 +14,15 @@ import { NavButtonArrow, NavButtonX } from './components/NavButtons'
 import { X, ArrowLeft } from '@tamagui/lucide-icons'
 import Header from './components/Header'
 
+// for testing
+import  ApiCalls  from './screens/apiCalls'
+import  Features  from './screens/Features'
+
+
 
 export default function Routes({ }) {
 
     return (
-
         <Stack.Navigator initialRouteName="StartScreen" screenOptions={{ headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white', headerBackVisible: false }}>
             <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={({navigation}) => ({ headerTitle: () => "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />

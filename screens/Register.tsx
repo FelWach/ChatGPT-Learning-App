@@ -1,213 +1,154 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, H2, Input, Text } from 'tamagui';
 import { SaveAreaView } from '../components/SafeAreaView';
 import { UserProps } from '../api/type';
 import { register } from '../api/api';
-import { atom, useAtom, useAtomValue } from 'jotai';
-import { atomWithValidate, atomWithFormControls } from 'jotai-form';
-import * as Yup from 'yup';
+import { useForm, Controller } from 'react-hook-form';
 
-const nameSchema = Yup.string()
-  .required('Please enter your name.');
-
-const emailSchema = Yup.string()
-  .email('Please enter a valid email address.')
-  .required('Please enter your email address.');
-
-const passwordSchema = Yup.string()
-  .min(8, 'Password must be at least 8 characters long.')
-  .required('Please enter your password.');
-
-const repeatPasswordSchema = Yup.string()
-  .required('Please repeat your password.');
-
-const nameAtom = atomWithValidate('', {
-  validate: async (v) => {
-    await nameSchema.validate(v);
-    return v;
-  },
-});
-
-const emailAtom = atomWithValidate('', {
-  validate: async (v) => {
-    await emailSchema.validate(v);
-    return v;
-  },
-});
-
-const passwordAtom = atomWithValidate('', {
-  validate: async (v) => {
-    await passwordSchema.validate(v);
-    return v;
-  },
-});
-
-const repeatPasswordAtom = atomWithValidate('', {
-  validate: async (v) => {
-    await repeatPasswordSchema.validate(v);
-    return v;
-  },
-});
-
-const formControlAtom = atomWithFormControls(
-  {
-    name: nameAtom,
-    email: emailAtom,
-    password: passwordAtom,
-    repeatPassword: repeatPasswordAtom,
-  },
-);
-
-const repeatPasswordErrorAtom = atom(false);
-const errorAtom = atom('');
+type FormData = {
+  name: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
 
 export default function Register({ navigation }) {
 
-  const {
-    values,
-    isValid,
-    touched,
-    fieldErrors,
-    handleOnChange,
-    handleOnBlur,
-  } = useAtomValue(formControlAtom);
+  const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
+    mode: 'onBlur',
+  });
 
-  const [repeatPasswordError, setRepeatPasswordError] = useAtom(repeatPasswordErrorAtom);
-  const [errorState, setErrorState] = useAtom(errorAtom);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const checkPasswordMatch = (repeatPassword: string, password: string) => {
-    if (repeatPassword !== password) {
-      setRepeatPasswordError(true);
-    } else {
-      setRepeatPasswordError(false);
-    }
-  }
+  const onSubmit = async (data: any) => {
 
-  const resetForm = () => {
-    handleOnChange('name')('');
-    handleOnChange('email')('');
-    handleOnChange('password')('');
-    handleOnChange('repeatPassword')('');
-    setRepeatPasswordError(false);
-    setErrorState('');
-  }
-
-  const handleRegister = async () => {
-
-    const data: UserProps = {
-      name: values.name,
-      email: values.email,
-      password: values.password,
+    const userData: UserProps = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
     };
 
-    if (isValid) {
-      try {
-        const response = await register(data);
-        resetForm();
-        navigation.navigate('Login');
-      } catch (error: any) {
-        console.error('Error:', error);
-        if (error.message) {
-          setErrorState(error.message);
-        } else {
-          setErrorState('An error occurred during registration.');
-        }
+    try {
+      const response = await register(userData);
+      navigation.navigate('Login');
+    } catch (error: any) {
+      if (error.message) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('An error occurred during registration.');
       }
     }
-  };
+  }
 
   return (
     <SaveAreaView>
       <H2>Create an account</H2>
 
-      <Input
-        value={values.name}
-        onChangeText={(e) => {
-          handleOnChange('name')(e);
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Name is required',
+          },
         }}
-        onBlur={handleOnBlur('name')}
-        placeholder={'Name'}
-        autoCapitalize='none'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Name"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+          />
+        )}
+        name="name"
       />
-      <Text>
-        {fieldErrors.name && touched.name
-          ? `${fieldErrors.name.message}`
-          : ''}
-      </Text>
+      <Text>{errors.name?.message}</Text>
 
-      <Input
-        value={values.email}
-        onChangeText={(e) => {
-          handleOnChange('email')(e);
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Email is required',
+          },
+          pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: 'Please enter a valid email',
+          },
         }}
-        onBlur={handleOnBlur('email')}
-        placeholder={'Email'}
-        autoCapitalize='none'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+          />
+        )}
+        name="email"
       />
-      <Text>
-        {fieldErrors.email && touched.email
-          ? `${fieldErrors.email.message}`
-          : ''}
-      </Text>
+      <Text>{errors.email?.message}</Text>
 
-      <Input
-        value={values.password}
-        onChangeText={(e) => {
-          handleOnChange('password')(e);
-        }}
-        onBlur={handleOnBlur('password')}
-        secureTextEntry={true}
-        placeholder='Password'
-        autoCapitalize='none'
-      />
-      <Text>
-        {fieldErrors.password && touched.password
-          ? `${fieldErrors.password.message}`
-          : ''}
-      </Text>
-
-      <Input
-        value={values.repeatPassword}
-        onChangeText={(e) => {
-          handleOnChange('repeatPassword')(e);
-        }}
-        onBlur={() => {
-          handleOnBlur('repeatPassword');
-          checkPasswordMatch(values.repeatPassword, values.password);
-        }
-        }
-        secureTextEntry={true}
-        placeholder='Repeat Password'
-        autoCapitalize='none'
-      />
-      {repeatPasswordError ?
-        <Text>
-          {repeatPasswordError
-            ? 'Passwords must match'
-            : ''
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Password is required',
+          },
+          minLength: {
+            value: 8,
+            message: 'Password must have at least 8 characters',
           }
-        </Text>
-        :
-        <Text>
-          {fieldErrors.repeatPassword && touched.repeatPassword
-            ? `${fieldErrors.repeatPassword.message}`
-            : ''
-          }
-        </Text>
-      }
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+            secureTextEntry={true}
+          />
+        )}
+        name="password"
+      />
+      <Text>{errors.password?.message}</Text>
 
-      <Text style={{ marginBottom: 10 }}>
-        {errorState ? errorState : ''}
-      </Text>
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Please confirm your password',
+          },
+          validate: value =>
+            value === getValues('password') || 'The passwords do not match',
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Confirm password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+            secureTextEntry={true}
+          />
+        )}
+        name="repeatPassword"
+      />
+      <Text>{errors.repeatPassword?.message}</Text>
+
+      {errorMessage && <Text>{errorMessage}</Text>}
 
       <Button
         disabled={!isValid}
         style={{ opacity: isValid ? 1 : 0.7 }}
-        onPress={() => {
-          handleRegister();
-        }}>
+        onPress={handleSubmit(onSubmit)}>
         Register
       </Button>
     </SaveAreaView>
   );
 };
+

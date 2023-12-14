@@ -1,62 +1,53 @@
 import { Button, H2, Text, Input, XStack, YStack } from 'tamagui';
-import { atom, useAtom } from 'jotai'
-import { userIdAtom } from '../state/atoms'
+import { useAtom } from 'jotai'
+import { userAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
 import { login } from '../api/api';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { SaveAreaView } from '../components/SafeAreaView';
+import { useForm, Controller } from 'react-hook-form';
 
-const usernameOrEmailAtom = atom<string>('');
-const passwordAtom = atom<string>('');
-const isValidAtom = atom<boolean>(false);
-const errorAtom = atom<string>('');
+type FormData = {
+  usernameOrEmail: string;
+  password: string;
+};
 
-export default function Login({ /*route,*/ navigation }) {
-  const [usernameOrEmail, setUsernameOrEmail] = useAtom(usernameOrEmailAtom);
-  const [password, setPassword] = useAtom(passwordAtom);
-  const [id, setId] = useAtom(userIdAtom);
+export default function Login({ navigation }) {
 
-  const [error, setError] = useAtom(errorAtom);
-  const [isValid, setIsValid] = useAtom(isValidAtom);
+  const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
+    mode: 'onBlur',
+  });
 
-  useEffect(() => {
-    if (usernameOrEmail === '' || password === '') {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-    }
-  }, [usernameOrEmail, password])
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const checkEmpty = (): boolean => {
-    if (usernameOrEmail === '' || password === '') {
-      return true;
-    }
-    return false;
-  }
+  const [user, setUser] = useAtom(userAtom);
 
-  const handleLogin = async () => {
-    if (checkEmpty()) {
-      setError('Please fill in all fields.');
-      return;
-    }
-    // Handle login logic here
-    const data: LoginProps = {
-      usernameOrEmail: usernameOrEmail,
-      password: password,
+  const onSubmit = async (data: any) => {
+
+    const userData: LoginProps = {
+      usernameOrEmail: data.usernameOrEmail,
+      password: data.password,
     };
 
     try {
-      const response = await login(data);
-      // Handle success
-      setId(response.userId);
-      console.log('id: ', response.userId);
-      setUsernameOrEmail('');
-      setPassword('');
+      const response = await login(userData);
+      setUser({
+        id: response.userId,
+        name: response.name,
+        email: response.email,
+      })
+      console.log("User in Login: ");
+      console.log(user);
+            
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
-      setError('Invalid username, email or password.');
+      if (error.message) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('An error occurred during login.');
+      }
     }
-  };
+  }
 
   return (
     <SaveAreaView>
@@ -74,40 +65,58 @@ export default function Login({ /*route,*/ navigation }) {
           </Text>
         </XStack>
 
-        <Input
-          value={usernameOrEmail}
-          onChangeText={(e) => {
-            setError('');
-            setUsernameOrEmail(e);
-          }}
-          placeholder={'Username'}
-          autoCapitalize='none'
-          style={{ marginBottom: 10 }}
-        />
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Username or email is required',
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Username or email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+          />
+        )}
+        name="usernameOrEmail"
+      />
+      <Text>{errors.usernameOrEmail?.message}</Text>
 
-        <Input
-          value={password}
-          onChangeText={(e) => {
-            setPassword(e);
-            setError('');
-          }}
-          placeholder={'Password'}
-          secureTextEntry={true}
-          autoCapitalize='none'
-          style={{ marginBottom: 10 }}
-        />
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: 'Password is required',
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize='none'
+            secureTextEntry={true}
+          />
+        )}
+        name="password"
+      />
+      <Text>{errors.password?.message}</Text>
 
-        {error !== '' && <Text style={{ marginBottom: 10 }}>{error}</Text>}
+      {errorMessage && <Text>{errorMessage}</Text>}
 
-        <Button
-          disabled={!isValid}
-          style={{ opacity: isValid ? 1 : 0.7 }}
-          onPress={() => {
-            handleLogin()
-          }}>
-          Sign in
-        </Button>
-        <Text>Forgot Password?</Text>
+      <Button
+        disabled={!isValid}
+        style={{ opacity: isValid ? 1 : 0.7 }}
+        onPress={handleSubmit(onSubmit)}>
+        Login
+      </Button>
+      <Text>Forgot Password?</Text>
     </SaveAreaView>
   );
 };

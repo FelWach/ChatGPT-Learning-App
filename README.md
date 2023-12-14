@@ -43,7 +43,7 @@ Gibt Anzahl der Seiten des PDF zurück-
 
 ---
 
-POST /generateFromPDF 
+POST /generateFromDocs 
 
 generiert Fragen und Antworten zu dem zuvor geladenen PDF (/upload muss logischerweise zuerst gecallt werden).
 Benötigt nbQuestions, pageStart, pageEnd im req.body
@@ -115,6 +115,12 @@ registriert einen neuen Nutzer mit name (user name), email, password und gibt de
 POST /login 
 
 loggt den Nutzer mit name (user name) oder email und password ein und gibt dessen userId zurück
+
+---
+
+GET /topics/:userId
+
+gibt alle Topics eines Users mit userId zurück
 
 ---
 
