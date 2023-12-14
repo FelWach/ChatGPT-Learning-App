@@ -1,13 +1,13 @@
 
 import { Save } from '@tamagui/lucide-icons';
 import { Button, H2, Text, View, YStack, TextArea, Input } from 'tamagui';
-import { SafeAreaView } from '../components/SafeAreaView';
+import { SaveAreaView } from '../components/SafeAreaView';
 
 
 export default function StartScreen({ navigation }) {
 
   return (
-    <SafeAreaView>
+    <SaveAreaView>
       <YStack space>
         <H2>Learning App</H2>
         <Button onPress={() => navigation.navigate('Register')} >
@@ -32,6 +32,6 @@ export default function StartScreen({ navigation }) {
              <Text>Profile</Text>
         </Button>
       </YStack>
-    </SafeAreaView>
+    </SaveAreaView>
   )
 }

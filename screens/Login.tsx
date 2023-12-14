@@ -1,10 +1,10 @@
-import { Button, H2, Text, Input, XStack } from 'tamagui';
+import { Button, H2, Text, Input, XStack, YStack } from 'tamagui';
 import { atom, useAtom } from 'jotai'
 import { userIdAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
 import { login } from '../api/api';
 import { useEffect } from 'react';
-import { SafeAreaView } from '../components/SafeAreaView';
+import { SaveAreaView } from '../components/SafeAreaView';
 
 const usernameOrEmailAtom = atom<string>('');
 const passwordAtom = atom<string>('');
@@ -59,55 +59,55 @@ export default function Login({ /*route,*/ navigation }) {
   };
 
   return (
-    <SafeAreaView>
-      <H2>Welcome back!</H2>
-      <XStack>
-        <Text
-          style={{ marginBottom: 10 }}>
-          Login below or </Text>
-        <Text
-          onPress={() => {
-            navigation.navigate('Register');
+    <SaveAreaView>
+        <H2>Welcome back!</H2>
+        <XStack>
+          <Text
+            style={{ marginBottom: 10 }}>
+            Login below or </Text>
+          <Text
+            onPress={() => {
+              navigation.navigate('Register');
+            }}
+            style={{ color: 'blue' }}>
+            create an account
+          </Text>
+        </XStack>
+
+        <Input
+          value={usernameOrEmail}
+          onChangeText={(e) => {
+            setError('');
+            setUsernameOrEmail(e);
           }}
-          style={{ color: 'blue' }}>
-          create an account
-        </Text>
-      </XStack>
+          placeholder={'Username'}
+          autoCapitalize='none'
+          style={{ marginBottom: 10 }}
+        />
 
-      <Input
-        value={usernameOrEmail}
-        onChangeText={(e) => {
-          setError('');
-          setUsernameOrEmail(e);
-        }}
-        placeholder={'Username'}
-        autoCapitalize='none'
-        style={{ marginBottom: 10 }}
-      />
+        <Input
+          value={password}
+          onChangeText={(e) => {
+            setPassword(e);
+            setError('');
+          }}
+          placeholder={'Password'}
+          secureTextEntry={true}
+          autoCapitalize='none'
+          style={{ marginBottom: 10 }}
+        />
 
-      <Input
-        value={password}
-        onChangeText={(e) => {
-          setPassword(e);
-          setError('');
-        }}
-        placeholder={'Password'}
-        secureTextEntry={true}
-        autoCapitalize='none'
-        style={{ marginBottom: 10 }}
-      />
+        {error !== '' && <Text style={{ marginBottom: 10 }}>{error}</Text>}
 
-      {error !== '' && <Text style={{ marginBottom: 10 }}>{error}</Text>}
-
-      <Button
-        disabled={!isValid}
-        style={{ opacity: isValid ? 1 : 0.7 }}
-        onPress={() => {
-          handleLogin()
-        }}>
-        Sign in
-      </Button>
-      <Text>Forgot Password?</Text>
-    </SafeAreaView>
+        <Button
+          disabled={!isValid}
+          style={{ opacity: isValid ? 1 : 0.7 }}
+          onPress={() => {
+            handleLogin()
+          }}>
+          Sign in
+        </Button>
+        <Text>Forgot Password?</Text>
+    </SaveAreaView>
   );
 };
