@@ -9,6 +9,7 @@ import { updateUser } from '../api/api';
 import { UpdatedUserProps } from '../api/type';
 import TabNavigator from '../components/TabNavigator/TabNavigator'
 import { useForm, Controller } from 'react-hook-form';
+import { n } from '@tanstack/query-core/build/legacy/queryClient-IoYjXsnV';
 
 const passwordAtom = atom<string>('');
 const editUsernameAtom = atom<boolean>(false);
@@ -40,10 +41,10 @@ export default function Profile({ navigation }) {
   const onSubmit = async (data: any) => {
 
     const updateUserData : UpdatedUserProps = {
-      name: data.name,
-      email: data.email,
+      name: data.username ? data.username : user.name,
+      email: data.email ? data.email : user.email,
+      oldPassword: data.oldPassword,
       password: data.password,
-      oldPassword: data.oldPassword
     }
     try {
       const response = await updateUser(user.id, updateUserData);
@@ -52,8 +53,6 @@ export default function Profile({ navigation }) {
       // TODO: setUser
 
       console.log(response.message)
-      console.log(response.user)
-      console.log("hy")
     }
     catch (error: any) {
       if (error.message) {
@@ -74,6 +73,9 @@ const handleEditEmail = () => {
 };
 
 const handleEditPassword = () => {
+  if (errors.password?.message) {
+    setEditPassword(true);
+  }
   editPassword ? setEditPassword(false) : setEditPassword(true);
 };
 
@@ -86,6 +88,7 @@ return (
         <XStack justifyContent='space-evenly' space>
           <Controller
             control={control}
+            defaultValue={user.name}
             rules={{
               required: {
                 value: false,
@@ -112,6 +115,7 @@ return (
         <XStack justifyContent='space-evenly' space>
           <Controller
               control={control}
+              defaultValue={user.email}
               rules={{
                 required: {
                   value: false,
@@ -140,14 +144,30 @@ return (
         { errors.email?.message && <Text>{errors.email?.message}</Text> }
 
         <XStack justifyContent='space-evenly' space>
-          <Input width='80%'
-            value={password}
-            editable={editPassword}
-            onChangeText={setPassword}
-            placeholder={'Password'}
-            secureTextEntry={true}
-          /><Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()}></Button>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: 'Password is required',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input width='80%'
+              placeholder="Password"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              autoCapitalize='none'
+              secureTextEntry={true}
+              editable={editPassword}
+            />
+          )}
+          name="oldPassword"
+          />
+          <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()}></Button>
         </XStack>
+        {errors.oldPassword?.message && <Text>{errors.oldPassword?.message}</Text> }
 
         {editPassword && 
           <YStack justifyContent='space-evenly' space width='100%'>
@@ -210,7 +230,7 @@ return (
           borderColor='black' 
           disabled={!isValid}
           style={{ opacity: isValid ? 1 : 0.7 }}
-          onPress={() => handleSubmit(onSubmit)}>
+          onPress={handleSubmit(onSubmit)}>
             Save
         </Button>
         <Button 
@@ -222,7 +242,7 @@ return (
       </YStack>
 
 
-      <YStack alignSelf="center" height={useWindowDimensions().height - 100} justifyContent="flex-end" position="absolute">
+      <YStack alignSelf="center" height={useWindowDimensions().height - 80} justifyContent="flex-end" position="absolute">
         <TabNavigator navigation={navigation} value={'profile'} />
       </YStack>
     </SaveAreaView>
