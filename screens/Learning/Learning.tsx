@@ -7,6 +7,7 @@ import { SaveAreaView } from "../../components/SafeAreaView";
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
 import { questionsAnswersAtom } from '../../state/atoms';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 
 const currIDAtom = atom(0);

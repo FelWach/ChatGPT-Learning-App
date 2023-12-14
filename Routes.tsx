@@ -22,7 +22,7 @@ import  Features  from './screens/Features'
 export default function Routes({ }) {
 
     return (
-        <Stack.Navigator initialRouteName="StartScreen" screenOptions={{ headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white', headerBackVisible: false }}>
+        <Stack.Navigator initialRouteName="StartScreen" screenOptions={{ headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white', headerBackVisible: false, headerTransparent: true }}>
             <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={({navigation}) => ({ headerTitle: () => "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />
             <Stack.Screen name="Register" component={Register} options={({navigation}) => ({ headerTitle: () => "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />

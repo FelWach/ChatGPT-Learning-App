@@ -1,4 +1,4 @@
-import { Button, H2, Text, Input, XStack, YStack } from 'tamagui';
+import { Button, H2, Text, Input, XStack, View } from 'tamagui';
 import { useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
@@ -6,6 +6,7 @@ import { login } from '../api/api';
 import { useState } from 'react';
 import { SaveAreaView } from '../components/SafeAreaView';
 import { useForm, Controller } from 'react-hook-form';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 type FormData = {
   usernameOrEmail: string;
@@ -38,7 +39,7 @@ export default function Login({ navigation }) {
       })
       console.log("User in Login: ");
       console.log(user);
-            
+
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {
@@ -51,6 +52,7 @@ export default function Login({ navigation }) {
 
   return (
     <SaveAreaView>
+      <View marginTop={useHeaderHeight() + 25}>
         <H2>Welcome back!</H2>
         <XStack>
           <Text
@@ -65,58 +67,59 @@ export default function Login({ navigation }) {
           </Text>
         </XStack>
 
-      <Controller
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Username or email is required',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Username or email"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize='none'
-          />
-        )}
-        name="usernameOrEmail"
-      />
-      <Text>{errors.usernameOrEmail?.message}</Text>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: 'Username or email is required',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              placeholder="Username or email"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              autoCapitalize='none'
+            />
+          )}
+          name="usernameOrEmail"
+        />
+        <Text>{errors.usernameOrEmail?.message}</Text>
 
-      <Controller
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Password is required',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Password"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize='none'
-            secureTextEntry={true}
-          />
-        )}
-        name="password"
-      />
-      <Text>{errors.password?.message}</Text>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: 'Password is required',
+            },
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              placeholder="Password"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              autoCapitalize='none'
+              secureTextEntry={true}
+            />
+          )}
+          name="password"
+        />
+        <Text>{errors.password?.message}</Text>
 
-      {errorMessage && <Text>{errorMessage}</Text>}
+        {errorMessage && <Text>{errorMessage}</Text>}
 
-      <Button
-        disabled={!isValid}
-        style={{ opacity: isValid ? 1 : 0.7 }}
-        onPress={handleSubmit(onSubmit)}>
-        Login
-      </Button>
-      <Text>Forgot Password?</Text>
+        <Button
+          disabled={!isValid}
+          style={{ opacity: isValid ? 1 : 0.7 }}
+          onPress={handleSubmit(onSubmit)}>
+          Login
+        </Button>
+        <Text>Forgot Password?</Text>
+      </View>
     </SaveAreaView>
   );
 };

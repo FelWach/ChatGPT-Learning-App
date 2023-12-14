@@ -1,11 +1,12 @@
 import { Button, H2, Text, View, YStack, TextArea, Input } from 'tamagui';
 import { SaveAreaView } from '../components/SafeAreaView';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 export default function Features({ navigation }) {
 
     return (
         <SaveAreaView>
-            <YStack margin="$5" space='$5'>
+            <YStack margin="$5" marginTop={useHeaderHeight()+25} space='$5'>
                 <H2>Features Overview</H2>
                 <Button onPress={() => navigation.navigate('LearnSet')} >
                     <Text>Learnset</Text>

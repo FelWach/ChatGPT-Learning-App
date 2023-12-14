@@ -8,8 +8,6 @@ import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
 
-import { useWindowDimensions } from 'react-native';
-import { useHeaderHeight } from '@react-navigation/elements';
 
 export function Learnset({ navigation }) {
 
