@@ -1,17 +1,16 @@
-import React, { Suspense } from 'react';
+import { useAtom } from 'jotai';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { H1, Spinner, View, Text } from 'tamagui';
-//import { GlobalLoadingIndicator } from '../App';
+import { Spinner, View } from 'tamagui';
+import { globalLoadingAtom } from './atoms';
 
 export function SaveAreaView({ children }) {
 
     const insets = useSafeAreaInsets();
-
-    //<GlobalLoadingIndicator />
+    const [loading] = useAtom(globalLoadingAtom);
+    
     return (
         <View style={{ paddingTop: insets.top, paddingLeft: 10, paddingRight: 10, paddingBottom: insets.bottom }}>
-            
-                {children}
+               {loading ? <Spinner size='large'/> : children}
         </View >
     )
 }

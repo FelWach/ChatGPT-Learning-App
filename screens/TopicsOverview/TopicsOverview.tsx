@@ -3,11 +3,12 @@ import { H1, YStack } from 'tamagui';
 import { TopicsCard } from '../../components/TopicCards/TopicsCard';
 import { topicAtom, topicCardAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';
-import { SaveAreaView } from '../../components/SafeAreaView';
+import { SaveAreaView } from '../../components/SafeAreaView/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
 import { GlobalLoadingIndicator } from '../../App';
 import { useWindowDimensions } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
@@ -27,11 +28,9 @@ export function TopicsOverview({ navigation }) {
                     key={index}
                     numberOfLearncards={topic.numberOfLearncards}
                     headline={topic.headline}
-                    onPress={() => {
+                    onPress={async () => {
                       setCurrentTopic(topic.headline);
-                      navigation.navigate('LearnSet', {
-                        navigation: navigation,
-                      });
+                      navigation.navigate('LearnSet');
                     }}
                   />
                 ))}

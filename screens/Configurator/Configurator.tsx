@@ -20,7 +20,7 @@ import {
   difficultyAtom,
   topicAtom,
 } from "./atoms";
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SaveAreaView } from "../../components/SafeAreaView/SafeAreaView";
 import {
   GenerateProps,
   ConfigSettingsProps,
@@ -29,9 +29,9 @@ import {
 import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 import { set } from "react-hook-form";
+import { globalLoadingAtom } from "../../components/SafeAreaView/atoms";
 
 const selectedValueAtom = atom("Topic");
-const loadingAtom = atom(false);
 
 export function Configurator({ navigation }) {
   const [question] = useAtom(questionAtom);
@@ -42,7 +42,7 @@ export function Configurator({ navigation }) {
   const [topic, setTopic] = useAtom(topicAtom);
   const [startPage, setStartPage] = useAtom(startPageAtom);
   const [endPage, setEndPage] = useAtom(endPageAtom);
-  const [loading, setLoading] = useAtom(loadingAtom);
+  const [globalLoading, setGlobalLoading] = useAtom(globalLoadingAtom);
   const [files, setFiles] = useAtom(filesAtom);
 
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
@@ -91,7 +91,7 @@ export function Configurator({ navigation }) {
   };
 
   const configureAndGenerate = async () => {
-    setLoading(true);
+    setGlobalLoading(true);
     if (!validate()) return;
     let configureSuccess = false;
 
@@ -116,7 +116,7 @@ export function Configurator({ navigation }) {
             console.log(error);
             alert("Could not generate questions, please try again");
           })
-          .finally(() => setLoading(false));
+          .finally(() => setGlobalLoading(false));
       } else {
         await generateFromPDF()
           .then((res) => {
@@ -128,7 +128,7 @@ export function Configurator({ navigation }) {
             alert("Could not generate questions, please try again");
           })
           .finally(() => {
-            setLoading(false);
+            setGlobalLoading(false);
             setFiles([]);
             setStartPage("1");
             setEndPage("1");
@@ -165,14 +165,14 @@ export function Configurator({ navigation }) {
           {selectedValue === "Topic" ? (
             <>
               <Label paddingBottom={10}>Topic</Label>
-              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text); console.log(topic) }} />
+              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text) }} />
             </>
           ) : (
             <DocumentSelect />
           )}
         </YStack>
         <ConfiguratorSettings />
-        {loading && <Spinner />}
+        {globalLoading && <Spinner />}
         <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
           Generate
         </Button>

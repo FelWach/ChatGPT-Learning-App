@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SaveAreaView } from "../../components/SafeAreaView/SafeAreaView";
 import { Progress, SizeTokens, YStack, Card, Text, View, XStack } from 'tamagui';
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';

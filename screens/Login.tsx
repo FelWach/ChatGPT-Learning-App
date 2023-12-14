@@ -4,7 +4,7 @@ import { userAtom } from '../state/atoms'
 import { LoginProps } from '../api/type';
 import { login } from '../api/api';
 import { useState } from 'react';
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SaveAreaView } from '../components/SafeAreaView/SafeAreaView';
 import { useForm, Controller } from 'react-hook-form';
 
 type FormData = {

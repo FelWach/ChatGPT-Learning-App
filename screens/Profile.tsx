@@ -3,7 +3,7 @@ import { Pencil } from '@tamagui/lucide-icons';
 import { useRef } from 'react';
 import { atom, useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SaveAreaView } from '../components/SafeAreaView/SafeAreaView';
 import { useWindowDimensions } from 'react-native';
 import { updateUser } from '../api/api';
 import TabNavigator from '../components/TabNavigator/TabNavigator'

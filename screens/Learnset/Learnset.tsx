@@ -4,7 +4,7 @@ import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem"
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SaveAreaView } from "../../components/SafeAreaView/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
 

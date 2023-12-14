@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, H2, Input, Text } from 'tamagui';
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SaveAreaView } from '../components/SafeAreaView/SafeAreaView';
 import { UserProps } from '../api/type';
 import { register } from '../api/api';
 import { useForm, Controller } from 'react-hook-form';
