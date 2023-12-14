@@ -99,7 +99,7 @@ return (
       </YStack>
 
 
-      <YStack alignSelf="center" height={useWindowDimensions().height - 100} justifyContent="flex-end" position="absolute">
+      <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height -100}>
         <TabNavigator navigation={navigation} value={'profile'} />
       </YStack>
     </SaveAreaView>
