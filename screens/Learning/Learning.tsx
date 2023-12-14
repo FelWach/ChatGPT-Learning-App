@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import { atom } from 'jotai';
 import { questionsAnswersAtom } from '../../state/atoms';
 
+
 const currIDAtom = atom(0);
 const currQAtom = atom("");
 const currAAtom = atom("");
