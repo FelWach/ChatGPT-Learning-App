@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SaveAreaView } from "../../components/SafeAreaView";
-import { Progress, SizeTokens, YStack, Card, Text, View, XStack } from 'tamagui';
+import { Progress, SizeTokens, YStack, Card, Text, View, XStack, Button } from 'tamagui';
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
 import { questionsAnswersAtom } from '../../state/atoms';
@@ -15,6 +15,7 @@ const numberQAtom = atom(1);
 const progressAtom = atom(0);
 const isFrontAtom = atom(true);
 const isFinishedAtom = atom(false);
+const correctAnswersAtom = atom(0);
 
 export default function Learning({ navigation }) {
 
@@ -24,6 +25,7 @@ export default function Learning({ navigation }) {
   const [currA, setCurrA] = useAtom(currAAtom);
   const [questionsAnswersLength, setquestionsAnswersLength] = useAtom(questionsAnswersLengthAtom);
   const [numberQ, setNumberQ] = useAtom(numberQAtom);
+  const [correctAnswers, setCorrectAnswers] = useAtom(correctAnswersAtom);
 
   let swipeableRef: { close: () => any; } | null = null;
 
@@ -78,6 +80,9 @@ export default function Learning({ navigation }) {
       setCurrID(currID + 1);
       setCurrQ(questionsAnswers[numberQ].Q);
       setCurrA(questionsAnswers[numberQ].A);
+      if (numberQ < questionsAnswersLength) {
+        setCorrectAnswers(correctAnswers + 1);
+      }
     }
   }
 
@@ -87,6 +92,7 @@ export default function Learning({ navigation }) {
     setProgress(0);
     setIsFront(true);
     setIsFinished(false);
+    setCorrectAnswers(0);
   }
 
   const repeatOneQuestion = () => {
@@ -169,42 +175,48 @@ export default function Learning({ navigation }) {
           <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
         </XStack>
         <View>
-          {
-            isFinished &&
-            <Text textAlign='center' margin='$3' onPress={() => repeatAllQuestions()}>Fragen wiederholen</Text>
-          }
-          <Swipeable
-            ref={(ref) => (swipeableRef = ref)}
-            renderLeftActions={leftSwipeActions}
-            renderRightActions={rightSwipeActions}
-            onSwipeableOpen={(event) => handleSwipeableOpen(event === 'right' ? 'right' : 'left')}
-          >
-            <Card elevate size="$20" borderRadius="$10" onPress={() => handleCard()}>
-              <Card.Header padded>
-              </Card.Header>
-              <Card.Footer padded>
+          { isFinished ?
+            <Text textAlign='center' margin='$3'>
+              You're done! {"\n"}
+              You answered {correctAnswers} out of {questionsAnswersLength} questions correctly!
+            </Text> :
+            <Swipeable
+              ref={(ref) => (swipeableRef = ref)}
+              renderLeftActions={leftSwipeActions}
+              renderRightActions={rightSwipeActions}
+              onSwipeableOpen={(event) => handleSwipeableOpen(event === 'right' ? 'right' : 'left')}
+            >
+              <Card elevate size="$20" borderRadius="$10" onPress={() => handleCard()}>
+                <Card.Header padded>
+                </Card.Header>
+                <Card.Footer padded>
 
-              </Card.Footer>
-              <Card.Background alignItems="center">
-                <View style={styles.card}>
-                  <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
-                    {isFinished ? "You're done!" :
+                </Card.Footer>
+                <Card.Background alignItems="center">
+                  <View style={styles.card}>
+                    <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
+                    {
                       isFront ? currQ : currA
                     }
-                  </Text>
-                </View>
-              </Card.Background>
-            </Card>
-          </Swipeable>
-        </View>
-        {!isFinished &&
-          <View>
-            {isFront ?
-              <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
-              :
-              <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
+                    </Text>
+                  </View>
+                </Card.Background>
+              </Card>
+            </Swipeable>
             }
-          </View>
+        </View>
+
+        {!isFinished ?
+        <View> 
+          {isFront ?
+            <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
+            :
+            <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
+          }
+        </View> :
+          <Button margin='$3' onPress={() => repeatAllQuestions()}>
+            <Text>Fragen wiederholen</Text> 
+          </Button>
         }
         <YStack height={60} alignItems="center" space>
           <Progress size={sizeProp} marginTop="$5" value={progress}>
