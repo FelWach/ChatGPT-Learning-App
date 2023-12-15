@@ -16,6 +16,9 @@ export default function Features({ navigation }) {
                 <Button onPress={() => navigation.navigate('TopicsOverview')}>
                     <Text>Topics Overview</Text>
                 </Button>
+                <Button onPress={() => navigation.navigate('Api')} >
+                    <Text>Api</Text>
+                </Button>
                 {/*}
           <Button onPress={ () => navigation.navigate('Api')}>
                <Text>Api</Text>

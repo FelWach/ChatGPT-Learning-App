@@ -246,12 +246,12 @@ export default function Profile({ navigation }) {
         </YStack>
 
 
-        <YStack alignSelf="center" height={useWindowDimensions().height - 80} justifyContent="flex-end" position="absolute">
-          <TabNavigator navigation={navigation} value={'profile'} />
-        </YStack>
-      </SaveAreaView>
-    </View>
-  );
-  };
+      <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height -100}>
+        <TabNavigator navigation={navigation} value={'profile'} />
+      </YStack>
+    </SaveAreaView>
+  </View>
+);
+};
 
 
