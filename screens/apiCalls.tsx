@@ -1,16 +1,12 @@
 import { View } from 'react-native';
 import { Button } from 'tamagui';
 import { useAtom  } from 'jotai'
-import { userAtom, passwordAtom, emailAtom, repeatPasswordAtom } from '../state/atoms'
+import { userAtom } from '../state/atoms'
 import { addUser, users, deleteUser, login, register, updateUser, generate, generate2, upload, generateFromDocs, setConfiguration, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
 //import upload from '../api/api'
 
 export default function ApiCalls() {
-  const [username, setUsername] = useAtom(userAtom);
-  const [email, setEmail] = useAtom(emailAtom);
-  const [password, setPassword] = useAtom(passwordAtom);
-  const [repeatPassword, setRepeatPassword] = useAtom(repeatPasswordAtom);
-
+  const [user, setUser] = useAtom(userAtom);
 
   const handleGenerate = async () => {
       const data = {

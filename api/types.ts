@@ -27,6 +27,12 @@ export interface GenerateFromDocsProps {
     pageEnd?: number;
 }
 
+export interface GenerateFromDocsProps {
+    nbQuestions: number;
+    pageStart?: number;
+    pageEnd?: number;
+}
+
 export interface ConfigSettingsProps {
     language: string;
     languageLevel: string;
@@ -38,5 +44,10 @@ export interface UploadProps {
     uri: string;
     name: string;
     size: number;
+}
+export interface UploadProps {
+    uri: string,
+    name: string,
+    size: number,
 }
 

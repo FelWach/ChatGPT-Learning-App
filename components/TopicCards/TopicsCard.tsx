@@ -3,7 +3,16 @@ import { TopicCardProps } from "./types";
 
 export function TopicsCard({ ...props }: CardProps & TopicCardProps) { // extend CardProps with headline and numberOfLearncards
     return (
-        <Card bordered {...props}>
+        <Card 
+        bordered 
+        animation="bouncy"
+        size="$3"
+        width={340}
+        height={100}
+        padding="$4"
+        justifyContent="center"
+        {...props}
+        >
             <H4>{props.headline}</H4>
             <Paragraph theme="alt2">{props.numberOfLearncards} Karteikarten</Paragraph>
         </Card>
