@@ -3,7 +3,6 @@ import { Stack } from './App'
 import StartScreen from './screens/StartScreen'
 import Login from './screens/Login'
 import Register from './screens/Register'
-import UserSettings from './screens/UserSettings'
 import Learning from './screens/Learning/Learning'
 import { Learnset } from './screens/Learnset/Learnset'
 import { Configurator } from './screens/Configurator/Configurator'
@@ -41,7 +40,7 @@ export default function Routes() {
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false  }}  />
             <Stack.Screen name="Api" component={ApiCalls} options={{ title: "Api Calls" }}  />
             <Stack.Screen name="Features" component={Features} options={{ title: "" }}  />
-
+          
         </Stack.Navigator>
     )
 }

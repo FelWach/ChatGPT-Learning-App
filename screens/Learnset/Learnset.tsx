@@ -8,10 +8,15 @@ import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
 
+const isEditingQuestionsAtom = atom<boolean>(false);
+
 export function Learnset({ navigation }) {
 
     const [questions, setQuestions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
+
+    const [isEditing, setIsEditing] = useAtom(isEditingQuestionsAtom);
+
 
     function deleteSet(): void {
         // Display an alert to confirm the deletion
@@ -40,7 +45,7 @@ export function Learnset({ navigation }) {
     }
 
     // TODO: fix small arrow margin
-    // TODO: add back button functionality
+
     return (
         <SaveAreaView>
             <ScrollView>
