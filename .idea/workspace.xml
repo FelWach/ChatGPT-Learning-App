@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="Fixed Error Handling">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Routes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/QuestionsAccordionItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/QuestionsAccordionItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" afterDir="false" />
     </list>

@@ -3,15 +3,12 @@ import { Trash, Edit, ChevronDown } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItemProps } from "../screens/Learnset/types";
 import { Button } from "tamagui";
 import { Alert } from "react-native";
-import { atom, useAtom } from "jotai";
 
-const isEditingAnswerAtom = atom<boolean>(false);
+import {deleteEntry} from '../api/api'
 
-export function QuestionsAccordionItem(props: QuestionsAccordionItemProps, { navigation }) {
+export function QuestionsAccordionItem(props: any, { navigation }) {
 
-    const [isEditingA, setIsEditingA] = useAtom(isEditingAnswerAtom);
-
-    function deleteQuestion(): void {
+    function deleteQuestion(id : number): void {
         Alert.alert(
             'Confirm Deletion',
             'Are you sure you want to delete this question?',
@@ -23,18 +20,15 @@ export function QuestionsAccordionItem(props: QuestionsAccordionItemProps, { nav
                 {
                     text: 'Delete',
                     onPress: () => {
-                        console.log('Question deleted!');
+                        console.log("delete: " + id)
+                        deleteEntry(id);
+                        // TODO: Refresh the cards
                     }
                 },
             ],
             { cancelable: false }
         );
     }
-
-    function handleEditQuestion(): void {
-        isEditingA ? setIsEditingA(false) : setIsEditingA(true);
-    }
-
 
     return (
         <Accordion.Item value={props.value} >
@@ -49,16 +43,19 @@ export function QuestionsAccordionItem(props: QuestionsAccordionItemProps, { nav
                 )}
             </Accordion.Trigger>
             <Accordion.Content>
-                {isEditingA ? 
-                    <TextArea placeholder="Edit answer" value={props.answer}/> 
-                    :
-                    <Paragraph>
-                        {props.answer}
-                    </Paragraph>
-                }
+                <Paragraph>
+                    {props.answer}
+                </Paragraph>
                 <XStack justifyContent='space-evenly' space>
-                    <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteQuestion}></Button>
-                    <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={handleEditQuestion}></Button>
+                    <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={() => deleteQuestion(props.id)}></Button>
+                    <Button
+                        icon={Edit}
+                        size="$6"
+                        width="$4"
+                        height="$4"
+                        chromeless
+                        onPress={() => props.handleEditQAndA(props.id, props.answer, props.question)}
+                    ></Button>
                 </XStack>
             </Accordion.Content>
         </Accordion.Item>
