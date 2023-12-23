@@ -70,6 +70,13 @@ topic in req params. (eventuell wird nur diese route benötigt)
 
 ---
 
+POST /addToLearnset
+
+added neue Fragen zu einem bestehenden Learnset. 
+Benötigt topic, nbQuestions, userId im request Body
+
+---
+
 POST /setConfigurations
 
 setzt die richtigen Konfigurator Einstellungen
