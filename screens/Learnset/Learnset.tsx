@@ -7,11 +7,14 @@ import { useHydrateAtoms } from 'jotai/utils'
 import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
+import { addQuestionsClickedAtom } from "../Configurator/atoms";
+import { set } from "react-hook-form";
 
 export function Learnset({ navigation }) {
 
-    const [questions, setQuestions] = useAtom(questionsAnswersAtom);
+    const [questions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
+    const [, setAddQuestionsClicked] = useAtom(addQuestionsClickedAtom)
 
     function deleteSet(): void {
         // Display an alert to confirm the deletion
@@ -39,8 +42,6 @@ export function Learnset({ navigation }) {
        // TODO: implement edit operation
     }
 
-    // TODO: fix small arrow margin
-    // TODO: add back button functionality
     return (
         <SaveAreaView>
             <ScrollView>
@@ -58,7 +59,7 @@ export function Learnset({ navigation }) {
                     ))}
                 </Accordion>
 
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15">
+                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={() => {setAddQuestionsClicked(true); navigation.navigate('Configurator')}}>
                     Add Questions
                 </Button>
             </ScrollView >
@@ -74,5 +75,4 @@ export function Learnset({ navigation }) {
                 }}>Lernen</Button> 
         </SaveAreaView>
     )
-    // TODO: add learn button functionality
 }

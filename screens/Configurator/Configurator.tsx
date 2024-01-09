@@ -18,7 +18,7 @@ import {
   languageStyleAtom,
   questionAtom,
   difficultyAtom,
-  topicAtom,
+  addQuestionsClickedAtom,
 } from "./atoms";
 import { SaveAreaView } from "../../components/SafeAreaView";
 import {
@@ -28,13 +28,17 @@ import {
 } from "../../api/types";
 import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
+import { TopicField } from "./TopicField";
 import { set } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
+import { topicAtom } from "../../state/atoms";
 
 const selectedValueAtom = atom("Topic");
 const loadingAtom = atom(false);
 
-export function Configurator({ navigation }) {
+export function Configurator(props: { navigation }) {
+  const navigation = props.navigation;
+
   const [question] = useAtom(questionAtom);
   const [language] = useAtom(languageAtom);
   const [languageStyle] = useAtom(languageStyleAtom);
@@ -44,8 +48,10 @@ export function Configurator({ navigation }) {
   const [startPage, setStartPage] = useAtom(startPageAtom);
   const [endPage, setEndPage] = useAtom(endPageAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
-  const [files, setFiles] = useAtom(filesAtom);
+  const [, setFiles] = useAtom(filesAtom);
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
+  const [, setAddQuestionsClicked] = useAtom(addQuestionsClickedAtom);
+  console.log("Topic in Configurator: " + topic);
 
   const queryClient = useQueryClient()
 
@@ -97,6 +103,7 @@ export function Configurator({ navigation }) {
     setStartPage("1");
     setEndPage("1");
     setFiles([]);
+    setAddQuestionsClicked(false);
   }
 
   const configureAndGenerate = async () => {
@@ -120,7 +127,7 @@ export function Configurator({ navigation }) {
           .then(async (res) => {
             console.log("Response from Topic generate: " + res);
             resetAtoms();
-            await queryClient.invalidateQueries({queryKey: ['topics']});
+            await queryClient.invalidateQueries({ queryKey: ['topics'] });
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
@@ -134,13 +141,13 @@ export function Configurator({ navigation }) {
           .then(async (res) => {
             console.log("Response from PDF generate: " + res);
             resetAtoms();
-            await queryClient.invalidateQueries({queryKey: ['topics']});
+            await queryClient.invalidateQueries({ queryKey: ['topics'] });
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
             console.log(error);
             alert("Could not generate questions, please try again");
-          }). finally(() => {
+          }).finally(() => {
             setLoading(false);
           })
       };
@@ -154,15 +161,13 @@ export function Configurator({ navigation }) {
     }
     return true;
   }
+
+
   return (
     <ScrollView>
       <SaveAreaView>
         <XStack justifyContent="center">
-          <ToggleGroup
-            type="single"
-            value={selectedValue}
-            onValueChange={(val) => { val && setSelectedValue(val) }}
-          >
+          <ToggleGroup type="single" value={selectedValue} onValueChange={(val) => { val && setSelectedValue(val) }}>
             <ToggleGroup.Item value="Topic">
               <Text>Choose Topic</Text>
             </ToggleGroup.Item>
@@ -173,10 +178,7 @@ export function Configurator({ navigation }) {
         </XStack>
         <YStack paddingTop={30} paddingBottom={20}>
           {selectedValue === "Topic" ? (
-            <>
-              <Label paddingBottom={10}>Topic</Label>
-              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text) }} />
-            </>
+            <TopicField />
           ) : (
             <DocumentSelect />
           )}

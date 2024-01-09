@@ -3,7 +3,6 @@ import { Stack } from './App'
 import StartScreen from './screens/StartScreen'
 import Login from './screens/Login'
 import Register from './screens/Register'
-import UserSettings from './screens/UserSettings'
 import Learning from './screens/Learning/Learning'
 import { Learnset } from './screens/Learnset/Learnset'
 import { Configurator } from './screens/Configurator/Configurator'
@@ -12,6 +11,7 @@ import Profile from './screens/Profile'
 // for testing
 import  ApiCalls  from './screens/apiCalls'
 import  Features  from './screens/Features'
+import { addQuestionsClickedAtom } from './screens/Configurator/atoms'
 
 
 export default function Routes() {
@@ -36,12 +36,11 @@ export default function Routes() {
             <Stack.Screen name="Register" component={Register} options={{ title: "" }}  />
             <Stack.Screen name="LearnSet" component={Learnset} options={{  title: "Learnset" }}  />
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
-            <Stack.Screen name="Configurator" component={Configurator} options={{ title: "Add Learnset" }}  />
-            <Stack.Screen name="Learning" component={Learning} options={{ title: "" }}  />
+            <Stack.Screen name="Configurator" component={Configurator}/>
+            <Stack.Screen name="Learning" component={Learning} options={{ title: "" }} />
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false  }}  />
             <Stack.Screen name="Api" component={ApiCalls} options={{ title: "Api Calls" }}  />
             <Stack.Screen name="Features" component={Features} options={{ title: "" }}  />
-
         </Stack.Navigator>
     )
 }
