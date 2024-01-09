@@ -24,19 +24,18 @@ import { generate, setConfiguration } from "../../api/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { topicAtom, userAtom } from "../../state/atoms";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
-import { resetAtoms } from "./helper";
 
 const loadingAtom = atom(false);
 
 export function ConfiguratorAdd(props: { navigation }) {
   const navigation = props.navigation;
 
-  const [question] = useAtom(questionAtom);
+  const [question, setQuestions] = useAtom(questionAtom);
   const [language] = useAtom(languageAtom);
   const [languageStyle] = useAtom(languageStyleAtom);
   const [creativity] = useAtom(creativityAtom);
   const [difficulty] = useAtom(difficultyAtom);
-  const [topic] = useAtom(topicAtom);
+  const [topic, setTopic] = useAtom(topicAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
   const [user] = useAtom(userAtom);
 
@@ -57,6 +56,11 @@ export function ConfiguratorAdd(props: { navigation }) {
 
     return await setConfiguration(config);
   };
+
+  const resetAtoms = () => {
+    setTopic("");
+    setQuestions("0");
+  }
 
   const addQuestions = async () => {
     const generateConfig: AddQuestionsProps = {
@@ -89,7 +93,7 @@ export function ConfiguratorAdd(props: { navigation }) {
       await addQuestions()
         .then(async (res) => {
           console.log("Response from Topic generate: " + res);
-          //resetAtoms();
+          resetAtoms();
           await queryClient.invalidateQueries({ queryKey: ['topics'] });
           navigation.navigate("TopicsOverview");
         }

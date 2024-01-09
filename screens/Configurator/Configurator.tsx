@@ -27,7 +27,6 @@ import { TopicField } from "./TopicField";
 import { useQueryClient } from "@tanstack/react-query";
 import { topicAtom } from "../../state/atoms";
 import { TopicUploadSwitcher } from "./TopicUploadSwitcher";
-import { resetAtoms } from "./helper";
 
 const loadingAtom = atom(false);
 
@@ -36,15 +35,16 @@ export function Configurator(props: { navigation }) {
 
   const [loading, setLoading] = useAtom(loadingAtom);
 
-  const [question] = useAtom(questionAtom);
+  const [question, setQuestions] = useAtom(questionAtom);
   const [language] = useAtom(languageAtom);
   const [languageStyle] = useAtom(languageStyleAtom);
   const [creativity] = useAtom(creativityAtom);
   const [difficulty] = useAtom(difficultyAtom);
-  const [topic] = useAtom(topicAtom);
-  const [startPage] = useAtom(startPageAtom);
-  const [endPage] = useAtom(endPageAtom);
+  const [topic, setTopic] = useAtom(topicAtom);
+  const [startPage, setStartPage] = useAtom(startPageAtom);
+  const [endPage, setEndPage] = useAtom(endPageAtom);
   const [selectedValue] = useAtom(selectedValueAtom);
+  const [, setFiles] = useAtom(filesAtom);
 
   console.log("Topic in Configurator: " + topic);
 
@@ -108,6 +108,15 @@ export function Configurator(props: { navigation }) {
         alert("Could not configure settings, please try again");
       });
 
+    const resetAtoms = () => {
+      setTopic("");
+      setQuestions("1");
+      setFiles([]);
+      setStartPage("1");
+      setEndPage("1");
+      setFiles([]);
+    }
+
     if (configureSuccess) {
       if (selectedValue === "Topic") {
         await generateFromTopic()
@@ -127,7 +136,7 @@ export function Configurator(props: { navigation }) {
         await generateFromPDF()
           .then(async (res) => {
             console.log("Response from PDF generate: " + res);
-            //resetAtoms();
+            resetAtoms();
             await queryClient.invalidateQueries({ queryKey: ['topics'] });
             navigation.navigate("TopicsOverview");
           }
