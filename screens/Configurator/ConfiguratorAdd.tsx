@@ -38,6 +38,7 @@ export function ConfiguratorAdd(props: { navigation }) {
   const [topic, setTopic] = useAtom(topicAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
   const [user] = useAtom(userAtom);
+  const [, setFiles] = useAtom(userAtom);
 
   const queryClient = useQueryClient()
 
@@ -59,7 +60,7 @@ export function ConfiguratorAdd(props: { navigation }) {
 
   const resetAtoms = () => {
     setTopic("");
-    setQuestions("0");
+    setQuestions("1");
   }
 
   const addQuestions = async () => {
