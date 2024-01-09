@@ -1,27 +1,22 @@
 import { Button, ScrollView, Text } from 'tamagui';
-import { H1, YStack, XStack } from 'tamagui';
+import { H1, YStack } from 'tamagui';
 import { TopicsCard } from '../../components/TopicCards/TopicsCard';
 import { topicAtom, topicCardAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';
 import { SaveAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
-import { GlobalLoadingIndicator } from '../../App';
 import { useWindowDimensions } from 'react-native';
-import { useQueryClient } from '@tanstack/react-query';
-import { addQuestionsClickedAtom } from '../Configurator/atoms';
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
   const [, setCurrentTopic] = useAtom(topicAtom);
-  const [, setAddQuestionsClicked] = useAtom(addQuestionsClickedAtom)
 
   // TODO: adjust spacing and other styling
   // TODO: add MenuButton to navigate to ProfileScreen
   return (
 
     <SaveAreaView>
-
       {topicCards.length ? (
         <ScrollView height={useWindowDimensions().height}>
           <YStack>
@@ -40,7 +35,7 @@ export function TopicsOverview({ navigation }) {
               ))}
             </YStack>
           </YStack>
-          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$5" onPress={() => {setAddQuestionsClicked(true); navigation.navigate('Configurator')}}>
+          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$5" onPress={() => navigation.navigate('Configurator') }>
             Add Learnset
           </Button>
           <YStack alignSelf="center" marginBottom="$10">
@@ -74,7 +69,7 @@ export function TopicsOverview({ navigation }) {
               Have fun!
             </Text>
           </YStack>
-          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10" onPress={() => {setAddQuestionsClicked(true), navigation.navigate('Configurator')}}>
+          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10" onPress={() => { navigation.navigate('Configurator') }}>
             Add Learnset
           </Button>
           <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>

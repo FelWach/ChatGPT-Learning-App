@@ -15,7 +15,7 @@ import {
   QueryClientProvider,
   useIsFetching,
 } from '@tanstack/react-query'
-import { atomsWithQuery, queryClientAtom } from 'jotai-tanstack-query'
+import { queryClientAtom } from 'jotai-tanstack-query'
 
 
 export function GlobalLoadingIndicator() {

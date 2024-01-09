@@ -8,7 +8,7 @@ export const languageAtom = atom<string>('en');
 export const languageStyleAtom = atom<string>('normal');
 export const difficultyAtom = atom<string>('normal');
 
-export const addQuestionsClickedAtom = atom<boolean>(false);
+export const selectedValueAtom = atom("Topic");
 
 // read-only atoms
 export const dropdownMenuLanguageAtom = atom<DropdownMenuItem[]>((get) =>[

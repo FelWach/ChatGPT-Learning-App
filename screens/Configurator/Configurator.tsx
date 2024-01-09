@@ -1,12 +1,7 @@
 import {
-  Label,
   Button,
-  Text,
   ScrollView,
   YStack,
-  XStack,
-  Input,
-  ToggleGroup,
   Spinner,
 } from "tamagui";
 import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
@@ -18,7 +13,7 @@ import {
   languageStyleAtom,
   questionAtom,
   difficultyAtom,
-  addQuestionsClickedAtom,
+  selectedValueAtom,
 } from "./atoms";
 import { SaveAreaView } from "../../components/SafeAreaView";
 import {
@@ -29,28 +24,28 @@ import {
 import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 import { TopicField } from "./TopicField";
-import { set } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { topicAtom } from "../../state/atoms";
+import { TopicUploadSwitcher } from "./TopicUploadSwitcher";
+import { resetAtoms } from "./helper";
 
-const selectedValueAtom = atom("Topic");
 const loadingAtom = atom(false);
 
 export function Configurator(props: { navigation }) {
   const navigation = props.navigation;
+
+  const [loading, setLoading] = useAtom(loadingAtom);
 
   const [question] = useAtom(questionAtom);
   const [language] = useAtom(languageAtom);
   const [languageStyle] = useAtom(languageStyleAtom);
   const [creativity] = useAtom(creativityAtom);
   const [difficulty] = useAtom(difficultyAtom);
-  const [topic, setTopic] = useAtom(topicAtom);
-  const [startPage, setStartPage] = useAtom(startPageAtom);
-  const [endPage, setEndPage] = useAtom(endPageAtom);
-  const [loading, setLoading] = useAtom(loadingAtom);
-  const [, setFiles] = useAtom(filesAtom);
-  const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
-  const [, setAddQuestionsClicked] = useAtom(addQuestionsClickedAtom);
+  const [topic] = useAtom(topicAtom);
+  const [startPage] = useAtom(startPageAtom);
+  const [endPage] = useAtom(endPageAtom);
+  const [selectedValue] = useAtom(selectedValueAtom);
+
   console.log("Topic in Configurator: " + topic);
 
   const queryClient = useQueryClient()
@@ -98,17 +93,9 @@ export function Configurator(props: { navigation }) {
     return generateFromDocs(generateConfig)
   };
 
-  const resetAtoms = () => {
-    setTopic("");
-    setStartPage("1");
-    setEndPage("1");
-    setFiles([]);
-    setAddQuestionsClicked(false);
-  }
-
   const configureAndGenerate = async () => {
     setLoading(true);
-    if (!validate()) return;
+    if (!validatePagesInput()) return;
     let configureSuccess = false;
 
     await configureSettings()
@@ -140,7 +127,7 @@ export function Configurator(props: { navigation }) {
         await generateFromPDF()
           .then(async (res) => {
             console.log("Response from PDF generate: " + res);
-            resetAtoms();
+            //resetAtoms();
             await queryClient.invalidateQueries({ queryKey: ['topics'] });
             navigation.navigate("TopicsOverview");
           }
@@ -154,7 +141,7 @@ export function Configurator(props: { navigation }) {
     }
   }
 
-  function validate(): boolean {
+  function validatePagesInput(): boolean {
     if (startPage > endPage) {
       alert("Start page must be smaller than end page")
       return false;
@@ -162,20 +149,10 @@ export function Configurator(props: { navigation }) {
     return true;
   }
 
-
   return (
     <ScrollView>
       <SaveAreaView>
-        <XStack justifyContent="center">
-          <ToggleGroup type="single" value={selectedValue} onValueChange={(val) => { val && setSelectedValue(val) }}>
-            <ToggleGroup.Item value="Topic">
-              <Text>Choose Topic</Text>
-            </ToggleGroup.Item>
-            <ToggleGroup.Item value="Files">
-              <Text>Upload PDF</Text>
-            </ToggleGroup.Item>
-          </ToggleGroup>
-        </XStack>
+        <TopicUploadSwitcher />
         <YStack paddingTop={30} paddingBottom={20}>
           {selectedValue === "Topic" ? (
             <TopicField />
@@ -184,10 +161,13 @@ export function Configurator(props: { navigation }) {
           )}
         </YStack>
         <ConfiguratorSettings />
+
         {loading && <Spinner />}
+
         <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
           Generate
         </Button>
+
       </SaveAreaView>
     </ScrollView>
   );

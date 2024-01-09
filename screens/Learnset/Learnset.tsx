@@ -1,20 +1,15 @@
 import { Button, H1, ScrollView, View, XStack, Accordion } from "tamagui";
 import { Trash, Edit, Plus, ArrowLeft } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
-import { Alert, Dimensions } from "react-native";
-import { useAtom, atom } from "jotai";
-import { useHydrateAtoms } from 'jotai/utils'
+import { Alert } from "react-native";
+import { useAtom } from "jotai";
 import { SaveAreaView } from "../../components/SafeAreaView";
-import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
-import { addQuestionsClickedAtom } from "../Configurator/atoms";
-import { set } from "react-hook-form";
 
 export function Learnset({ navigation }) {
 
     const [questions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
-    const [, setAddQuestionsClicked] = useAtom(addQuestionsClickedAtom)
 
     function deleteSet(): void {
         // Display an alert to confirm the deletion
@@ -59,7 +54,7 @@ export function Learnset({ navigation }) {
                     ))}
                 </Accordion>
 
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={() => {setAddQuestionsClicked(true); navigation.navigate('Configurator')}}>
+                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={() => navigation.navigate('ConfiguratorAdd')}>
                     Add Questions
                 </Button>
             </ScrollView >

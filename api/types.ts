@@ -21,6 +21,12 @@ export interface GenerateProps {
     nbQuestions: number;
 }
 
+export interface AddQuestionsProps {
+    topic: string;
+    nbQuestions: number;
+    userId: number;
+}
+
 export interface GenerateFromDocsProps {
     nbQuestions: number;
     pageStart?: number;
@@ -45,9 +51,5 @@ export interface UploadProps {
     name: string;
     size: number;
 }
-export interface UploadProps {
-    uri: string,
-    name: string,
-    size: number,
-}
+
 
