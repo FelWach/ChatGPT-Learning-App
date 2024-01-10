@@ -32,7 +32,7 @@ import { configureSettings, generateFromPDF, generateFromTopic } from "./generat
 const loadingAtom = atom(false);
 
 export function Configurator({ navigation, route }) {
-  console.log("addQuestionsClicked: " +  route.params.addQuestionsClicked); // this is how props can be passed to components using the React Native Navigator
+  console.log("addQuestionsClicked: " + route.params.addQuestionsClicked); // this is how props can be passed to components using the React Native Navigator
 
   const addQuestionsClicked = route.params.addQuestionsClicked;
 
@@ -108,19 +108,16 @@ export function Configurator({ navigation, route }) {
         <TopicUploadSwitcher />
         <YStack paddingTop={30} paddingBottom={20}>
           {selectedValue === "Topic" ? (
-            <TopicField addQuestionsClicked={addQuestionsClicked}/>
+            <TopicField addQuestionsClicked={addQuestionsClicked} />
           ) : (
             <DocumentSelect />
           )}
         </YStack>
         <ConfiguratorSettings />
-
         {loading && <Spinner />}
-
         <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
           Generate
         </Button>
-
       </SaveAreaView>
     </ScrollView>
   );

@@ -6,7 +6,6 @@ import Register from './screens/Register'
 import Learning from './screens/Learning/Learning'
 import { Learnset } from './screens/Learnset/Learnset'
 import { Configurator } from './screens/Configurator/Configurator'
-import { ConfiguratorAdd } from './screens/Configurator/ConfiguratorAdd'
 import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview'
 import Profile from './screens/Profile'
 // for testing
@@ -36,7 +35,6 @@ export default function Routes() {
             <Stack.Screen name="LearnSet" component={Learnset} options={{  title: "Learnset" }}  />
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
             <Stack.Screen name="Configurator" component={Configurator}/>
-            <Stack.Screen name="ConfiguratorAdd" component={ConfiguratorAdd}/>
             <Stack.Screen name="Learning" component={Learning} options={{ title: "" }} />
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false  }}  />
             <Stack.Screen name="Api" component={ApiCalls} options={{ title: "Api Calls" }}  />
