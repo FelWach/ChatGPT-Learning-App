@@ -35,7 +35,7 @@ export function TopicsOverview({ navigation }) {
               ))}
             </YStack>
           </YStack>
-          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$5" onPress={() => navigation.navigate('Configurator') }>
+          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$5" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: false })}>{/* addQuestionsClicked is used to in Configurator -> passing props using the React Native Navigator*/}
             Add Learnset
           </Button>
           <YStack alignSelf="center" marginBottom="$10">
@@ -69,7 +69,8 @@ export function TopicsOverview({ navigation }) {
               Have fun!
             </Text>
           </YStack>
-          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10" onPress={() => { navigation.navigate('Configurator') }}>
+          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10"
+            onPress={() => { navigation.navigate('Configurator', { addQuestionsClicked: false }) }}> {/* addQuestionsClicked is used to in Configurator -> passing props using the React Native Navigator*/}
             Add Learnset
           </Button>
           <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>

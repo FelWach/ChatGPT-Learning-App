@@ -54,7 +54,7 @@ export function Learnset({ navigation }) {
                     ))}
                 </Accordion>
 
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={() => navigation.navigate('ConfiguratorAdd')}>
+                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={() => navigation.navigate('Configurator', {addQuestionsClicked: true})}>
                     Add Questions
                 </Button>
             </ScrollView >

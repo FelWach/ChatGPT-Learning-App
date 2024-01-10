@@ -31,23 +31,23 @@ import { configureSettings, generateFromPDF, generateFromTopic } from "./generat
 
 const loadingAtom = atom(false);
 
-export function Configurator(props: { navigation }) {
-  const navigation = props.navigation;
+export function Configurator({ navigation, route }) {
+  console.log("addQuestionsClicked: " +  route.params.addQuestionsClicked); // this is how props can be passed to components using the React Native Navigator
+
+  const addQuestionsClicked = route.params.addQuestionsClicked;
 
   const [loading, setLoading] = useAtom(loadingAtom);
 
   const [question, setQuestions] = useAtom(questionAtom);
-  const [language] = useAtom(languageAtom);
-  const [languageStyle] = useAtom(languageStyleAtom);
+  const [language, setLanguage] = useAtom(languageAtom);
+  const [languageStyle, setLanguageStyle] = useAtom(languageStyleAtom);
   const [creativity] = useAtom(creativityAtom);
-  const [difficulty] = useAtom(difficultyAtom);
+  const [difficulty, setDifficulty] = useAtom(difficultyAtom);
   const [topic, setTopic] = useAtom(topicAtom);
   const [startPage, setStartPage] = useAtom(startPageAtom);
   const [endPage, setEndPage] = useAtom(endPageAtom);
   const [selectedValue] = useAtom(selectedValueAtom);
   const [, setFiles] = useAtom(filesAtom);
-
-  console.log("Topic in Configurator: " + topic);
 
   const queryClient = useQueryClient()
 
@@ -93,11 +93,13 @@ export function Configurator(props: { navigation }) {
 
   const resetAtoms = () => {
     setTopic("");
-    setQuestions("1");
+    setQuestions("10");
     setFiles([]);
+    setLanguageStyle("normal");
+    setLanguage("en");
+    setDifficulty("normal");
     setStartPage("1");
     setEndPage("1");
-    setFiles([]);
   }
 
   return (
@@ -106,7 +108,7 @@ export function Configurator(props: { navigation }) {
         <TopicUploadSwitcher />
         <YStack paddingTop={30} paddingBottom={20}>
           {selectedValue === "Topic" ? (
-            <TopicField />
+            <TopicField addQuestionsClicked={addQuestionsClicked}/>
           ) : (
             <DocumentSelect />
           )}
