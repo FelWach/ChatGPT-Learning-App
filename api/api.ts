@@ -4,7 +4,7 @@ const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps, UpdatedUserProps, LoginProps, GenerateProps, GenerateFromDocsProps, ConfigSettingsProps, UploadProps, AddQuestionsProps } from "./types"
+import { UserProps, UpdatedUserProps, LoginProps, GenerateProps, GenerateFromDocsProps, ConfigSettingsProps, UploadProps, AddQuestionsTopicProps, AddQuestionsPDFProps } from "./types"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
@@ -134,7 +134,7 @@ export async function upload(data: FormData) {
 }
 
 // adds questions to an existing learnset
-export async function addQuestions(data: AddQuestionsProps) {
+export async function addQuestionsTopic(data: AddQuestionsTopicProps) {
 
     try {
         const response = await axios.post(`${baseUrl}/addToLearnset`, data, { headers: { 'Content-Type': 'application/json' } });
@@ -143,6 +143,16 @@ export async function addQuestions(data: AddQuestionsProps) {
         console.log('Error: ' + error)
         throw error;
     }
+}
+
+export async function addQuestionsPDF(data: AddQuestionsPDFProps) {
+        try {
+            const response = await axios.post(`${baseUrl}/addToLearnsetFromDocs`, data, { headers: { 'Content-Type': 'application/json' } });
+            return response.data
+        } catch (error) {
+            console.log('Error: ' + error)
+            throw error;
+        }
 }
 
 // post generateFromDocs: for generating Q&As after uploading a pdf

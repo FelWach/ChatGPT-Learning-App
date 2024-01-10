@@ -21,16 +21,17 @@ export interface GenerateProps {
     nbQuestions: number;
 }
 
-export interface AddQuestionsProps {
+export interface AddQuestionsTopicProps {
     topic: string;
     nbQuestions: number;
     userId: number;
 }
 
-export interface GenerateFromDocsProps {
+export interface AddQuestionsPDFProps {
     nbQuestions: number;
-    pageStart?: number;
-    pageEnd?: number;
+    pageStart: number;
+    pageEnd: number;
+    topic: string;
 }
 
 export interface GenerateFromDocsProps {

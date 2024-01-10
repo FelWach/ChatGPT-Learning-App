@@ -16,25 +16,18 @@ import {
   selectedValueAtom,
 } from "./atoms";
 import { SaveAreaView } from "../../components/SafeAreaView";
-import {
-  GenerateProps,
-  ConfigSettingsProps,
-  GenerateFromDocsProps,
-} from "../../api/types";
-import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 import { TopicField } from "./TopicField";
 import { useQueryClient } from "@tanstack/react-query";
-import { topicAtom } from "../../state/atoms";
+import { topicAtom, userAtom } from "../../state/atoms";
 import { TopicUploadSwitcher } from "./TopicUploadSwitcher";
-import { configureSettings, generateFromPDF, generateFromTopic } from "./generateHelper";
+import { addQuestionsFromPDF, addQuestionsFromTopic, configureSettings, generateFromPDF, generateFromTopic } from "./generateHelper";
 
 const loadingAtom = atom(false);
 
 export function Configurator({ navigation, route }) {
-  console.log("addQuestionsClicked: " + route.params.addQuestionsClicked); // this is how props can be passed to components using the React Native Navigator
 
-  const addQuestionsClicked = route.params.addQuestionsClicked;
+  const addQuestionsClicked = route.params.addQuestionsClicked; // this is how props can be passed to components using the React Native Navigator
 
   const [loading, setLoading] = useAtom(loadingAtom);
 
@@ -48,6 +41,7 @@ export function Configurator({ navigation, route }) {
   const [endPage, setEndPage] = useAtom(endPageAtom);
   const [selectedValue] = useAtom(selectedValueAtom);
   const [, setFiles] = useAtom(filesAtom);
+  const [user] = useAtom(userAtom);  
 
   const queryClient = useQueryClient()
 
@@ -69,7 +63,20 @@ export function Configurator({ navigation, route }) {
     if (configureSuccess) {
       try {
         let res = null;
-        selectedValue === "Topic" ? res = await generateFromTopic(topic, Number(question)) : res = await generateFromPDF(Number(question), Number(startPage), Number(endPage));
+        if (!addQuestionsClicked) {
+          if (selectedValue === "Topic") {
+            await generateFromTopic(topic, Number(question))
+          } else {
+            await generateFromPDF(Number(question), Number(startPage), Number(endPage));
+          }
+      } else {
+          if (selectedValue === "Topic") {
+              await addQuestionsFromTopic(topic, Number(question), user.id);
+          } else {
+            console.log("addQuestionsFromPDF !!!!!!!!!!!");
+              await addQuestionsFromPDF(topic, Number(endPage), Number(startPage), Number(question));
+          }
+      }
         console.log(`Response from ${selectedValue} generate: ` + res);
         resetAtoms();
         await queryClient.invalidateQueries({ queryKey: ['topics'] });
@@ -84,8 +91,9 @@ export function Configurator({ navigation, route }) {
   }
 
   function validatePagesInput(): boolean {
-    if (startPage > endPage) {
+    if (Number(startPage) > Number(endPage)) {
       alert("Start page must be smaller than end page")
+      setLoading(false);
       return false;
     }
     return true;
