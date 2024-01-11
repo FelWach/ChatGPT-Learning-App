@@ -1,5 +1,5 @@
-import { Button, H1, ScrollView, View, XStack, Accordion } from "tamagui";
-import { Trash, Edit, Plus, ArrowLeft } from '@tamagui/lucide-icons'
+import { Button, H1, ScrollView, View, XStack, Accordion, Input, Paragraph, TextArea } from "tamagui";
+import { Trash, Edit, Plus, ArrowLeft, X } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
@@ -8,10 +8,23 @@ import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
 
+const isEditingQAndAAtom = atom<boolean>(false);
+
+// atoms for editing Q and A
+const idAtom = atom<number>(0);
+const questionAtom = atom<string>('');
+const answerAtom = atom<string>('');
+
 export function Learnset({ navigation }) {
 
     const [questions, setQuestions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
+
+    const [isEditingQAndA, setIsEditingQAndA] = useAtom(isEditingQAndAAtom);
+
+    const [id, setId] = useAtom(idAtom);
+    const [question, setQuestion] = useAtom(questionAtom);
+    const [answer, setAnswer] = useAtom(answerAtom);
 
     function deleteSet(): void {
         // Display an alert to confirm the deletion
@@ -27,7 +40,7 @@ export function Learnset({ navigation }) {
                     text: 'Delete',
                     onPress: () => {
                         // TODO: implement delete operation
-                        console.log('Set deleted!');
+                        
                     },
                 },
             ],
@@ -39,8 +52,23 @@ export function Learnset({ navigation }) {
        // TODO: implement edit operation
     }
 
-    // TODO: fix small arrow margin
-    // TODO: add back button functionality
+    const handleEditQAndA = (id?: number, answer?: any, question?: any): void => {
+        if (id && answer && question) {
+            setIsEditingQAndA(true);
+            setId(id);
+            setQuestion(question);
+            setAnswer(answer);
+        } else {
+            setIsEditingQAndA(false);
+        }
+    };
+    
+    const handleSaveQandA = (id: number): void => {
+        setIsEditingQAndA(!isEditingQAndA);
+        console.log("Saving Q and A with id: " + id);
+    };
+
+
     return (
         <SaveAreaView>
             <ScrollView>
@@ -53,16 +81,51 @@ export function Learnset({ navigation }) {
                 </XStack>
 
                 <Accordion overflow="hidden" width="auto" type="multiple" space="$2">
+                {isEditingQAndA ?  
+                    <>
+                        <Input 
+                            placeholder="Edit question" 
+                            value={question}
+                            onChangeText={setQuestion}
+                            /> 
+                        <TextArea 
+                            placeholder="Edit answer" 
+                            value={answer}
+                            onChangeText={setAnswer}
+                            />
+                    </>
+                            : 
+                    <>
                     {questions.map((topic, index) => (
-                        <QuestionsAccordionItem key={index} question={topic.Q} answer={topic.A} value={topic.id} />
+                        <QuestionsAccordionItem
+                            key={index}
+                            id={topic.id}
+                            question={topic.Q}
+                            answer={topic.A}
+                            value={topic.id}
+                            handleEditQAndA={handleEditQAndA}
+                        />
                     ))}
+                        
+                    </>}
                 </Accordion>
-
+                {isEditingQAndA ?
+                    <XStack justifyContent="space-between">
+                        <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={handleEditQAndA}>
+                            Cancel
+                        </Button>
+                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" marginBottom="$15" onPress={() => handleSaveQandA(id)}>
+                            Save
+                        </Button>
+                    </XStack>
+                    :
                 <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15">
                     Add Questions
                 </Button>
+                }
+                
             </ScrollView >
-
+            {isEditingQAndA ? null :
             <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
                 {
                     position: "absolute",
@@ -72,6 +135,7 @@ export function Learnset({ navigation }) {
                     marginHorizontal: 10,
                     
                 }}>Lernen</Button> 
+            }
         </SaveAreaView>
     )
     // TODO: add learn button functionality
