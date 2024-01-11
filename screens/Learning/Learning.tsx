@@ -67,9 +67,9 @@ export default function Learning({ navigation }) {
     }
 
     if (direction === 'right') {
-      repeatOneQuestion();
-    } else {
       nextQuestion();
+    } else {
+      repeatOneQuestion();
     }
   }
 
