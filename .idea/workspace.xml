@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="Fixed Error Handling">
-      <change afterPath="$PROJECT_DIR$/screens/TopicsOverview/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/atoms.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/state/atoms.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Learning/Learning.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learning/Learning.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
