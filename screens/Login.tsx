@@ -1,10 +1,10 @@
 import { Button, H2, Text, Input, XStack, View } from 'tamagui';
 import { useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
-import { LoginProps } from '../api/type';
+import { LoginProps } from '../api/types';
 import { login } from '../api/api';
 import { useState } from 'react';
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SafeAreaView } from '../components/SafeAreaView';
 import { useForm, Controller } from 'react-hook-form';
 import { useHeaderHeight } from '@react-navigation/elements';
 
@@ -51,8 +51,8 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <SaveAreaView>
-      <View marginTop={useHeaderHeight() + 25}>
+    <SafeAreaView>
+      <View>
         <H2>Welcome back!</H2>
         <XStack>
           <Text
@@ -120,6 +120,6 @@ export default function Login({ navigation }) {
         </Button>
         <Text>Forgot Password?</Text>
       </View>
-    </SaveAreaView>
+    </SafeAreaView>
   );
 };

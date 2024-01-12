@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, H2, Input, Text } from 'tamagui';
-import { SaveAreaView } from '../components/SafeAreaView';
-import { UserProps } from '../api/type';
+import { SafeAreaView } from '../components/SafeAreaView';
+import { UserProps } from '../api/types';
 import { register } from '../api/api';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -41,7 +41,7 @@ export default function Register({ navigation }) {
   }
 
   return (
-    <SaveAreaView>
+    <SafeAreaView>
       <H2>Create an account</H2>
 
       <Controller
@@ -148,7 +148,7 @@ export default function Register({ navigation }) {
         onPress={handleSubmit(onSubmit)}>
         Register
       </Button>
-    </SaveAreaView>
+    </SafeAreaView>
   );
 };
 

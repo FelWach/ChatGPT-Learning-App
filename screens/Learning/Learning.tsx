@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { Progress, SizeTokens, YStack, Card, Text, View, XStack} from 'tamagui';
-import { getEntriesWithTopic } from '../api/api';
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { getEntriesWithTopic } from '../../api/api';
+import { SafeAreaView } from "../../components/SafeAreaView";
 import { useAtom } from 'jotai';
 import { atom } from 'jotai';
 import { questionsAnswersAtom } from '../../state/atoms';
@@ -164,9 +164,9 @@ export default function Learning({ navigation }) {
   }
 
   return (
-    <SaveAreaView>
+    <SafeAreaView>
       <View>
-        <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
+        <Text textAlign='center' marginBottom='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
         <XStack>
           <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
           <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
@@ -215,7 +215,7 @@ export default function Learning({ navigation }) {
           </Progress>
         </YStack>
       </View>
-    </SaveAreaView>
+    </SafeAreaView>
   );
 }
 

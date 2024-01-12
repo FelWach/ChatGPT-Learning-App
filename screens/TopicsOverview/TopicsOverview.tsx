@@ -1,27 +1,23 @@
-import { Button, ScrollView, Text } from 'tamagui';
+import { Button, ScrollView, Text, Tabs } from 'tamagui';
 import { H1, YStack, XStack } from 'tamagui';
 import { TopicsCard } from '../../components/TopicCards/TopicsCard';
 import { topicAtom, topicCardAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';
-import { SaveAreaView } from '../../components/SafeAreaView';
+import { SafeAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
 import { GlobalLoadingIndicator } from '../../App';
 import { useWindowDimensions } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 
+
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
-  const [, setCurrentTopic] = useAtom(topicAtom);
-
-
+  const [currentTopic, setCurrentTopic] = useAtom(topicAtom);
 
   // TODO: adjust spacing and other styling
-  // TODO: add MenuButton to navigate to ProfileScreen
   return (
-
-    <SaveAreaView>
-
+    <SafeAreaView>
       {topicCards.length ? (
         <ScrollView height={useWindowDimensions().height}>
           <YStack>
@@ -43,9 +39,11 @@ export function TopicsOverview({ navigation }) {
           <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$5" onPress={() => navigation.navigate('Configurator')}>
             Add Learnset
           </Button>
+
           <YStack alignSelf="center" marginBottom="$10">
-            <TabNavigator navigation={navigation} value={'topicsOverview'} />
+            <TabNavigator navigation={navigation} value={"topicsOverview"}/>
           </YStack>
+
 
           {/* // TODO: making Tab Navigator stick to bottom (position absolute) until screen is scrollable */}
           {/*}
@@ -63,7 +61,7 @@ export function TopicsOverview({ navigation }) {
         </ScrollView>
       ) : (
         <>
-          <YStack space="$5" marginTop="$8" marginHorizontal="$3">
+          <YStack space="$5" marginHorizontal="$3">
             <H1 size="$9" color="#52A9FF">
               You haven't generated any learning sets yet!
             </H1>
@@ -77,12 +75,12 @@ export function TopicsOverview({ navigation }) {
           <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10" onPress={() => navigation.navigate('Configurator')}>
             Add Learnset
           </Button>
+
           <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
-            <TabNavigator navigation={navigation} value={'topicsOverview'} />
+            <TabNavigator navigation={navigation} value={"topicsOverview"}/>
           </YStack>
         </>
       )}
-
-    </SaveAreaView>
+    </SafeAreaView >
   );
 }

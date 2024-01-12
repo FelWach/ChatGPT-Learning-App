@@ -6,9 +6,7 @@ export function TopicsCard({ ...props }: CardProps & TopicCardProps) { // extend
         <Card 
         bordered 
         animation="bouncy"
-        size="$3"
-        width={340}
-        height={100}
+        width="100%"
         padding="$4"
         justifyContent="center"
         {...props}

@@ -1,3 +1,4 @@
+//import Native Stack Navigator
 import { Stack } from './App'
 // import Screens
 import StartScreen from './screens/StartScreen'
@@ -14,26 +15,35 @@ import { X, ArrowLeft } from '@tamagui/lucide-icons'
 import Header from './components/Header'
 
 // for testing
-import  ApiCalls  from './screens/apiCalls'
-import  Features  from './screens/Features'
+import ApiCalls from './screens/apiCalls'
+import Features from './screens/Features'
+import { SaveAreaView } from './components/SafeAreaView'
 
 
 
 export default function Routes({ }) {
 
     return (
-        <Stack.Navigator initialRouteName="StartScreen" screenOptions={{ headerStyle: {backgroundColor: 'black'}, headerTintColor: 'white', headerBackVisible: false, headerTransparent: true }}>
+        <Stack.Navigator initialRouteName="StartScreen"
+            screenOptions={({ navigation }) => ({
+                headerTitle: "",
+                headerTransparent: true,
+                headerLeftContainerStyle: { margin: 20, padding: 20 },
+                headerRightContainerStyle: { margin: 20, padding: 20 },
+                headerLeft: () => (<NavButtonArrow navigation={navigation} />)
+            })}>
             <Stack.Screen name="StartScreen" component={StartScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={Login} options={({navigation}) => ({ headerTitle: () => "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />
-            <Stack.Screen name="Register" component={Register} options={({navigation}) => ({ headerTitle: () => "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />
-            <Stack.Screen name="LearnSet" component={Learnset} options={({navigation}) => ({ title: "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="LearnSet" component={Learnset} />
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-            <Stack.Screen name="Configurator" component={StartScreen} options={{ title: "" }} />
-            <Stack.Screen name="Learning" component={Learning} options={({navigation}) => ({ title: "", headerRight: () => (<NavButtonX navigation={navigation} />), })} />
+            <Stack.Screen name="Configurator" component={Configurator} options={({ navigation }) => ({ headerLeft: () => (<></>), headerRight: () => (<NavButtonX navigation={navigation} />) })} />
+            <Stack.Screen name="Learning" component={Learning} options={({ navigation }) => ({ headerLeft: () => (<></>), headerRight: () => (<NavButtonX navigation={navigation} />) })} />
             <Stack.Screen name="TopicsOverview" component={TopicsOverview} options={{ headerShown: false }} />
 
-            <Stack.Screen name="Api" component={ApiCalls} options={({navigation}) => ({ title: "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />
-            <Stack.Screen name="Features" component={Features} options={({navigation}) => ({ title: "", headerLeft: () => (<NavButtonArrow navigation={navigation} />), })} />
+            <Stack.Screen name="Api" component={ApiCalls} />
+            <Stack.Screen name="Features" component={Features} />
         </Stack.Navigator>
+
     )
 }
