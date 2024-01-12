@@ -21,7 +21,7 @@ export function TopicsOverview({ navigation }) {
       {topicCards.length ? (
         <ScrollView height={useWindowDimensions().height}>
           <YStack>
-            <H1 size="$9" marginBottom="$4" marginTop="$6">Your Learnsets</H1>
+            <H1 size="$9" marginBottom="$4">Your Learnsets</H1>
             <YStack alignItems="center" space="$3">
               {topicCards.map((topic, index) => (
                 <TopicsCard

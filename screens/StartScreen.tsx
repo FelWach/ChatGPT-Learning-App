@@ -8,11 +8,11 @@ export default function StartScreen({ navigation }) {
     <SafeAreaView>
       <YStack>
         <H2 alignSelf='center'>Learning App</H2>        
-        <YStack marginTop='$10' space="$5"> 
-          <Button onPress={() => navigation.navigate('Login')}>
+        <YStack marginTop='$10' space="$5" alignItems='center'> 
+          <Button width="75%" onPress={() => navigation.navigate('Login')}>
             <Text>Login</Text>
           </Button>
-          <Button onPress={() => navigation.navigate('Register')} >
+          <Button width="75%" onPress={() => navigation.navigate('Register')} >
             <Text>Register</Text>
           </Button>         
         </YStack>       
