@@ -4,7 +4,7 @@ import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem"
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SafeAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
 
@@ -70,13 +70,13 @@ export function Learnset({ navigation }) {
 
 
     return (
-        <SaveAreaView>
+        <SafeAreaView>
             <ScrollView>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
-                    <H1 size="$9" paddingVertical="$4">{topic}</H1>
+                    <H1 size="$9" paddingBottom="$4">{topic}</H1>
                     <XStack>
-                        <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
-                        <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={editSet}></Button>
+                        <Button icon={Trash} size="$6" width="$4" height="$4" paddingBottom="$4" chromeless onPress={deleteSet}></Button>
+                        <Button icon={Edit} size="$6" width="$4" height="$4" paddingBottom="$4" chromeless onPress={editSet}></Button>
                     </XStack>
                 </XStack>
 
@@ -119,24 +119,16 @@ export function Learnset({ navigation }) {
                         </Button>
                     </XStack>
                     :
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15">
+                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5">
                     Add Questions
                 </Button>
-                }
-                
-            </ScrollView >
+                }                
+            
             {isEditingQAndA ? null :
-            <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
-                {
-                    position: "absolute",
-                    bottom: 40,
-                    right: 0,
-                    left: 0,
-                    marginHorizontal: 10,
-                    
-                }}>Lernen</Button> 
+            <Button alignSelf="center" size="$5" width="75%" marginBottom="$5" theme="active" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
             }
-        </SaveAreaView>
+            </ScrollView >
+        </SafeAreaView>
     )
     // TODO: add learn button functionality
 }

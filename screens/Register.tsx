@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, H2, Input, Text } from 'tamagui';
-import { SaveAreaView } from '../components/SafeAreaView';
-import { UserProps } from '../api/type';
+import { Button, H2, Input, Text, View, YStack } from 'tamagui';
+import { SafeAreaView } from '../components/SafeAreaView';
+import { UserProps } from '../api/types';
 import { register } from '../api/api';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -41,114 +41,121 @@ export default function Register({ navigation }) {
   }
 
   return (
-    <SaveAreaView>
-      <H2>Create an account</H2>
-
-      <Controller
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Name is required',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Name"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize='none'
+    <SafeAreaView>
+      <View marginHorizontal="$3">
+        <H2>Create an account</H2>
+        <YStack marginTop="$5">
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: 'Name is required!',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Name"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+              />
+            )}
+            name="name"            
           />
-        )}
-        name="name"
-      />
-      <Text>{errors.name?.message}</Text>
+          <Text marginVertical="$2" marginLeft="$3">{errors.name?.message}</Text>
 
-      <Controller
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Email is required',
-          },
-          pattern: {
-            value: /\S+@\S+\.\S+/,
-            message: 'Please enter a valid email',
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Email"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize='none'
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: 'Email is required!',
+              },
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Please enter a valid email!',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Email"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+              />
+            )}
+            name="email"
           />
-        )}
-        name="email"
-      />
-      <Text>{errors.email?.message}</Text>
+          <Text marginVertical="$2" marginLeft="$3">{errors.email?.message}</Text>
 
-      <Controller
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Password is required',
-          },
-          minLength: {
-            value: 8,
-            message: 'Password must have at least 8 characters',
-          }
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Password"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize='none'
-            secureTextEntry={true}
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: 'Password is required!',
+              },
+              minLength: {
+                value: 8,
+                message: 'Password must have at least 8 characters!',
+              }
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Password"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+                secureTextEntry={true}
+              />
+            )}
+            name="password"
           />
-        )}
-        name="password"
-      />
-      <Text>{errors.password?.message}</Text>
+          <Text marginVertical="$2" marginLeft="$3">{errors.password?.message}</Text>
 
-      <Controller
-        control={control}
-        rules={{
-          required: {
-            value: true,
-            message: 'Please confirm your password',
-          },
-          validate: value =>
-            value === getValues('password') || 'The passwords do not match',
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Confirm password"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            autoCapitalize='none'
-            secureTextEntry={true}
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: 'Please confirm your password.',
+              },
+              validate: value =>
+                value === getValues('password') || 'The passwords do not match!',
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Confirm password"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+                secureTextEntry={true}
+              />
+            )}
+            name="repeatPassword"
           />
-        )}
-        name="repeatPassword"
-      />
-      <Text>{errors.repeatPassword?.message}</Text>
+          <Text marginVertical="$2" marginLeft="$3">{errors.repeatPassword?.message}</Text>
 
-      {errorMessage && <Text>{errorMessage}</Text>}
+          {errorMessage && <Text>{errorMessage}</Text>}
 
-      <Button
-        disabled={!isValid}
-        style={{ opacity: isValid ? 1 : 0.7 }}
-        onPress={handleSubmit(onSubmit)}>
-        Register
-      </Button>
-    </SaveAreaView>
+          <Button
+            disabled={!isValid}
+            style={{ opacity: isValid ? 1 : 0.7 }}
+            onPress={handleSubmit(onSubmit)}
+            width="75%"
+            alignSelf='center'
+            marginTop="$5"
+            >
+            Register
+          </Button>
+        </YStack>
+      </View>
+    </SafeAreaView>
   );
 };
 

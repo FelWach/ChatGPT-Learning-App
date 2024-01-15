@@ -3,7 +3,7 @@ import { Pencil } from '@tamagui/lucide-icons';
 import { useRef } from 'react';
 import { atom, useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SafeAreaView } from '../components/SafeAreaView';
 import { useWindowDimensions } from 'react-native';
 import { updateUser } from '../api/api';
 import TabNavigator from '../components/TabNavigator/TabNavigator'
@@ -16,7 +16,7 @@ const editPasswordAtom = atom<boolean>(false);
 export default function Profile({ navigation }) {
 
   const [user, setUser] = useAtom(userAtom);
-  const [password, setPassword] = useAtom(passwordAtom);  
+  const [password, setPassword] = useAtom(passwordAtom);
   const [editUsername, setEditUsername] = useAtom(editUsernameAtom);
   const [editEmail, setEditEmail] = useAtom(editEmailAtom);
   const [editPassword, setEditPassword] = useAtom(editPasswordAtom)
@@ -39,30 +39,29 @@ export default function Profile({ navigation }) {
   }
 
 
-const handleEditUsername = () => {
-  if (editUsername) {
-    setEditUsername(false);
-  } else {
-    setEditUsername(true);
-    // TODO: focus text when editUsername = true
-    inputUsername.current.focus();
-  }
-};
+  const handleEditUsername = () => {
+    if (editUsername) {
+      setEditUsername(false);
+    } else {
+      setEditUsername(true);
+      // TODO: focus text when editUsername = true
+      inputUsername.current.focus();
+    }
+  };
 
-const handleEditEmail = () => {
-  editEmail ? setEditEmail(false) : setEditEmail(true);
-  // TODO: focus text when editEmail = true
-};
+  const handleEditEmail = () => {
+    editEmail ? setEditEmail(false) : setEditEmail(true);
+    // TODO: focus text when editEmail = true
+  };
 
-const handleEditPassword = () => {
-  editPassword ? setEditPassword(false) : setEditPassword(true);
-  // TODO: focus text when editPassword = true
-};
+  const handleEditPassword = () => {
+    editPassword ? setEditPassword(false) : setEditPassword(true);
+    // TODO: focus text when editPassword = true
+  };
 
-return (
-  <View>
-    <SaveAreaView>
-      <YStack justifyContent="space-between" alignItems="flex-start" space="$5" margin="$5" zIndex='$1'>
+  return (
+    <SafeAreaView>
+      <YStack justifyContent="space-between" alignItems="flex-start" space="$5" zIndex='$1'>
         <H2>Your Profile</H2>
         <XStack justifyContent='space-evenly' space>
           <Input width='85%'
@@ -98,13 +97,12 @@ return (
         <Button width='100%' borderColor='black' onPress={() => navigation.navigate('StartScreen')}>Sign out</Button>
       </YStack>
 
-
-      <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height -100}>
-        <TabNavigator navigation={navigation} value={'profile'} />
+      <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
+        <TabNavigator navigation={navigation} value={"profile"}/>
       </YStack>
-    </SaveAreaView>
-  </View>
-);
+
+    </SafeAreaView>
+  );
 };
 
 

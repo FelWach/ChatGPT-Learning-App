@@ -4,6 +4,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/NavButtons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/SafeAreaView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SafeAreaView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/TabNavigator/TabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/TabNavigator/TabNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Learning.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learning.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/StartScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/StartScreen.tsx" afterDir="false" />
     <list default="true" id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="Fixed Error Handling">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />

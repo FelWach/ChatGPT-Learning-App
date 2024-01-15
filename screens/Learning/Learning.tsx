@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { SaveAreaView } from "../../components/SafeAreaView";
 import { Progress, SizeTokens, YStack, Card, Text, View, XStack, Button } from 'tamagui';
-import { useAtom } from 'jotai';
-import { atom } from 'jotai';
+import { useAtom, atom } from 'jotai';
 import { questionsAnswersAtom } from '../../state/atoms';
 import { Repeat } from '@tamagui/lucide-icons';
 import { QuestionsAnswersData } from './types';
+import { getEntriesWithTopic } from '../../api/api';
+import { SafeAreaView } from "../../components/SafeAreaView";
+import { useHeaderHeight } from '@react-navigation/elements';
 
 const currIDAtom = atom(0);
 const currQAtom = atom("");
@@ -180,14 +181,14 @@ export default function Learning({ navigation }) {
   }
 
   return (
-    <SaveAreaView>
+    <SafeAreaView>
       <View>
         { isFinished ? null :
           <YStack alignItems="center">
             {numberQ > questionsAnswers.length ?
               <Repeat size={25} color={"#D74C4C"} marginTop='$3.5'/>
               :
-              <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
+              <Text textAlign='center' marginBottom='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
             }
             <XStack>
               <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
@@ -245,7 +246,7 @@ export default function Learning({ navigation }) {
           </Progress>
         </YStack>
       </View>
-    </SaveAreaView>
+    </SafeAreaView>
   );
 }
 
