@@ -2,36 +2,11 @@ import { Accordion, Input, Paragraph, Square, TextArea, XStack } from "tamagui";
 import { Trash, Edit, ChevronDown } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItemProps } from "../screens/Learnset/types";
 import { Button } from "tamagui";
-import { Alert } from "react-native";
 
-import {deleteEntry} from '../api/api'
-
-export function QuestionsAccordionItem(props: any, { navigation }) {
-
-    function deleteQuestion(id : number): void {
-        Alert.alert(
-            'Confirm Deletion',
-            'Are you sure you want to delete this question?',
-            [
-                {
-                    text: 'Cancel',
-                    style: 'cancel',
-                },
-                {
-                    text: 'Delete',
-                    onPress: () => {
-                        console.log("delete: " + id)
-                        deleteEntry(id);
-                        // TODO: Refresh the cards
-                    }
-                },
-            ],
-            { cancelable: false }
-        );
-    }
+export function QuestionsAccordionItem(props: any) {
 
     return (
-        <Accordion.Item value={props.value} >
+        <Accordion.Item value={props.value} marginBottom="$2" >
             <Accordion.Trigger flexDirection="row" justifyContent="space-between">
                 {({ open }) => (
                     <>
@@ -47,7 +22,7 @@ export function QuestionsAccordionItem(props: any, { navigation }) {
                     {props.answer}
                 </Paragraph>
                 <XStack justifyContent='space-evenly' space>
-                    <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={() => deleteQuestion(props.id)}></Button>
+                    <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={() => props.deleteQuestion(props.id)}></Button>
                     <Button
                         icon={Edit}
                         size="$6"

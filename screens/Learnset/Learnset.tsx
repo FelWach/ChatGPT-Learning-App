@@ -7,6 +7,8 @@ import { useHydrateAtoms } from 'jotai/utils'
 import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
+import { useQueryClient } from "@tanstack/react-query";
+import { deleteEntry } from "../../api/api";
 
 const isEditingQAndAAtom = atom<boolean>(false);
 
@@ -17,6 +19,8 @@ const answerAtom = atom<string>('');
 
 export function Learnset({ navigation }) {
 
+    const queryClient = useQueryClient();
+    
     const [questions, setQuestions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
 
@@ -25,6 +29,30 @@ export function Learnset({ navigation }) {
     const [id, setId] = useAtom(idAtom);
     const [question, setQuestion] = useAtom(questionAtom);
     const [answer, setAnswer] = useAtom(answerAtom);
+
+    function deleteQuestion(id : number): void {
+        Alert.alert(
+            'Confirm Deletion',
+            'Are you sure you want to delete this question?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => {
+                        console.log("delete: " + id)
+                        deleteEntry(id);
+                        queryClient.invalidateQueries({ queryKey: ['topics'] });
+                        navigation.navigate('TopicsOverview');
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
 
     function deleteSet(): void {
         // Display an alert to confirm the deletion
@@ -104,6 +132,7 @@ export function Learnset({ navigation }) {
                             answer={topic.A}
                             value={topic.id}
                             handleEditQAndA={handleEditQAndA}
+                            deleteQuestion={deleteQuestion}
                         />
                     ))}
                         
