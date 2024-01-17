@@ -140,28 +140,6 @@ export default function Learning({ navigation }) {
       return;
     }
     return (
-      <Card elevate size="$20" borderRadius="$10" style={{ backgroundColor: "#901C1C" }}>
-        <Card.Header padded>
-        </Card.Header>
-        <Card.Footer padded>
-
-        </Card.Footer>
-        <Card.Background alignItems="center">
-          <View style={styles.card}>
-            <Text style={styles.cardTextSwipe} color={"#D74C4C"}>
-              Wrong
-            </Text>
-          </View>
-        </Card.Background>
-      </Card>
-    )
-  }
-
-  const leftSwipeActions = () => {
-    if (isFinished) {
-      return;
-    }
-    return (
       <Card elevate size="$20" borderRadius="$10" style={{ backgroundColor: "#0A9632" }}>
         <Card.Header padded>
         </Card.Header>
@@ -179,19 +157,41 @@ export default function Learning({ navigation }) {
     )
   }
 
+  const leftSwipeActions = () => {
+    if (isFinished) {
+      return;
+    }
+    return (
+      <Card elevate size="$20" borderRadius="$10" style={{ backgroundColor: "#901C1C" }}>
+        <Card.Header padded>
+        </Card.Header>
+        <Card.Footer padded>
+
+        </Card.Footer>
+        <Card.Background alignItems="center">
+          <View style={styles.card}>
+            <Text style={styles.cardTextSwipe} color={"#D74C4C"}>
+              Wrong
+            </Text>
+          </View>
+        </Card.Background>
+      </Card>
+    )
+  }
+
   return (
     <SaveAreaView>
       <View>
         { isFinished ? null :
           <YStack alignItems="center">
-            {numberQ > questionsAnswers.length ?
-              <Repeat size={25} color={"#D74C4C"} marginTop='$3.5'/>
-              :
-              <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
-            }
             <XStack>
-              <Text textAlign='left' margin='$3' width={170} onPress={() => nextQuestion()}>Correct</Text>
-              <Text textAlign='right' margin='$3' width={170} onPress={() => repeatOneQuestion()}>Wrong</Text>
+            {numberQ > questionsAnswers.length &&
+              <Repeat size={15} color={"#D74C4C"} />
+            }
+              <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
+            </XStack>
+            <XStack style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+              <Text style={{ flex: 1, margin: 15 }} onPress={() => nextQuestion()}>Correct</Text>
             </XStack>
           </YStack>
         }
