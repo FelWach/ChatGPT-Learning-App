@@ -56,6 +56,13 @@ Falls **weder** pageStart **noch** pageEnd gegeben ist, werden nbQuestions Frage
 
 ---
 
+POST /addToLearnsetFromDocs
+
+added neue Fragen zu einem bestehenden Learnset nachdem ein PDF hochgeladen wurde.
+Benötigt nbQuestions, pageStart, pageEnd, learnsetName im req.body
+
+---
+
 POST /generate
 
 generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
@@ -67,6 +74,13 @@ POST /generate/:topic
 
 generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
 topic in req params. (eventuell wird nur diese route benötigt)
+
+---
+
+POST /addToLearnset
+
+added neue Fragen zu einem bestehenden Learnset. 
+Benötigt topic, nbQuestions, userId im request Body
 
 ---
 

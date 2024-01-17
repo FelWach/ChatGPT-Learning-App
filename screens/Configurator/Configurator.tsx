@@ -20,7 +20,7 @@ import {
   difficultyAtom,
   topicAtom,
 } from "./atoms";
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SafeAreaView } from "../../components/SafeAreaView";
 import {
   GenerateProps,
   ConfigSettingsProps,
@@ -120,7 +120,7 @@ export function Configurator({ navigation }) {
           .then(async (res) => {
             console.log("Response from Topic generate: " + res);
             resetAtoms();
-            await queryClient.invalidateQueries({queryKey: ['topics']});
+            await queryClient.invalidateQueries({ queryKey: ['topics'] });
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
@@ -134,13 +134,13 @@ export function Configurator({ navigation }) {
           .then(async (res) => {
             console.log("Response from PDF generate: " + res);
             resetAtoms();
-            await queryClient.invalidateQueries({queryKey: ['topics']});
+            await queryClient.invalidateQueries({ queryKey: ['topics'] });
             navigation.navigate("TopicsOverview");
           }
           ).catch((error) => {
             console.log(error);
             alert("Could not generate questions, please try again");
-          }). finally(() => {
+          }).finally(() => {
             setLoading(false);
           })
       };
@@ -156,7 +156,7 @@ export function Configurator({ navigation }) {
   }
   return (
     <ScrollView>
-      <SaveAreaView>
+      <SafeAreaView>
         <XStack justifyContent="center">
           <ToggleGroup
             type="single"
@@ -183,10 +183,10 @@ export function Configurator({ navigation }) {
         </YStack>
         <ConfiguratorSettings />
         {loading && <Spinner />}
-        <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
+        <Button size="$5" width="75%" theme="active" alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
           Generate
         </Button>
-      </SaveAreaView>
+      </SafeAreaView>
     </ScrollView>
   );
 }

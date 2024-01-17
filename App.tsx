@@ -3,7 +3,8 @@ import { StyleSheet, StatusBar } from 'react-native'
 import { Button, View, Text, TamaguiProvider, H1 } from 'tamagui'
 import config from './tamagui.config'
 import { DarkTheme, NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+//import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createStackNavigator } from '@react-navigation/stack';
 import Routes from './Routes'
 import { Provider } from 'jotai'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -16,6 +17,7 @@ import {
   useIsFetching,
 } from '@tanstack/react-query'
 import { atomsWithQuery, queryClientAtom } from 'jotai-tanstack-query'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 
 export function GlobalLoadingIndicator() {
@@ -25,8 +27,9 @@ export function GlobalLoadingIndicator() {
     <H1>Queries are fetching in the background...</H1>
   ) : null
 }
-// creating Native Stack Navigator
-export const Stack = createNativeStackNavigator();
+
+// creating Stack Navigator
+export const Stack = createStackNavigator();
 
 const queryClient = new QueryClient()
 
@@ -52,18 +55,20 @@ export default function App() {
   // added DarkTheme to NavigationContainer to make background color dark
   return (
     <Provider>
-      <NavigationContainer theme={DarkTheme}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <StatusBar barStyle='light-content' />
-          <TamaguiProvider config={config} defaultTheme='dark_blue'>
-            <QueryClientProvider client={queryClient}>
-              <HydrateAtoms>
-                <Routes />
-              </HydrateAtoms>
-            </QueryClientProvider>
-          </TamaguiProvider>
-        </GestureHandlerRootView>
-      </NavigationContainer>
+      <SafeAreaProvider>
+        <NavigationContainer theme={DarkTheme}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar barStyle='light-content' />
+            <TamaguiProvider config={config} defaultTheme='dark_blue'>
+              <QueryClientProvider client={queryClient}>
+                <HydrateAtoms>
+                  <Routes />
+                </HydrateAtoms>
+              </QueryClientProvider>
+            </TamaguiProvider>
+          </GestureHandlerRootView>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   )
 }
