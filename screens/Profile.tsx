@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { atom, useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
 import { SaveAreaView } from '../components/SafeAreaView';
-import { useWindowDimensions } from 'react-native';
+import { Alert, useWindowDimensions } from 'react-native';
 import { updateUser } from '../api/api';
 import { UpdatedUserProps } from '../api/type';
 import TabNavigator from '../components/TabNavigator/TabNavigator'
@@ -66,10 +66,26 @@ export default function Profile({ navigation }) {
     }
   }
 
-  const signOutUser = () => {
-    setUser(null);
-    navigation.navigate('Login');
-  }
+  const signOutUserAlert = () => {
+    Alert.alert(
+          'Confirm Sign out',
+          'Are you sure you want to sign out?',
+          [
+              {
+                  text: 'Cancel',
+                  style: 'cancel',
+              },
+              {
+                  text: 'Sign Out',
+                  onPress: () => {
+                    navigation.navigate('Login');
+                    setUser(null);
+                  },
+              },
+          ],
+          { cancelable: false }
+      );
+    }
 
   const handleEditUsername = () => {
     editUsername ? setEditUsername(false) : setEditUsername(true);
@@ -252,7 +268,8 @@ export default function Profile({ navigation }) {
               <Button 
                 width='100%' 
                 borderColor='black' 
-                onPress={() => signOutUser()}>
+                variant="outlined"
+                onPress={() => signOutUserAlert()}>
                   Sign out
               </Button> 
           </YStack>
