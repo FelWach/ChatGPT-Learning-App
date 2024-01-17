@@ -3,7 +3,7 @@ import { Pencil } from '@tamagui/lucide-icons';
 import React, { useEffect, useRef } from 'react';
 import { atom, useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
-import { SaveAreaView } from '../components/SafeAreaView';
+import { SafeAreaView } from '../components/SafeAreaView';
 import { Alert, useWindowDimensions } from 'react-native';
 import { updateUser } from '../api/api';
 import { UpdatedUserProps } from '../api/type';
@@ -78,8 +78,8 @@ export default function Profile({ navigation }) {
               {
                   text: 'Sign Out',
                   onPress: () => {
-                    navigation.navigate('Login');
-                    setUser(null);
+                    navigation.navigate('StartScreen');
+                    setUser({});
                   },
               },
           ],
@@ -110,7 +110,7 @@ export default function Profile({ navigation }) {
 
   return (
       <View>
-        <SaveAreaView>
+        <SafeAreaView>
           <YStack justifyContent="space-between" alignItems="flex-start" space="$5" margin="$5" zIndex='$1'>
             <H2>Your Profile</H2>
 
@@ -278,7 +278,7 @@ export default function Profile({ navigation }) {
         <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height -100}>
           <TabNavigator navigation={navigation} value={'profile'} />
         </YStack>
-      </SaveAreaView>
+      </SafeAreaView>
     </View>
 );
 };
