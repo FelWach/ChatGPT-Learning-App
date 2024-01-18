@@ -62,7 +62,7 @@ export default function Profile({ navigation }) {
   return (
     <SafeAreaView>
       <YStack justifyContent="space-between" alignItems="flex-start" space="$5" zIndex='$1'>
-        <H2>Your Profile</H2>
+        <H2>Hello {user.name}!</H2>
         <XStack justifyContent='space-evenly' space>
           <Input width='85%'
             ref={inputUsername}
@@ -93,12 +93,14 @@ export default function Profile({ navigation }) {
             secureTextEntry={true}
           /><Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()}></Button>
         </XStack>
-        <Button width='100%' marginTop='$3' borderColor='black' onPress={() => saveUserData()}>Save</Button>
-        <Button width='100%' borderColor='black' onPress={() => navigation.navigate('StartScreen')}>Sign out</Button>
+      </YStack>
+      <YStack marginTop='$9' alignItems='center' gap='$3'>
+        <Button  width='75%' borderColor='black' onPress={() => saveUserData()}>Save</Button>
+        <Button  width='75%' borderColor='black' onPress={() => navigation.navigate('Login')}>Sign out</Button>
       </YStack>
 
       <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
-        <TabNavigator navigation={navigation} value={"profile"}/>
+        <TabNavigator navigation={navigation} value={"profile"} />
       </YStack>
 
     </SafeAreaView>

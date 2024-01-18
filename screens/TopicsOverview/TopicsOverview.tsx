@@ -19,34 +19,29 @@ export function TopicsOverview({ navigation }) {
   return (
     <SafeAreaView>
       {topicCards.length ? (
-        <ScrollView height={useWindowDimensions().height}>
-          <YStack>
-            <H1 size="$9" marginBottom="$4">Your Learnsets</H1>
-            <YStack alignItems="center" space="$3">
-              {topicCards.map((topic, index) => (
-                <TopicsCard
-                  key={index}
-                  numberOfLearncards={topic.numberOfLearncards}
-                  headline={topic.headline}
-                  onPress={async () => {
-                    setCurrentTopic(topic.headline);
-                    navigation.navigate('LearnSet');
-                  }}
-                />
-              ))}
+        <>
+          <ScrollView marginBottom="$14">
+            <YStack>
+              <H1 size="$9" marginBottom="$4">Your Learnsets</H1>
+              <YStack alignItems="center" space="$3">
+                {topicCards.map((topic, index) => (
+                  <TopicsCard
+                    key={index}
+                    numberOfLearncards={topic.numberOfLearncards}
+                    headline={topic.headline}
+                    onPress={async () => {
+                      setCurrentTopic(topic.headline);
+                      navigation.navigate('LearnSet');
+                    }}
+                  />
+                ))}
+              </YStack>
             </YStack>
-          </YStack>
-          <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$5" onPress={() => navigation.navigate('Configurator')}>
-            Add Learnset
-          </Button>
-
-          <YStack alignSelf="center" marginBottom="$10">
-            <TabNavigator navigation={navigation} value={"topicsOverview"}/>
-          </YStack>
-
-
-          {/* // TODO: making Tab Navigator stick to bottom (position absolute) until screen is scrollable */}
-          {/*}
+            <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" onPress={() => navigation.navigate('Configurator')}>
+              Add Learnset
+            </Button>
+            {/* // TODO: making Tab Navigator stick to bottom (position absolute) until screen is scrollable */}
+            {/*}
           {topicCards.length <= 3 ? (
             <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
               <TabNavigator navigation={navigation} value={'topicsOverview'} />
@@ -57,8 +52,11 @@ export function TopicsOverview({ navigation }) {
             </YStack>
           )}
           {*/}
-
-        </ScrollView>
+          </ScrollView>
+          <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
+            <TabNavigator navigation={navigation} value={"topicsOverview"} />
+          </YStack>
+        </>
       ) : (
         <>
           <YStack space="$5" marginHorizontal="$3">
@@ -77,7 +75,7 @@ export function TopicsOverview({ navigation }) {
           </Button>
 
           <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
-            <TabNavigator navigation={navigation} value={"topicsOverview"}/>
+            <TabNavigator navigation={navigation} value={"topicsOverview"} />
           </YStack>
         </>
       )}
