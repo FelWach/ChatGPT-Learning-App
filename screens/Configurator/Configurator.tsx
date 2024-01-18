@@ -15,7 +15,7 @@ import {
   difficultyAtom,
   selectedValueAtom,
 } from "./atoms";
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SafeAreaView } from "../../components/SafeAreaView";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 import { TopicField } from "./TopicField";
 import { useQueryClient } from "@tanstack/react-query";
@@ -112,7 +112,7 @@ export function Configurator({ navigation, route }) {
 
   return (
     <ScrollView>
-      <SaveAreaView>
+      <SafeAreaView>
         <TopicUploadSwitcher />
         <YStack paddingTop={30} paddingBottom={20}>
           {selectedValue === "Topic" ? (
