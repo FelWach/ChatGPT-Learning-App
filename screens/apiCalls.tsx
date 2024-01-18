@@ -1,9 +1,9 @@
-import { View } from 'react-native';
-import { Button } from 'tamagui';
+import {  View } from 'react-native';
+import {  Button, ScrollView } from 'tamagui';
 import { useAtom  } from 'jotai'
 import { userAtom } from '../state/atoms'
 import { addUser, users, deleteUser, login, register, updateUser, generate, generate2, upload, generateFromDocs, setConfiguration, getEntries, getUserEntries, getEntriesWithTopic, getEntry, deleteEntry } from '../api/api'
-//import upload from '../api/api'
+import { SafeAreaView } from '../components/SafeAreaView';
 
 export default function ApiCalls() {
   const [user, setUser] = useAtom(userAtom);
@@ -214,9 +214,9 @@ export default function ApiCalls() {
       };
 
 
-  return (
-    <View>
-    {/*}
+  return (    
+    <SafeAreaView>
+      <ScrollView>
       <Button onPress= {  handleGenerate }>Generate</Button>
       <Button onPress= {  handleGenerateTopic }>Generate Topic</Button>
       <Button onPress= {  handleSetConfiguration }>Set Configurations</Button>
@@ -230,7 +230,6 @@ export default function ApiCalls() {
       <Button onPress= {  handleDeleteUser }>Delete User</Button>
       <Button onPress= {  handleLogin }>Login</Button>
       <Button onPress= {  handleRegister }>Register</Button>
-{*/}
       <Button onPress= {  handleGenerate }>Generate</Button>
       <Button onPress= {  handleGenerateTopic }>Generate Topic</Button>
       <Button onPress= {  handleSetConfiguration }>Set Configurations</Button>
@@ -242,7 +241,7 @@ export default function ApiCalls() {
       <Button onPress= {  handleUpdateUser }>Update User</Button>
       <Button onPress= {  handleUpload }>Upload</Button>
       <Button onPress= {  handleGenerateFromDocs }>Generate Q&As From PDF</Button>
-
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };

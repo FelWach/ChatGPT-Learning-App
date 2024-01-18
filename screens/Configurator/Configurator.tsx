@@ -123,10 +123,10 @@ export function Configurator({ navigation, route }) {
         </YStack>
         <ConfiguratorSettings />
         {loading && <Spinner />}
-        <Button size="$6" theme="active" marginVertical={30} onPress={configureAndGenerate} >
+        <Button size="$5" width="75%" theme="active" alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
           Generate
         </Button>
-      </SaveAreaView>
+      </SafeAreaView>
     </ScrollView>
   );
 }

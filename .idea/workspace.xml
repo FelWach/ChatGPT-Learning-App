@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="Fixed Error Handling">
-      <change afterPath="$PROJECT_DIR$/screens/TopicsOverview/types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/atoms.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/state/atoms.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/QuestionsAccordionItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/QuestionsAccordionItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,7 +33,9 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/learning&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/laura/OneDrive - FH OOe/Dokumente/00_FH_WSemester_23_24/Semesterprojekt WS2324/Projekt/ChatGPT-Learning-App&quot;
   }
 }</component>
