@@ -1,5 +1,5 @@
-import { Button, ScrollView, Text, Tabs } from 'tamagui';
-import { H1, YStack, XStack } from 'tamagui';
+import { Button, ScrollView, Text  } from 'tamagui';
+import { H1, YStack } from 'tamagui';
 import { TopicsCard } from '../../components/TopicCards/TopicsCard';
 import { topicAtom, topicCardAtom } from '../../state/atoms';
 import { useAtom } from 'jotai';

@@ -1,6 +1,5 @@
 import { Button, Tabs } from 'tamagui';
 import { User, BookOpen } from '@tamagui/lucide-icons'
-import { useAtom, atom } from 'jotai';
 
 export default function TabNavigator({ navigation, value }) {
 
@@ -15,10 +14,5 @@ export default function TabNavigator({ navigation, value }) {
                 </Tabs.Tab>
             </Tabs.List>
         </Tabs>
-/*
-        <Tab.Navigator>
-            <Tab.Screen></Tab.Screen>
-        </Tab.Navigator>
-        */
     )
 }

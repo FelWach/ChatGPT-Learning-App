@@ -18,7 +18,7 @@ import ApiCalls from './screens/apiCalls'
 import Features from './screens/Features'
 
 
-export default function Routes({ }) {
+export default function Routes({}) {
 
     return (
         <Stack.Navigator initialRouteName="Login"

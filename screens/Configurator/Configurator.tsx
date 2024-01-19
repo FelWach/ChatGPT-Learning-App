@@ -183,7 +183,7 @@ export function Configurator({ navigation }) {
         </YStack>
         <ConfiguratorSettings />
         {loading && <Spinner />}
-        <Button size="$5" width="75%" theme="active" alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
+        <Button size="$5" width="75%"  alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
           Generate
         </Button>
       </SafeAreaView>

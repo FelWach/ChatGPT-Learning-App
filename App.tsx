@@ -1,12 +1,12 @@
-import { useFonts } from 'expo-font'
-import { StyleSheet, StatusBar } from 'react-native'
-import { Button, View, Text, TamaguiProvider, H1 } from 'tamagui'
 import config from './tamagui.config'
-import { DarkTheme, NavigationContainer } from '@react-navigation/native'
-//import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { useFonts } from 'expo-font'
+import { StatusBar, Text, useColorScheme } from 'react-native'
+import { TamaguiProvider, H1, Theme, ThemeName, useForceUpdate } from 'tamagui'
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native'
+import { switchThemeAtom } from './state/atoms'
 import { createStackNavigator } from '@react-navigation/stack';
 import Routes from './Routes'
-import { Provider } from 'jotai'
+import { Provider, useAtom, atom } from 'jotai'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useHydrateAtoms } from 'jotai/utils'
 import {
@@ -18,7 +18,6 @@ import {
 } from '@tanstack/react-query'
 import { atomsWithQuery, queryClientAtom } from 'jotai-tanstack-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-
 
 export function GlobalLoadingIndicator() {
   const isFetching = useIsFetching()
@@ -38,37 +37,58 @@ const HydrateAtoms = ({ children }) => {
   return children
 }
 
+// setting initial theme to dark theme
+export const themeAtom = atom<ThemeName>('dark_blue');
+
+export function SwitchTheme({ }) {
+  //const colorScheme: string = useColorScheme() as string;   for checking the colormode of the device settings
+  const [switchOn, setSwitchOn] = useAtom(switchThemeAtom);
+  const [theme, setTheme] = useAtom(themeAtom);
+
+  if (switchOn) {   
+      setTheme('light_blue_alt1')
+      console.log('switched theme to light_blue_alt1')
+    } else {
+      setTheme('dark_blue')
+      console.log('switched theme to dark_blue')
+    } 
+
+  return (
+    <TamaguiProvider config={config} defaultTheme={theme}>
+        <Theme name={theme}>
+          <SafeAreaProvider>
+            <NavigationContainer theme={theme === 'light_blue_alt1' ? DefaultTheme : DarkTheme}>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <StatusBar barStyle='light-content' />
+                <QueryClientProvider client={queryClient}>
+                  <HydrateAtoms>
+                    <Routes />
+                  </HydrateAtoms>
+                </QueryClientProvider>
+              </GestureHandlerRootView>
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </Theme>
+    </TamaguiProvider>
+  )
+}
+
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
+
   if (!fontsLoaded) {
     return (
-      <View>
-        <Text>{fontError?.message}</Text>
-      </View>
+      <Text>{fontError?.message}</Text>
     )
   }
 
-  // added DarkTheme to NavigationContainer to make background color dark
   return (
     <Provider>
-      <SafeAreaProvider>
-        <NavigationContainer theme={DarkTheme}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <StatusBar barStyle='light-content' />
-            <TamaguiProvider config={config} defaultTheme='dark_blue'>
-              <QueryClientProvider client={queryClient}>
-                <HydrateAtoms>
-                  <Routes />
-                </HydrateAtoms>
-              </QueryClientProvider>
-            </TamaguiProvider>
-          </GestureHandlerRootView>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <SwitchTheme />
     </Provider>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, H2, Input, View, XStack, YStack } from 'tamagui';
+import { Button, H2, Input, XStack, YStack } from 'tamagui';
 import { Pencil } from '@tamagui/lucide-icons';
 import { useRef } from 'react';
 import { atom, useAtom } from 'jotai'
@@ -7,6 +7,7 @@ import { SafeAreaView } from '../components/SafeAreaView';
 import { useWindowDimensions } from 'react-native';
 import { updateUser } from '../api/api';
 import TabNavigator from '../components/TabNavigator/TabNavigator'
+import ThemeSwitch from '../components/ThemeSwitch/ThemeSwitch';
 
 const passwordAtom = atom<string>('');
 const editUsernameAtom = atom<boolean>(false);
@@ -61,8 +62,11 @@ export default function Profile({ navigation }) {
 
   return (
     <SafeAreaView>
+      <XStack alignSelf='flex-end' marginBottom='$3'>
+        <ThemeSwitch />
+      </XStack>
+      <H2 marginBottom='$5'>Hello {user.name}!</H2>
       <YStack justifyContent="space-between" alignItems="flex-start" space="$5" zIndex='$1'>
-        <H2>Hello {user.name}!</H2>
         <XStack justifyContent='space-evenly' space>
           <Input width='85%'
             ref={inputUsername}
@@ -95,8 +99,8 @@ export default function Profile({ navigation }) {
         </XStack>
       </YStack>
       <YStack marginTop='$9' alignItems='center' gap='$3'>
-        <Button  width='75%' borderColor='black' onPress={() => saveUserData()}>Save</Button>
-        <Button  width='75%' borderColor='black' onPress={() => navigation.navigate('Login')}>Sign out</Button>
+        <Button width='75%'  onPress={() => saveUserData()}>Save</Button>
+        <Button width='75%'  onPress={() => navigation.navigate('Login')}>Sign out</Button>
       </YStack>
 
       <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>

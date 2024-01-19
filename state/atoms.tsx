@@ -1,4 +1,4 @@
-import { PrimitiveAtom, atom, useAtom } from 'jotai'
+import { atom } from 'jotai'
 import { atomsWithQuery } from 'jotai-tanstack-query'
 import { getEntriesWithTopic, getTopics } from '../api/api';
 import { TopicCardProps } from '../components/TopicCards/types';
@@ -13,6 +13,8 @@ const userContent: UserProps = {
     name: '',
     email: '',
 }
+
+export const switchThemeAtom = atom<boolean>(false);
 
 export const userAtom = atomWithStorage('user', userContent, userStorage);
 
