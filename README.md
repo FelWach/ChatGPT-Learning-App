@@ -159,3 +159,9 @@ Löscht einen Nutzer mit der ID
 PUT /updateUser/:id
 
 Updatet einen User mit der ID --> Benötigt im req body jeweils das zu updatende attribut name oder email oder password. Falls password geupdatet werden soll muss zudem oldPassword im req body angegeben werden. 
+
+---
+
+PUT /update/:userId/:oldTopic/:newTopic
+
+Updatet Topic von einem User --> Benötigt im req body jeweils das zu updatende Topic und das neue Topic
