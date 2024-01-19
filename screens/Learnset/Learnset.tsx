@@ -125,7 +125,7 @@ export function Learnset({ navigation }) {
                 }                
             
             {isEditingQAndA ? null :
-            <Button alignSelf="center" size="$5" width="75%" marginBottom="$5" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
+            <Button alignSelf="center" size="$5" width="75%" theme='active' marginBottom="$5" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
             }
             </ScrollView >
         </SafeAreaView>

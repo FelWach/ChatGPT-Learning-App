@@ -1,13 +1,14 @@
 import { Button, H2, Input, XStack, YStack } from 'tamagui';
 import { Pencil } from '@tamagui/lucide-icons';
 import { useRef } from 'react';
-import { atom, useAtom } from 'jotai'
+import { atom, useAtom, useSetAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
 import { SafeAreaView } from '../components/SafeAreaView';
 import { useWindowDimensions } from 'react-native';
 import { updateUser } from '../api/api';
 import TabNavigator from '../components/TabNavigator/TabNavigator'
 import ThemeSwitch from '../components/ThemeSwitch/ThemeSwitch';
+import { valueAtom } from './TopicsOverview/TopicsOverview';
 
 const passwordAtom = atom<string>('');
 const editUsernameAtom = atom<boolean>(false);
@@ -15,12 +16,12 @@ const editEmailAtom = atom<boolean>(false);
 const editPasswordAtom = atom<boolean>(false);
 
 export default function Profile({ navigation }) {
-
   const [user, setUser] = useAtom(userAtom);
   const [password, setPassword] = useAtom(passwordAtom);
   const [editUsername, setEditUsername] = useAtom(editUsernameAtom);
   const [editEmail, setEditEmail] = useAtom(editEmailAtom);
   const [editPassword, setEditPassword] = useAtom(editPasswordAtom)
+  const setValue = useSetAtom(valueAtom);
   const inputUsername = useRef();
 
   const saveUserData = async () => {
@@ -61,7 +62,7 @@ export default function Profile({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
+    <>
       <XStack alignSelf='flex-end' marginBottom='$3'>
         <ThemeSwitch />
       </XStack>
@@ -99,15 +100,10 @@ export default function Profile({ navigation }) {
         </XStack>
       </YStack>
       <YStack marginTop='$9' alignItems='center' gap='$3'>
-        <Button width='75%'  onPress={() => saveUserData()}>Save</Button>
-        <Button width='75%'  onPress={() => navigation.navigate('Login')}>Sign out</Button>
+        <Button width='75%' onPress={() => saveUserData()}>Save</Button>
+        <Button width='75%' onPress={() => {setValue('topicsOverview'); navigation.navigate('Login')}}>Sign out</Button>
       </YStack>
-
-      <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
-        <TabNavigator navigation={navigation} value={"profile"} />
-      </YStack>
-
-    </SafeAreaView>
+    </>
   );
 };
 

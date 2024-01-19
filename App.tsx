@@ -49,13 +49,23 @@ const CustomDarkTheme = {
   },
 }
 
+/*
+const CustomLightTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'rgb(254, 255, 226)'
+  },
+}
+*/
+
 export function SwitchTheme({ }) {
   //const colorScheme: string = useColorScheme() as string;   for checking the colormode of the device settings
   const [switchOn, setSwitchOn] = useAtom(switchThemeAtom);
   const [theme, setTheme] = useAtom(themeAtom);
 
   if (switchOn) {
-    setTheme('light_blue_alt1')
+    setTheme('light_blue')
     console.log('switched theme to light theme');
   } else {
     setTheme('dark_blue')
@@ -67,7 +77,7 @@ export function SwitchTheme({ }) {
     <TamaguiProvider config={config} defaultTheme={theme}>
       <Theme name={theme}>
         <SafeAreaProvider>
-          <NavigationContainer theme={theme === 'light_blue_alt1' ? DefaultTheme : CustomDarkTheme}>
+          <NavigationContainer theme={theme === 'light_blue' ? DefaultTheme : CustomDarkTheme}>
             <GestureHandlerRootView style={{ flex: 1 }}>
               <StatusBar barStyle='light-content' />
               <QueryClientProvider client={queryClient}>
