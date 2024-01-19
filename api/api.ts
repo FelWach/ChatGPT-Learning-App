@@ -218,3 +218,23 @@ export async function deleteEntry(id: number) {
         throw error.response.data
     }
 }
+
+export async function updateTopic(id: number, oldTopic: string, newTopic: string) {
+    try {
+        const response = await axios.put(`${baseUrl}/update/${id}/${oldTopic}/${newTopic}`, {headers: { 'Content-Type': 'application/json'}});
+        return response.data
+    }
+    catch(error: any) {
+        throw error.response.data
+    }
+}
+
+export async function deleteTopic(id: number, topic: string) {
+    try {
+        const response = await axios.delete(`${baseUrl}/delete/${id}/${topic}`, {headers: { 'Content-Type': 'application/json'}});
+        return response.data
+    }
+    catch(error: any) {
+        throw error.response.data
+    }
+}
