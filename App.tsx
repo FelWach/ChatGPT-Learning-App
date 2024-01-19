@@ -47,11 +47,12 @@ export function SwitchTheme({ }) {
 
   if (switchOn) {   
       setTheme('light_blue_alt1')
-      console.log('switched theme to light_blue_alt1')
+      console.log('switched theme to light theme');
     } else {
       setTheme('dark_blue')
-      console.log('switched theme to dark_blue')
+      console.log('switched to dark theme');
     } 
+  
 
   return (
     <TamaguiProvider config={config} defaultTheme={theme}>

@@ -67,7 +67,7 @@ export default function Login({ navigation }) {
           rules={{
             required: {
               value: true,
-              message: 'Username or Email is required',
+              message: 'Username or Email is required!',
             },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -88,7 +88,7 @@ export default function Login({ navigation }) {
           rules={{
             required: {
               value: true,
-              message: 'Password is required',
+              message: 'Password is required!',
             },
           }}
           render={({ field: { onChange, onBlur, value } }) => (

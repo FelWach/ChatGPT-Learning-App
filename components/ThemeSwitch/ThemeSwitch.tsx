@@ -17,7 +17,6 @@ export default function ThemeSwitch() {
                 else{
                     setSwitchOn(false)
                 }
-                console.log('changing theme');
             }}>
                 <Switch.Thumb animation='bouncy' />
             </Switch>
