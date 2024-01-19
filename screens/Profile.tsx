@@ -63,9 +63,7 @@ export default function Profile({ navigation }) {
 
   return (
     <>
-      <XStack alignSelf='flex-end' marginBottom='$3'>
-        <ThemeSwitch />
-      </XStack>
+      <ThemeSwitch />
       <H2 marginBottom='$5'>Hello {user.name}!</H2>
       <YStack justifyContent="space-between" alignItems="flex-start" space="$5" zIndex='$1'>
         <XStack justifyContent='space-evenly' space>
@@ -101,7 +99,7 @@ export default function Profile({ navigation }) {
       </YStack>
       <YStack marginTop='$9' alignItems='center' gap='$3'>
         <Button width='75%' onPress={() => saveUserData()}>Save</Button>
-        <Button width='75%' onPress={() => {setValue('topicsOverview'); navigation.navigate('Login')}}>Sign out</Button>
+        <Button width='75%' onPress={() => { setValue('topicsOverview'); navigation.navigate('Login') }}>Sign out</Button>
       </YStack>
     </>
   );

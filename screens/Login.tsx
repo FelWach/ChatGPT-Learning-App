@@ -51,13 +51,13 @@ export default function Login({ navigation }) {
       <View marginHorizontal="$3">
         <H2>Welcome back!</H2>
         <XStack>
-          <Text color='#52A9FF' marginTop="$2" marginBottom="$5">
+          <Text marginTop="$2" marginBottom="$5">
             Login below or </Text>
           <Text
             onPress={() => {
               navigation.navigate('Register');
             }}
-            color='#52A9FF' textDecorationLine='underline' marginTop="$2">
+            textDecorationLine='underline' marginTop="$2">
             create an account!
           </Text>
         </XStack>

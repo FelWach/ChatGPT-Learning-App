@@ -14,6 +14,7 @@ const userContent: UserProps = {
     email: '',
 }
 
+export const themeColorAtom = atom<'blue'|'red'|'yellow'|'green'|'purple'>('blue');
 export const switchThemeAtom = atom<boolean>(false);
 
 export const userAtom = atomWithStorage('user', userContent, userStorage);
