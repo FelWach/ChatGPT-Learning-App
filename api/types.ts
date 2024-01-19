@@ -31,7 +31,7 @@ export interface AddQuestionsPDFProps {
     nbQuestions: number;
     pageStart: number;
     pageEnd: number;
-    topic: string;
+    learnsetName: string;
 }
 
 export interface GenerateFromDocsProps {
