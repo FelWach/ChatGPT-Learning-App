@@ -9,12 +9,12 @@ export default function TabNavigator({ navigation }) {
 
     return (        
         <Tabs value={value}  >
-            <Tabs.List>
-                <Tabs.Tab value="profile">
-                    <Button unstyled={true} alignItems='center' padding='$3' icon={<User size='$2' />}  onPress={() => setValue('profile')} /*onPress={() => navigation.navigate('Profile')}*/ />
-                </Tabs.Tab>
+            <Tabs.List>                
                 <Tabs.Tab value="topicsOverview">
                     <Button unstyled={true} alignItems='center' padding='$3' icon={<BookOpen size='$2' />} onPress={() => setValue('topicsOverview')} /*onPress={() => navigation.navigate('TopicsOverview')}*/ />
+                </Tabs.Tab>
+                <Tabs.Tab value="profile">
+                    <Button unstyled={true} alignItems='center' padding='$3' icon={<User size='$2' />}  onPress={() => setValue('profile')} /*onPress={() => navigation.navigate('Profile')}*/ />
                 </Tabs.Tab>
             </Tabs.List>
         </Tabs>
