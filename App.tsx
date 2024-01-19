@@ -40,36 +40,45 @@ const HydrateAtoms = ({ children }) => {
 // setting initial theme to dark theme
 export const themeAtom = atom<ThemeName>('dark_blue');
 
+// adapting background color of React Navigation's DarkTheme
+const CustomDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    background: 'rgb(8, 14, 23)'
+  },
+}
+
 export function SwitchTheme({ }) {
   //const colorScheme: string = useColorScheme() as string;   for checking the colormode of the device settings
   const [switchOn, setSwitchOn] = useAtom(switchThemeAtom);
   const [theme, setTheme] = useAtom(themeAtom);
 
-  if (switchOn) {   
-      setTheme('light_blue_alt1')
-      console.log('switched theme to light theme');
-    } else {
-      setTheme('dark_blue')
-      console.log('switched to dark theme');
-    } 
-  
+  if (switchOn) {
+    setTheme('light_blue_alt1')
+    console.log('switched theme to light theme');
+  } else {
+    setTheme('dark_blue')
+    console.log('switched to dark theme');
+  }
+
 
   return (
     <TamaguiProvider config={config} defaultTheme={theme}>
-        <Theme name={theme}>
-          <SafeAreaProvider>
-            <NavigationContainer theme={theme === 'light_blue_alt1' ? DefaultTheme : DarkTheme}>
-              <GestureHandlerRootView style={{ flex: 1 }}>
-                <StatusBar barStyle='light-content' />
-                <QueryClientProvider client={queryClient}>
-                  <HydrateAtoms>
-                    <Routes />
-                  </HydrateAtoms>
-                </QueryClientProvider>
-              </GestureHandlerRootView>
-            </NavigationContainer>
-          </SafeAreaProvider>
-        </Theme>
+      <Theme name={theme}>
+        <SafeAreaProvider>
+          <NavigationContainer theme={theme === 'light_blue_alt1' ? DefaultTheme : CustomDarkTheme}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <StatusBar barStyle='light-content' />
+              <QueryClientProvider client={queryClient}>
+                <HydrateAtoms>
+                  <Routes />
+                </HydrateAtoms>
+              </QueryClientProvider>
+            </GestureHandlerRootView>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </Theme>
     </TamaguiProvider>
   )
 }
