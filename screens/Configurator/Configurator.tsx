@@ -1,31 +1,10 @@
-import {
-  Label,
-  Button,
-  Text,
-  ScrollView,
-  YStack,
-  XStack,
-  Input,
-  ToggleGroup,
-  Spinner,
-} from "tamagui";
+import { Label, Button, Text, ScrollView, YStack, XStack, Input, ToggleGroup, Spinner } from "tamagui";
 import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
 import { endPageAtom, filesAtom, startPageAtom } from "../../components/DocumentSelect/atoms";
-import {
-  creativityAtom,
-  languageAtom,
-  languageStyleAtom,
-  questionAtom,
-  difficultyAtom,
-  topicAtom,
-} from "./atoms";
+import { creativityAtom, languageAtom, languageStyleAtom, questionAtom, difficultyAtom, topicAtom } from "./atoms";
 import { SafeAreaView } from "../../components/SafeAreaView";
-import {
-  GenerateProps,
-  ConfigSettingsProps,
-  GenerateFromDocsProps,
-} from "../../api/types";
+import { GenerateProps, ConfigSettingsProps, GenerateFromDocsProps } from "../../api/types";
 import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
 import { set } from "react-hook-form";
@@ -56,11 +35,11 @@ export function Configurator({ navigation }) {
       temperature: creativity,
       difficulty: difficulty,
     };
-    console.log("Config");
-    console.log("Language: " + config.language);
-    console.log("Language Level: " + config.languageLevel);
-    console.log("Temperature: " + config.temperature);
-    console.log("Difficulty: " + config.difficulty);
+    //console.log("Config");
+    //console.log("Language: " + config.language);
+    //console.log("Language Level: " + config.languageLevel);
+    //console.log("Temperature: " + config.temperature);
+    //console.log("Difficulty: " + config.difficulty);
 
     return await setConfiguration(config);
   };
@@ -70,9 +49,9 @@ export function Configurator({ navigation }) {
       topic: topic,
       nbQuestions: Number(question),
     };
-    console.log("Generate Config Topic: ");
-    console.log("Topic: " + generateConfig.topic);
-    console.log("Number of questions: " + generateConfig.nbQuestions);
+    //console.log("Generate Config Topic: ");
+    //console.log("Topic: " + generateConfig.topic);
+    //console.log("Number of questions: " + generateConfig.nbQuestions);
 
     return await generate(generateConfig)
   };
@@ -84,10 +63,10 @@ export function Configurator({ navigation }) {
       pageEnd: Number(endPage),
     };
 
-    console.log("Generate Config PDF");
-    console.log("Number of questions: " + generateConfig.nbQuestions);
-    console.log("Page Start: " + generateConfig.pageStart);
-    console.log("Page End: " + generateConfig.pageEnd);
+    //console.log("Generate Config PDF");
+    //console.log("Number of questions: " + generateConfig.nbQuestions);
+    //console.log("Page Start: " + generateConfig.pageStart);
+    //console.log("Page End: " + generateConfig.pageEnd);
 
     return generateFromDocs(generateConfig)
   };
@@ -178,12 +157,12 @@ export function Configurator({ navigation }) {
               <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text) }} />
             </>
           ) : (
-            <DocumentSelect />
+            <DocumentSelect />          
           )}
         </YStack>
         <ConfiguratorSettings />
         {loading && <Spinner />}
-        <Button size="$5" width="75%" theme="active" alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
+        <Button size="$5" width="75%" theme='active' alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
           Generate
         </Button>
       </SafeAreaView>
