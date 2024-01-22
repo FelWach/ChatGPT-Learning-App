@@ -41,7 +41,7 @@ export function TopicsOverview({ navigation }) {
                   ))}
                 </YStack>
               </YStack>
-              <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" marginBottom="$14" onPress={() => navigation.navigate('Configurator')}>
+              <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" marginBottom="$14" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator')}>
                 Add Learnset
               </Button>
             </ScrollView>
@@ -58,7 +58,7 @@ export function TopicsOverview({ navigation }) {
                   Have fun!
                 </Text>
               </YStack>
-              <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10" onPress={() => navigation.navigate('Configurator')}>
+              <Button icon={Plus} size="$5"  variant="outlined" marginVertical="$5" marginBottom="$10" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator')}>
                 Add Learnset
               </Button>
             </>

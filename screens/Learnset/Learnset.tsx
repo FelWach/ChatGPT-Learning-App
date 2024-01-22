@@ -119,7 +119,7 @@ export function Learnset({ navigation }) {
                         </Button>
                     </XStack>
                     :
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5">
+                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" pressStyle={{borderWidth: 3}}>
                     Add Questions
                 </Button>
                 }                

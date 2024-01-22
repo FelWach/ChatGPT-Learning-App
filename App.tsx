@@ -1,6 +1,6 @@
 import config from './tamagui.config'
 import { useFonts } from 'expo-font'
-import { StatusBar, Text, useColorScheme } from 'react-native'
+import { StatusBar, Text, LogBox } from 'react-native'
 import { TamaguiProvider, H1, Theme, ThemeName, useForceUpdate } from 'tamagui'
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { switchThemeAtom, themeColorAtom } from './state/atoms'
@@ -9,13 +9,7 @@ import Routes from './Routes'
 import { Provider, useAtom, atom, useAtomValue } from 'jotai'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useHydrateAtoms } from 'jotai/utils'
-import {
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-  useIsFetching,
-} from '@tanstack/react-query'
+import { useMutation, useQueryClient, QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react-query'
 import { atomsWithQuery, queryClientAtom } from 'jotai-tanstack-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
@@ -26,6 +20,9 @@ export function GlobalLoadingIndicator() {
     <H1>Queries are fetching in the background...</H1>
   ) : null
 }
+
+// Ignore all log notifications - for Test Mode only
+//LogBox.ignoreAllLogs();
 
 // creating Stack Navigator
 export const Stack = createStackNavigator();
