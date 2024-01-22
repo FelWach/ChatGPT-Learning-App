@@ -132,7 +132,8 @@ export default function Profile({ navigation }) {
                 value={value}
                 autoCapitalize='none'
                 editable={editUsername}
-                color={editUsername ? 'white' : '#455468'}
+                borderWidth={editUsername ? '$0.5' : '$0'}
+                //color={editUsername ? 'rgba(255, 255, 255, 1.0)' : 'rgba(255, 255, 255, 0.5)'}
               />
             )}
             name="username"
@@ -167,7 +168,8 @@ export default function Profile({ navigation }) {
                 value={value}
                 autoCapitalize='none'
                 editable={editEmail}
-                color={editEmail ? 'white' : '#455468'}
+                borderWidth={editEmail ? '$0.5' : '$0'}
+                //color={editEmail ? 'white' : '#455468'}
               />
             )}
             name="email"
@@ -198,7 +200,8 @@ export default function Profile({ navigation }) {
                 value={value}
                 autoCapitalize='none'
                 editable={editOldPassword}
-                color={editOldPassword ? 'white' : '#455468'}
+                borderWidth={editOldPassword ? '$0.5' : '$0'}
+                //color={editOldPassword ? 'white' : '#455468'}
                 secureTextEntry={true}
               />
             )}
@@ -234,6 +237,7 @@ export default function Profile({ navigation }) {
                   onChangeText={onChange}
                   value={value}
                   autoCapitalize='none'
+                  borderWidth='$0.5'
                   secureTextEntry={true}
                 />
               )}
@@ -259,6 +263,7 @@ export default function Profile({ navigation }) {
                   onChangeText={onChange}
                   value={value}
                   autoCapitalize='none'
+                  borderWidth='$0.5'
                   secureTextEntry={true}
                 />
               )}
