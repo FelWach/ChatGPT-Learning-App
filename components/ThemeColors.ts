@@ -29,7 +29,7 @@ export const BlueDarkTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: 'rgb(236, 236, 236)'
+      background: 'rgb(255, 243, 243)'
     },
   }
   
@@ -45,7 +45,7 @@ export const BlueDarkTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: 'rgb(255, 255, 240)'
+      background: 'rgb(255, 255, 245)'
     },
   }
   
@@ -61,7 +61,7 @@ export const BlueDarkTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: 'rgb(229, 249, 241)'
+      background: 'rgb(246, 255, 252)'
     },
   }
   
@@ -77,6 +77,6 @@ export const BlueDarkTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: 'rgb(232, 226, 245)'
+      background: 'rgb(255, 245, 255)'
     },
   }
