@@ -12,6 +12,7 @@ import { useHydrateAtoms } from 'jotai/utils'
 import { useMutation, useQueryClient, QueryClient, QueryClientProvider, useIsFetching } from '@tanstack/react-query'
 import { atomsWithQuery, queryClientAtom } from 'jotai-tanstack-query'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import {BlueDarkTheme, BlueLightTheme, RedDarkTheme, RedLightTheme, YellowDarkTheme, YellowLightTheme, GreenDarkTheme, GreenLightTheme, PurpleDarkTheme, PurpleLightTheme } from './components/ThemeColors'
 
 export function GlobalLoadingIndicator() {
   const isFetching = useIsFetching()
@@ -34,91 +35,11 @@ const HydrateAtoms = ({ children }) => {
   return children
 }
 
-// adapting background color of React Navigation Container
-const BlueDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: 'rgb(8, 14, 23)'
-  },
-}
-
-const BlueLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'rgb(234, 248, 255)'
-  },
-}
-
-const RedDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: 'rgb(24, 6, 6)'
-  },
-}
-
-const RedLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'rgb(236, 236, 236)'
-  },
-}
-
-const YellowDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: 'rgb(15, 16, 6)'
-  },
-}
-
-const YellowLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'rgb(255, 255, 240)'
-  },
-}
-
-const GreenDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: 'rgb(7, 20, 8)'
-  },
-}
-
-const GreenLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'rgb(229, 249, 241)'
-  },
-}
-
-const PurpleDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: 'rgb(20, 9, 29)'
-  },
-}
-
-const PurpleLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'rgb(232, 226, 245)'
-  },
-}
-
 // setting initial theme to dark theme
 const themeAtom = atom<ThemeName>('dark_blue');
 const containerThemeAtom = atom(BlueDarkTheme);
 
+// adapting background color of React Navigation Container
 export function SwitchTheme({ }) {
   //const colorScheme: string = useColorScheme() as string;   for checking the colormode of the device settings
   const switchOn = useAtomValue(switchThemeAtom);

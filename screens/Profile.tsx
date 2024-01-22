@@ -1,13 +1,14 @@
 import { Button, H2, Input, XStack, YStack, Text } from 'tamagui';
 import { Pencil } from '@tamagui/lucide-icons';
 import React, { useEffect } from 'react';
-import { atom, useAtom } from 'jotai'
+import { atom, useAtom, useSetAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
 import { Alert } from 'react-native';
 import { updateUser } from '../api/api';
 import { UpdatedUserProps } from '../api/types';
 import { useForm, Controller } from 'react-hook-form';
 import ThemeSwitch from '../components/ThemeSwitch/ThemeSwitch';
+import { tabValueAtom } from './TopicsOverview/TopicsOverview';
 
 const editUsernameAtom = atom<boolean>(false);
 const editEmailAtom = atom<boolean>(false);
@@ -34,6 +35,7 @@ export default function Profile({ navigation }) {
   const [editOldPassword, setEditOldPassword] = useAtom(editOldPasswordAtom);
   const [editPasswordRepeat, setEditPasswordRepeat] = useAtom(editPasswordRepeatAtom);
   const [errorMessage, setErrorMessage] = useAtom(errorAtom);
+  const [tabValue, setTabValue] = useAtom(tabValueAtom);
 
   useEffect(() => {
     setValue('username', user.name);
@@ -75,7 +77,11 @@ export default function Profile({ navigation }) {
         {
           text: 'Sign Out',
           onPress: () => {
-            navigation.navigate('StartScreen');
+            setTabValue('topicsOverview');
+            setEditUsername(false);
+            setEditEmail(false);
+            setEditOldPassword(false);
+            navigation.navigate('Login');
             setUser({});
           },
         },
@@ -108,9 +114,8 @@ export default function Profile({ navigation }) {
   return (
     <>
       <H2 marginBottom='$5'>Hello {user.name}!</H2>
-      <YStack justifyContent="space-between" alignItems="flex-start" space="$5" zIndex='$1'>
-        
-        <XStack justifyContent='space-evenly' space>
+      <YStack space="$5" zIndex='$1'>
+        <XStack space>
           <Controller
             control={control}
             rules={{
@@ -132,21 +137,26 @@ export default function Profile({ navigation }) {
             )}
             name="username"
           />
-          <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditUsername()}></Button>
-        </XStack>
-        {errors.username?.message && <Text>{errors.username?.message}</Text>}
+          {editUsername ? (
+            <Button width='15%' theme='active' icon={<Pencil size={18} />} onPress={() => setEditUsername(false)} />
+          ) : (
+            <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditUsername()} />
+          )}
 
-        <XStack justifyContent='space-evenly' space>
+        </XStack>
+        {errors.username?.message && <Text marginLeft="$3">{errors.username?.message}</Text>}
+
+        <XStack space>
           <Controller
             control={control}
             rules={{
               required: {
                 value: false,
-                message: 'Email is required',
+                message: 'Email is required!',
               },
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: 'Please enter a valid email',
+                message: 'Please enter a valid email!',
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
@@ -162,18 +172,22 @@ export default function Profile({ navigation }) {
             )}
             name="email"
           />
-          <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditEmail()}></Button>
+          {editEmail ? (
+            <Button width='15%' theme='active' icon={<Pencil size={18} />} onPress={() => setEditEmail(false)} />
+          ) : (
+            <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditEmail()} />
+          )}
         </XStack>
 
-        {errors.email?.message && <Text>{errors.email?.message}</Text>}
+        {errors.email?.message && <Text marginLeft="$3">{errors.email?.message}</Text>}
 
-        <XStack justifyContent='space-evenly' space>
+        <XStack space>
           <Controller
             control={control}
             rules={{
               required: {
                 value: false,
-                message: 'Password is required',
+                message: 'Password is required!',
               },
             }}
             render={({ field: { onChange, onBlur, value } }) => (
@@ -190,23 +204,27 @@ export default function Profile({ navigation }) {
             )}
             name="oldPassword"
           />
-          <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()}></Button>
+          {editOldPassword ? (
+            <Button width='15%' theme='active' icon={<Pencil size={18} />} onPress={() => handleEditPassword()} />
+          ) : (
+            <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()} />
+          )}
         </XStack>
 
-        {errors.oldPassword?.message && <Text>{errors.oldPassword?.message}</Text>}
+        {errors.oldPassword?.message && <Text marginLeft="$3">{errors.oldPassword?.message}</Text>}
 
         {editOldPassword &&
-          <YStack justifyContent='space-evenly' space width='100%'>
+          <YStack space="$5" width='100%'>
             <Controller
               control={control}
               rules={{
                 required: {
                   value: editOldPassword ? true : false,
-                  message: 'Password is required',
+                  message: 'Password is required!',
                 },
                 minLength: {
                   value: 8,
-                  message: 'Password must have at least 8 characters',
+                  message: 'Password must have at least 8 characters!',
                 }
               }}
               render={({ field: { onChange, onBlur, value } }) => (
@@ -222,21 +240,21 @@ export default function Profile({ navigation }) {
               name="password"
             />
 
-            {errors.password?.message && <Text>{errors.password?.message}</Text>}
+            {errors.password?.message && <Text marginLeft="$3">{errors.password?.message}</Text>}
 
             <Controller
               control={control}
               rules={{
                 required: {
                   value: editOldPassword ? true : false,
-                  message: 'Please confirm your new password',
+                  message: 'Please confirm your new password!',
                 },
                 validate: value =>
-                  value === getValues('password') || 'The passwords do not match',
+                  value === getValues('password') || 'The passwords do not match!',
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
-                  placeholder="Confirm new password"
+                  placeholder="Confirm new password!"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -249,27 +267,20 @@ export default function Profile({ navigation }) {
           </YStack>
         }
 
-        {errors.passwordRepeat?.message && <Text>{errors.passwordRepeat?.message}</Text>}
+        {errors.passwordRepeat?.message && <Text marginLeft="$3">{errors.passwordRepeat?.message}</Text>}
 
         {errorMessage && <Text>{errorMessage}</Text>}
-        <Button
-          width='100%'
-          marginTop='$3'
-          borderColor='black'
-          disabled={!isValid}
-          style={{ opacity: isValid ? 1 : 0.7 }}
-          onPress={handleSubmit(onSubmit)}>
-          Save
-        </Button>
-        <Button
-          width='100%'
-          borderColor='black'
-          variant="outlined"
-          onPress={() => signOutUserAlert()}>
-          Sign out
-        </Button>
+
+        <XStack marginTop='$3' justifyContent='space-between'>
+          <Button width='46%' disabled={!isValid} style={{ opacity: isValid ? 1 : 0.7 }} onPress={handleSubmit(onSubmit)}>Save</Button>
+          <Button width='46%' variant="outlined" pressStyle={{ borderWidth: 3 }} onPress={() => signOutUserAlert()}>Sign out</Button>
+        </XStack>
       </YStack>
-      <ThemeSwitch />
+      {!editOldPassword && !editPasswordRepeat && !editEmail && !editUsername ? (
+        <ThemeSwitch />
+      ) :
+        <></>
+      }
     </>
   );
 

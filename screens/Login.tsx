@@ -45,7 +45,6 @@ export default function Login({ navigation }) {
     }
   }
 
-
   return (
     <SafeAreaView>
       <View marginHorizontal="$3">
@@ -105,7 +104,7 @@ export default function Login({ navigation }) {
         />
         <Text marginVertical="$2" marginLeft="$3">{errors.password?.message}</Text>
 
-        {errorMessage && <Text>{errorMessage}</Text>}
+        {errorMessage && <Text marginLeft="$3">{errorMessage}</Text>}
         <YStack marginTop="$5" alignItems='center' space>
           <Button
             disabled={!isValid}

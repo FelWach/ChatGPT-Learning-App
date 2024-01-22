@@ -141,7 +141,7 @@ export default function Register({ navigation }) {
           />
           <Text marginVertical="$2" marginLeft="$3">{errors.repeatPassword?.message}</Text>
 
-          {errorMessage && <Text>{errorMessage}</Text>}
+          {errorMessage && <Text marginLeft="$3">{errorMessage}</Text>}
 
           <Button
             disabled={!isValid}

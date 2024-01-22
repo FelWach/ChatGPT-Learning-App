@@ -11,17 +11,16 @@ import { useWindowDimensions, StyleSheet } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import Profile from '../Profile';
 
-export const valueAtom = atom<'topicsOverview'|'profile'>('topicsOverview')
+export const tabValueAtom = atom<'topicsOverview'|'profile'>('topicsOverview')
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
   const [currentTopic, setCurrentTopic] = useAtom(topicAtom);
-  const value = useAtomValue(valueAtom)
+  const tabValue = useAtomValue(tabValueAtom)
 
-  // TODO: adjust spacing and other styling
   return (
     <SafeAreaView>
-      {value === 'topicsOverview' ? (
+      {tabValue === 'topicsOverview' ? (
         <>
           {topicCards.length ? (
             <ScrollView >
