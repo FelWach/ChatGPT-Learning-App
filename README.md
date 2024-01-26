@@ -84,6 +84,12 @@ Benötigt topic, nbQuestions, userId im request Body
 
 ---
 
+DELETE /deleteLearnset/:userId/:topic
+
+löscht Learnset mit userId und topic
+
+---
+
 POST /setConfigurations
 
 setzt die richtigen Konfigurator Einstellungen
