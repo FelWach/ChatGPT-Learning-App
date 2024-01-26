@@ -118,6 +118,18 @@ DELETE /deleteEntry/:id
 
 löscht Eintrag mit id
 
+---
+
+PUT /updateQuestion/:id
+
+ändert Frage mit id. Benötigt die neue Frage question im req.body
+
+---
+
+PUT /updateAnswer/:id
+
+ändert Antwort mit id. Benötigt die neue Antwort answer im req.body
+
 ### User
 
 POST /register
