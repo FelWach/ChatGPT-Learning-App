@@ -30,7 +30,7 @@ export default function Register({ navigation }) {
 
     try {
       const response = await register(userData);
-      navigation.navigate('Login');
+      navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {
         setErrorMessage(error.message);
