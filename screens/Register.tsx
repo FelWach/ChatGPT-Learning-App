@@ -30,7 +30,7 @@ export default function Register({ navigation }) {
 
     try {
       const response = await register(userData);
-      navigation.navigate('Login');
+      navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {
         setErrorMessage(error.message);
@@ -141,7 +141,7 @@ export default function Register({ navigation }) {
           />
           <Text marginVertical="$2" marginLeft="$3">{errors.repeatPassword?.message}</Text>
 
-          {errorMessage && <Text>{errorMessage}</Text>}
+          {errorMessage && <Text marginLeft="$3">{errorMessage}</Text>}
 
           <Button
             disabled={!isValid}

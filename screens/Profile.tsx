@@ -1,108 +1,294 @@
-import { Button, H2, Input, View, XStack, YStack } from 'tamagui';
+import { Button, H2, Input, XStack, YStack, Text } from 'tamagui';
 import { Pencil } from '@tamagui/lucide-icons';
-import { useRef } from 'react';
-import { atom, useAtom } from 'jotai'
+import React, { useEffect } from 'react';
+import { atom, useAtom, useSetAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
-import { SafeAreaView } from '../components/SafeAreaView';
-import { useWindowDimensions } from 'react-native';
+import { Alert } from 'react-native';
 import { updateUser } from '../api/api';
-import TabNavigator from '../components/TabNavigator/TabNavigator'
+import { UpdatedUserProps } from '../api/types';
+import { useForm, Controller } from 'react-hook-form';
+import ThemeSwitch from '../components/ThemeSwitch/ThemeSwitch';
+import { tabValueAtom } from './TopicsOverview/TopicsOverview';
 
-const passwordAtom = atom<string>('');
 const editUsernameAtom = atom<boolean>(false);
 const editEmailAtom = atom<boolean>(false);
-const editPasswordAtom = atom<boolean>(false);
+const editOldPasswordAtom = atom<boolean>(false);
+const editPasswordRepeatAtom = atom<boolean>(false);
+const errorAtom = atom<string>('');
+
+type FormData = {
+  username: string;
+  email: string;
+  oldPassword: string;
+  password: string;
+  passwordRepeat: string;
+};
 
 export default function Profile({ navigation }) {
+  const { control, handleSubmit, getValues, setValue, formState: { errors, isValid } } = useForm<FormData>({
+    mode: 'onBlur',
+  });
 
   const [user, setUser] = useAtom(userAtom);
-  const [password, setPassword] = useAtom(passwordAtom);
   const [editUsername, setEditUsername] = useAtom(editUsernameAtom);
   const [editEmail, setEditEmail] = useAtom(editEmailAtom);
-  const [editPassword, setEditPassword] = useAtom(editPasswordAtom)
-  const inputUsername = useRef();
+  const [editOldPassword, setEditOldPassword] = useAtom(editOldPasswordAtom);
+  const [editPasswordRepeat, setEditPasswordRepeat] = useAtom(editPasswordRepeatAtom);
+  const [errorMessage, setErrorMessage] = useAtom(errorAtom);
+  const [tabValue, setTabValue] = useAtom(tabValueAtom);
 
-  const saveUserData = async () => {
-    const data = {
-      name: user.name,
-      email: user.email,
-      //password: password,
-      //oldPassword:
+  useEffect(() => {
+    setValue('username', user.name);
+    setValue('email', user.email);
+    setValue('oldPassword', '*');
+  }, [user]);
+
+  const onSubmit = async (data: any) => {
+
+    const updateUserData: UpdatedUserProps = {
+      name: data.username ? data.username : user.name,
+      email: data.email ? data.email : user.email,
+      oldPassword: data.oldPassword,
+      password: data.password,
     }
     try {
-      const response = await updateUser(user.id, data);
+      const response = await updateUser(user.id, updateUserData);
+      navigation.navigate('Login');
       console.log(response.message)
     }
     catch (error: any) {
-      console.log(error.message + '! ' + error.error)
+      if (error.message) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('An error occurred during update.');
+      }
     }
   }
 
+  const signOutUserAlert = () => {
+    Alert.alert(
+      'Confirm Sign out',
+      'Are you sure you want to sign out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Sign Out',
+          onPress: () => {
+            setTabValue('topicsOverview');
+            setEditUsername(false);
+            setEditEmail(false);
+            setEditOldPassword(false);
+            navigation.navigate('Login');
+            setUser({});
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
 
   const handleEditUsername = () => {
-    if (editUsername) {
-      setEditUsername(false);
-    } else {
-      setEditUsername(true);
-      // TODO: focus text when editUsername = true
-      inputUsername.current.focus();
-    }
+    editUsername ? setEditUsername(false) : setEditUsername(true);
+    editEmail && setEditEmail(false);
+    editOldPassword && setEditOldPassword(false);
   };
 
   const handleEditEmail = () => {
     editEmail ? setEditEmail(false) : setEditEmail(true);
-    // TODO: focus text when editEmail = true
+    editUsername && setEditUsername(false);
+    editOldPassword && setEditOldPassword(false);
   };
 
   const handleEditPassword = () => {
-    editPassword ? setEditPassword(false) : setEditPassword(true);
-    // TODO: focus text when editPassword = true
+    if (errors.password?.message) {
+      setEditOldPassword(true);
+    }
+    editOldPassword ? setEditOldPassword(false) : setEditOldPassword(true);
+    editUsername && setEditUsername(false);
+    editEmail && setEditEmail(false);
   };
 
   return (
-    <SafeAreaView>
-      <YStack justifyContent="space-between" alignItems="flex-start" space="$5" zIndex='$1'>
-        <H2>Your Profile</H2>
-        <XStack justifyContent='space-evenly' space>
-          <Input width='85%'
-            ref={inputUsername}
-            value={user.name}
-            editable={editUsername}
-            onChangeText={(e) => setUser({ ...user, name: value })}
-            placeholder={'Email'}
+    <>
+      <H2 marginBottom='$5'>Hello {user.name}!</H2>
+      <YStack space="$5" zIndex='$1'>
+        <XStack space>
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: false,
+                message: 'Name is required',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input width='80%'
+                placeholder="Name"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+                editable={editUsername}
+                borderWidth={editUsername ? '$0.5' : '$0'}
+                //color={editUsername ? 'rgba(255, 255, 255, 1.0)' : 'rgba(255, 255, 255, 0.5)'}
+              />
+            )}
+            name="username"
           />
-          <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditUsername()}></Button>
-        </XStack>
+          {editUsername ? (
+            <Button width='15%' theme='active' icon={<Pencil size={18} />} onPress={() => setEditUsername(false)} />
+          ) : (
+            <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditUsername()} />
+          )}
 
-        <XStack justifyContent='space-evenly' space>
-          <Input width='85%'
-            value={user.email}
-            editable={editEmail}
-            onChangeText={(e) => setUser({ ...user, email: e })}
-            placeholder={'Email'}
+        </XStack>
+        {errors.username?.message && <Text marginLeft="$3">{errors.username?.message}</Text>}
+
+        <XStack space>
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: false,
+                message: 'Email is required!',
+              },
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Please enter a valid email!',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input width='80%'
+                placeholder="Email"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+                editable={editEmail}
+                borderWidth={editEmail ? '$0.5' : '$0'}
+                //color={editEmail ? 'white' : '#455468'}
+              />
+            )}
+            name="email"
           />
-          <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditEmail()}></Button>
+          {editEmail ? (
+            <Button width='15%' theme='active' icon={<Pencil size={18} />} onPress={() => setEditEmail(false)} />
+          ) : (
+            <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditEmail()} />
+          )}
         </XStack>
 
-        <XStack justifyContent='space-evenly' space>
-          <Input width='85%'
-            value={password}
-            editable={editPassword}
-            onChangeText={setPassword}
-            placeholder={'Password'}
-            secureTextEntry={true}
-          /><Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()}></Button>
+        {errors.email?.message && <Text marginLeft="$3">{errors.email?.message}</Text>}
+
+        <XStack space>
+          <Controller
+            control={control}
+            rules={{
+              required: {
+                value: false,
+                message: 'Password is required!',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input width='80%'
+                placeholder="Password"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize='none'
+                editable={editOldPassword}
+                borderWidth={editOldPassword ? '$0.5' : '$0'}
+                //color={editOldPassword ? 'white' : '#455468'}
+                secureTextEntry={true}
+              />
+            )}
+            name="oldPassword"
+          />
+          {editOldPassword ? (
+            <Button width='15%' theme='active' icon={<Pencil size={18} />} onPress={() => handleEditPassword()} />
+          ) : (
+            <Button width='15%' icon={<Pencil size={18} />} onPress={() => handleEditPassword()} />
+          )}
         </XStack>
-        <Button width='100%' marginTop='$3' borderColor='black' onPress={() => saveUserData()}>Save</Button>
-        <Button width='100%' borderColor='black' onPress={() => navigation.navigate('StartScreen')}>Sign out</Button>
-      </YStack>
 
-      <YStack alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
-        <TabNavigator navigation={navigation} value={"profile"}/>
-      </YStack>
+        {errors.oldPassword?.message && <Text marginLeft="$3">{errors.oldPassword?.message}</Text>}
 
-    </SafeAreaView>
+        {editOldPassword &&
+          <YStack space="$5" width='100%'>
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: editOldPassword ? true : false,
+                  message: 'Password is required!',
+                },
+                minLength: {
+                  value: 8,
+                  message: 'Password must have at least 8 characters!',
+                }
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  placeholder="New password"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  autoCapitalize='none'
+                  borderWidth='$0.5'
+                  secureTextEntry={true}
+                />
+              )}
+              name="password"
+            />
+
+            {errors.password?.message && <Text marginLeft="$3">{errors.password?.message}</Text>}
+
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: editOldPassword ? true : false,
+                  message: 'Please confirm your new password!',
+                },
+                validate: value =>
+                  value === getValues('password') || 'The passwords do not match!',
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  placeholder="Confirm new password!"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  autoCapitalize='none'
+                  borderWidth='$0.5'
+                  secureTextEntry={true}
+                />
+              )}
+              name="passwordRepeat"
+            />
+          </YStack>
+        }
+
+        {errors.passwordRepeat?.message && <Text marginLeft="$3">{errors.passwordRepeat?.message}</Text>}
+
+        {errorMessage && <Text>{errorMessage}</Text>}
+
+        <XStack marginTop='$3' justifyContent='space-between'>
+          <Button width='46%' disabled={!isValid} style={{ opacity: isValid ? 1 : 0.7 }} onPress={handleSubmit(onSubmit)}>Save</Button>
+          <Button width='46%' variant="outlined" pressStyle={{ borderWidth: 3 }} onPress={() => signOutUserAlert()}>Sign out</Button>
+        </XStack>
+      </YStack>
+      {!editOldPassword && !editPasswordRepeat && !editEmail && !editUsername ? (
+        <ThemeSwitch />
+      ) :
+        <></>
+      }
+    </>
   );
+
 };
 
 

@@ -111,7 +111,7 @@ export function DocumentSelect() {
           </Card>
         );
       })}
-      {spinner && <Spinner size="large" color="$blue10" />}
+      {spinner && <Spinner size="large" />}
     </View >
   );
 }

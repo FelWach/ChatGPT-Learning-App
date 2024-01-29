@@ -126,12 +126,12 @@ export function Configurator({ navigation, route }) {
           {selectedValue === "Topic" ? (
             <TopicField addQuestionsClicked={addQuestionsClicked} />
           ) : (
-            <DocumentSelect />
+            <DocumentSelect />          
           )}
         </YStack>
         <ConfiguratorSettings />
         {loading && <Spinner />}
-        <Button size="$5" width="75%" theme="active" alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
+        <Button size="$5" width="75%" theme='active' alignSelf="center" marginVertical="$5" onPress={configureAndGenerate} >
           Generate
         </Button>
       </SafeAreaView>

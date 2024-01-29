@@ -84,6 +84,12 @@ Benötigt topic, nbQuestions, userId im request Body
 
 ---
 
+DELETE /deleteLearnset/:userId/:topic
+
+löscht Learnset mit userId und topic
+
+---
+
 POST /setConfigurations
 
 setzt die richtigen Konfigurator Einstellungen
@@ -117,6 +123,18 @@ gibt eine Frage mit id zurück
 DELETE /deleteEntry/:id
 
 löscht Eintrag mit id
+
+---
+
+PUT /updateQuestion/:id
+
+ändert Frage mit id. Benötigt die neue Frage question im req.body
+
+---
+
+PUT /updateAnswer/:id
+
+ändert Antwort mit id. Benötigt die neue Antwort answer im req.body
 
 ### User
 
@@ -159,3 +177,9 @@ Löscht einen Nutzer mit der ID
 PUT /updateUser/:id
 
 Updatet einen User mit der ID --> Benötigt im req body jeweils das zu updatende attribut name oder email oder password. Falls password geupdatet werden soll muss zudem oldPassword im req body angegeben werden. 
+
+---
+
+PUT /update/:userId/:oldTopic/:newTopic
+
+Updatet Topic von einem User --> Benötigt im req body jeweils das zu updatende Topic und das neue Topic

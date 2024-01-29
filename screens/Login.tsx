@@ -6,8 +6,6 @@ import { login } from '../api/api';
 import { useState } from 'react';
 import { SafeAreaView } from '../components/SafeAreaView';
 import { useForm, Controller } from 'react-hook-form';
-import { useHeaderHeight } from '@react-navigation/elements';
-import { Underline } from '@tamagui/lucide-icons';
 
 type FormData = {
   usernameOrEmail: string;
@@ -15,17 +13,13 @@ type FormData = {
 };
 
 export default function Login({ navigation }) {
-
   const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
     mode: 'onBlur',
   });
-
   const [errorMessage, setErrorMessage] = useState<string>('');
-
   const [user, setUser] = useAtom(userAtom);
 
-  const onSubmit = async (data: any) => {
-
+  const onSubmit = async (data: any) => {    
     const userData: LoginProps = {
       usernameOrEmail: data.usernameOrEmail,
       password: data.password,
@@ -56,13 +50,13 @@ export default function Login({ navigation }) {
       <View marginHorizontal="$3">
         <H2>Welcome back!</H2>
         <XStack>
-          <Text color='#52A9FF' marginTop="$2" marginBottom="$5">
+          <Text marginTop="$2" marginBottom="$5">
             Login below or </Text>
           <Text
             onPress={() => {
               navigation.navigate('Register');
             }}
-            color= '#52A9FF' textDecorationLine='underline' marginTop="$2">
+            textDecorationLine='underline' marginTop="$2">
             create an account!
           </Text>
         </XStack>
@@ -72,7 +66,7 @@ export default function Login({ navigation }) {
           rules={{
             required: {
               value: true,
-              message: 'Username or Email is required',
+              message: 'Username or Email is required!',
             },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -86,14 +80,14 @@ export default function Login({ navigation }) {
           )}
           name="usernameOrEmail"
         />
-        <Text>{errors.usernameOrEmail?.message}</Text>
+        <Text marginVertical="$2" marginLeft="$3">{errors.usernameOrEmail?.message}</Text>
 
         <Controller
           control={control}
           rules={{
             required: {
               value: true,
-              message: 'Password is required',
+              message: 'Password is required!',
             },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -110,7 +104,7 @@ export default function Login({ navigation }) {
         />
         <Text marginVertical="$2" marginLeft="$3">{errors.password?.message}</Text>
 
-        {errorMessage && <Text marginBottom="$2" marginLeft="$3">{errorMessage}</Text>}
+        {errorMessage && <Text marginLeft="$3">{errorMessage}</Text>}
         <YStack marginTop="$5" alignItems='center' space>
           <Button
             disabled={!isValid}
@@ -120,7 +114,7 @@ export default function Login({ navigation }) {
           >
             Login
           </Button>
-          <Text  color='#52A9FF' textDecorationLine='underline'>Forgot Password?</Text>
+          {/*}<Text  color='#52A9FF' textDecorationLine='underline'>Forgot Password?</Text>{*/}
         </YStack>
       </View>
     </SafeAreaView>
