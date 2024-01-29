@@ -4,7 +4,7 @@ const localhost = process.env.EXPO_PUBLIC_IP_ADDRESS;
 const port = process.env.EXPO_PUBLIC_PORT;
 
 // type interfaces
-import { UserProps, UpdatedUserProps, LoginProps, GenerateProps, GenerateFromDocsProps, ConfigSettingsProps, UploadProps } from "./type"
+import { UserProps, UpdatedUserProps, LoginProps, GenerateProps, GenerateFromDocsProps, ConfigSettingsProps, UploadProps } from "./types"
 
 // base URL
 const baseUrl = `http://${localhost}:${port}`
