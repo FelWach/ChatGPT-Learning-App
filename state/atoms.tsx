@@ -8,6 +8,7 @@ import { UserProps } from './types'
 import { QuestionsAnswersData } from '../screens/Learning/types';
 
 const userStorage = createJSONStorage(() => AsyncStorage)
+
 const userContent: UserProps = {
     id: '',
     name: '',
@@ -47,6 +48,7 @@ export const [topicCardAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
 export const dataLoadingAtom = atom(false);
 
 export const emailAtom = atomWithStorage<string>('email', '');
+
 export const passwordAtom = atomWithStorage<string>('password', '');
 
 export const topicAtom = atom<string>('');

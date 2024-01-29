@@ -1,5 +1,5 @@
 import { Button, H1, ScrollView, View, XStack, Accordion, Input, Paragraph, TextArea } from "tamagui";
-import { Trash, Edit, Plus, ArrowLeft, X } from '@tamagui/lucide-icons'
+import { Trash, Edit, Plus, } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
@@ -17,7 +17,7 @@ const answerAtom = atom<string>('');
 
 export function Learnset({ navigation }) {
 
-    const [questions, setQuestions] = useAtom(questionsAnswersAtom);
+    const [questions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
 
     const [isEditingQAndA, setIsEditingQAndA] = useAtom(isEditingQAndAAtom);
@@ -40,7 +40,7 @@ export function Learnset({ navigation }) {
                     text: 'Delete',
                     onPress: () => {
                         // TODO: implement delete operation
-                        
+
                     },
                 },
             ],
@@ -49,7 +49,7 @@ export function Learnset({ navigation }) {
     }
 
     function editSet(): void {
-       // TODO: implement edit operation
+        // TODO: implement edit operation
     }
 
     const handleEditQAndA = (id?: number, answer?: any, question?: any): void => {
@@ -62,7 +62,7 @@ export function Learnset({ navigation }) {
             setIsEditingQAndA(false);
         }
     };
-    
+
     const handleSaveQandA = (id: number): void => {
         setIsEditingQAndA(!isEditingQAndA);
         console.log("Saving Q and A with id: " + id);
@@ -81,33 +81,33 @@ export function Learnset({ navigation }) {
                 </XStack>
 
                 <Accordion overflow="hidden" width="auto" type="multiple" space="$2">
-                {isEditingQAndA ?  
-                    <>
-                        <Input 
-                            placeholder="Edit question" 
-                            value={question}
-                            onChangeText={setQuestion}
-                            /> 
-                        <TextArea 
-                            placeholder="Edit answer" 
-                            value={answer}
-                            onChangeText={setAnswer}
+                    {isEditingQAndA ?
+                        <>
+                            <Input
+                                placeholder="Edit question"
+                                value={question}
+                                onChangeText={setQuestion}
                             />
-                    </>
-                            : 
-                    <>
-                    {questions.map((topic, index) => (
-                        <QuestionsAccordionItem
-                            key={index}
-                            id={topic.id}
-                            question={topic.Q}
-                            answer={topic.A}
-                            value={topic.id}
-                            handleEditQAndA={handleEditQAndA}
-                        />
-                    ))}
-                        
-                    </>}
+                            <TextArea
+                                placeholder="Edit answer"
+                                value={answer}
+                                onChangeText={setAnswer}
+                            />
+                        </>
+                        :
+                        <>
+                            {questions.map((topic, index) => (
+                                <QuestionsAccordionItem
+                                    key={index}
+                                    id={topic.id}
+                                    question={topic.Q}
+                                    answer={topic.A}
+                                    value={topic.id}
+                                    handleEditQAndA={handleEditQAndA}
+                                />
+                            ))}
+
+                        </>}
                 </Accordion>
                 {isEditingQAndA ?
                     <XStack justifyContent="space-between">
@@ -119,16 +119,22 @@ export function Learnset({ navigation }) {
                         </Button>
                     </XStack>
                     :
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" pressStyle={{borderWidth: 3}}>
-                    Add Questions
-                </Button>
-                }                
-            
-            {isEditingQAndA ? null :
-            <Button alignSelf="center" size="$5" width="75%" theme='active' marginBottom="$5" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
-            }
-            </ScrollView >
-        </SafeAreaView>
+                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$12" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
+                        Add Questions
+                    </Button>
+                }
+                </ScrollView >
+                {isEditingQAndA ? null :
+                <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
+                    {
+                        position: "absolute",
+                        bottom: 40,
+                        right: 0,
+                        left: 0,
+                        marginHorizontal: 10,
+                        
+                    }}>Lernen</Button> 
+                }
+        </SafeAreaView >
     )
-    // TODO: add learn button functionality
 }

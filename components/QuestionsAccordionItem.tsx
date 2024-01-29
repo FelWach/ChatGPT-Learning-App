@@ -31,7 +31,7 @@ export function QuestionsAccordionItem(props: any, { navigation }) {
     }
 
     return (
-        <Accordion.Item value={props.value} >
+        <Accordion.Item value={props.value} paddingBottom="$2">
             <Accordion.Trigger flexDirection="row" justifyContent="space-between">
                 {({ open }) => (
                     <>
