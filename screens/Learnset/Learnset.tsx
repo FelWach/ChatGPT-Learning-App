@@ -8,7 +8,7 @@ import { SaveAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom, userAtom } from "../../state/atoms";
 import { useQueryClient } from "@tanstack/react-query";
-import { deleteEntry, updateTopic, deleteTopic } from "../../api/api";
+import { deleteEntry, updateTopic, deleteTopic, updateAnswer, updateQuestion } from "../../api/api";
 import { useEffect } from "react";
 
 const isEditingQAndAAtom = atom<boolean>(false);
@@ -64,6 +64,31 @@ export function Learnset({ navigation }) {
         );
     }
 
+    function updateQAndA(id: number, question: string, answer: string): void {
+        Alert.alert(
+            'Confirm Changes',
+            'Are you sure you want to change the question and answer?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Save',
+                    onPress: () => {
+                        setIsEditingQAndA(false);
+                        updateQuestion(id, question);
+                        updateAnswer(id, answer);
+                        queryClient.invalidateQueries({ queryKey: ['topics'] });
+                        navigation.navigate('TopicsOverview');
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
+
     function deleteSet(): void {
         // Display an alert to confirm the deletion
         Alert.alert(
@@ -108,11 +133,6 @@ export function Learnset({ navigation }) {
         } else {
             setIsEditingQAndA(false);
         }
-    };
-    
-    const handleSaveQandA = (id: number): void => {
-        setIsEditingQAndA(!isEditingQAndA);
-        console.log("Saving Q and A with id: " + id);
     };
 
     return (
@@ -184,7 +204,7 @@ export function Learnset({ navigation }) {
                         <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={handleEditQAndA}>
                             Cancel
                         </Button>
-                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" marginBottom="$15" onPress={() => handleSaveQandA(id)}>
+                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" marginBottom="$15" onPress={() => updateQAndA(id, question, answer)}>
                             Save
                         </Button>
                     </XStack>

@@ -238,3 +238,24 @@ export async function deleteTopic(id: number, topic: string) {
         throw error.response.data
     }
 }
+
+export async function updateQuestion(id: number, question: string) {
+    try {
+        const response = await axios.put(`${baseUrl}/updateQuestion/${id}`, { question: question }, { headers: { 'Content-Type': 'application/json' } });
+        return response.data
+    }
+    catch (error: any) {
+        throw error.response.data
+    }
+}
+
+export async function updateAnswer(id: number, answer: string) {
+    try {
+        const response = await axios.put(`${baseUrl}/updateAnswer/${id}`, { answer: answer }, { headers: { 'Content-Type': 'application/json' } });
+        return response.data
+    }
+    catch (error: any) {
+        throw error.response.data
+    }
+}
+
