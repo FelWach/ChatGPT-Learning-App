@@ -44,7 +44,6 @@ export interface ConfigSettingsProps {
     language: string;
     languageLevel: string;
     difficulty: string;
-    temperature: number;
 }
 
 export interface UploadProps {

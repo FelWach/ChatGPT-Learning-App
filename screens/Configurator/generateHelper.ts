@@ -30,17 +30,15 @@ export const generateFromTopic = async (topic: string, nbQuestions: number) => {
 };
 
 
-export const configureSettings = async (language: string, languageStyle: string, creativity: number, difficulty: string) => {
+export const configureSettings = async (language: string, languageStyle: string, difficulty: string) => {
     const config: ConfigSettingsProps = {
         language: language,
         languageLevel: languageStyle,
-        temperature: creativity,
         difficulty: difficulty,
     };
     console.log("Config configureSettings");
     console.log("Language: " + config.language);
     console.log("Language Level: " + config.languageLevel);
-    console.log("Temperature: " + config.temperature);
     console.log("Difficulty: " + config.difficulty);
 
     return await setConfiguration(config);

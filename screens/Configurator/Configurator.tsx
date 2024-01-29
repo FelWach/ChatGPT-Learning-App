@@ -8,7 +8,6 @@ import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
 import { endPageAtom, filesAtom, startPageAtom } from "../../components/DocumentSelect/atoms";
 import {
-  creativityAtom,
   languageAtom,
   languageStyleAtom,
   questionAtom,
@@ -34,23 +33,23 @@ export function Configurator({ navigation, route }) {
   const [question, setQuestions] = useAtom(questionAtom);
   const [language, setLanguage] = useAtom(languageAtom);
   const [languageStyle, setLanguageStyle] = useAtom(languageStyleAtom);
-  const [creativity] = useAtom(creativityAtom);
   const [difficulty, setDifficulty] = useAtom(difficultyAtom);
   const [topic, setTopic] = useAtom(topicAtom);
   const [startPage, setStartPage] = useAtom(startPageAtom);
   const [endPage, setEndPage] = useAtom(endPageAtom);
   const [selectedValue] = useAtom(selectedValueAtom);
   const [, setFiles] = useAtom(filesAtom);
-  const [user] = useAtom(userAtom);  
+  const [user] = useAtom(userAtom);
 
   const queryClient = useQueryClient()
 
   const configureAndGenerate = async () => {
     setLoading(true);
-    if (!validatePagesInput()) return;
+    if (selectedValue === "PDF" && !validatePagesInput()) return;
+    if (selectedValue === "Topic" && !validateTopicInput()) return;
     let configureSuccess = false;
 
-    await configureSettings(language, languageStyle, creativity, difficulty)
+    await configureSettings(language, languageStyle, difficulty)
       .then((res) => {
         console.log("Response from configure: " + res.message);
         configureSuccess = true;
@@ -69,14 +68,14 @@ export function Configurator({ navigation, route }) {
           } else {
             await generateFromPDF(Number(question), Number(startPage), Number(endPage));
           }
-      } else {
+        } else {
           if (selectedValue === "Topic") {
-              await addQuestionsFromTopic(topic, Number(question), user.id);
+            await addQuestionsFromTopic(topic, Number(question), user.id);
           } else {
             console.log("addQuestionsFromPDF !!!!!!!!!!!");
-              await addQuestionsFromPDF(topic, Number(endPage), Number(startPage), Number(question));
+            await addQuestionsFromPDF(topic, Number(endPage), Number(startPage), Number(question));
           }
-      }
+        }
         console.log(`Response from ${selectedValue} generate: ` + res);
         resetAtoms();
         await queryClient.invalidateQueries({ queryKey: ['topics'] });
@@ -93,6 +92,15 @@ export function Configurator({ navigation, route }) {
   function validatePagesInput(): boolean {
     if (Number(startPage) > Number(endPage)) {
       alert("Start page must be smaller than end page")
+      setLoading(false);
+      return false;
+    }
+    return true;
+  }
+
+  function validateTopicInput(): boolean {
+    if (topic.trim() === "") {
+      alert("Please enter a topic");
       setLoading(false);
       return false;
     }

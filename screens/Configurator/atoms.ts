@@ -2,7 +2,6 @@ import {atom} from 'jotai';
 import { DropdownMenuItem } from '../../components/DropdownMenu/types';
 import { atomWithStorage } from 'jotai/utils';
 
-export const creativityAtom = atom<number>(0.5);
 export const questionAtom = atom<string>('10');
 export const languageAtom = atom<string>('en');
 export const languageStyleAtom = atom<string>('normal');
