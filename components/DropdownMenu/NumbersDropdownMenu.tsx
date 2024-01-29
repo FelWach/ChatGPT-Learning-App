@@ -1,12 +1,6 @@
 import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import { useEffect, useMemo, useState } from 'react'
-import {
-    Adapt,
-    Select,
-    SelectProps,
-    Sheet,
-    YStack,
-} from 'tamagui'
+import { Adapt, Select, SelectProps, Sheet, YStack } from 'tamagui'
 import { Atom, useAtom } from 'jotai'
 
 export function NumbersDropdownMenu({ ...props }: SelectProps & { maxNumber: number, label: string, atom: Atom<string>}) {
@@ -79,7 +73,7 @@ export function NumbersDropdownMenu({ ...props }: SelectProps & { maxNumber: num
                                     [...Array(props.maxNumber)].map((_, i) => {
                                         return (
                                             <Select.Item
-                                                debug="verbose"
+                                                //debug="verbose"
                                                 index={i+1}
                                                 key={String(i+1)}
                                                 value={String(i+1)}

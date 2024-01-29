@@ -56,6 +56,13 @@ Falls **weder** pageStart **noch** pageEnd gegeben ist, werden nbQuestions Frage
 
 ---
 
+POST /addToLearnsetFromDocs
+
+added neue Fragen zu einem bestehenden Learnset nachdem ein PDF hochgeladen wurde.
+Benötigt nbQuestions, pageStart, pageEnd, learnsetName im req.body
+
+---
+
 POST /generate
 
 generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
@@ -67,6 +74,19 @@ POST /generate/:topic
 
 generiert Fragen und Antworten und speichert diese in die db (Name noch nicht passend und speichert bis user Login funktioniert alle Entries user 1)
 topic in req params. (eventuell wird nur diese route benötigt)
+
+---
+
+POST /addToLearnset
+
+added neue Fragen zu einem bestehenden Learnset. 
+Benötigt topic, nbQuestions, userId im request Body
+
+---
+
+DELETE /deleteLearnset/:userId/:topic
+
+löscht Learnset mit userId und topic
 
 ---
 
@@ -103,6 +123,18 @@ gibt eine Frage mit id zurück
 DELETE /deleteEntry/:id
 
 löscht Eintrag mit id
+
+---
+
+PUT /updateQuestion/:id
+
+ändert Frage mit id. Benötigt die neue Frage question im req.body
+
+---
+
+PUT /updateAnswer/:id
+
+ändert Antwort mit id. Benötigt die neue Antwort answer im req.body
 
 ### User
 
@@ -145,3 +177,9 @@ Löscht einen Nutzer mit der ID
 PUT /updateUser/:id
 
 Updatet einen User mit der ID --> Benötigt im req body jeweils das zu updatende attribut name oder email oder password. Falls password geupdatet werden soll muss zudem oldPassword im req body angegeben werden. 
+
+---
+
+PUT /update/:userId/:oldTopic/:newTopic
+
+Updatet Topic von einem User --> Benötigt im req body jeweils das zu updatende Topic und das neue Topic

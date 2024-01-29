@@ -1,10 +1,10 @@
 import { Button, H1, ScrollView, View, XStack, Accordion, Input, Paragraph, TextArea } from "tamagui";
-import { Trash, Edit, Plus, ArrowLeft, X } from '@tamagui/lucide-icons'
+import { Trash, Edit, Plus, } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
-import { SaveAreaView } from "../../components/SafeAreaView";
+import { SafeAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
 import { questionsAnswersAtom, topicAtom, userAtom } from "../../state/atoms";
 import { useQueryClient } from "@tanstack/react-query";
@@ -136,7 +136,7 @@ export function Learnset({ navigation }) {
     };
 
     return (
-        <SaveAreaView>
+        <SafeAreaView>
             <ScrollView>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">       
                     {isEditingTopic ?
@@ -170,17 +170,17 @@ export function Learnset({ navigation }) {
                 </XStack>
 
                 <Accordion overflow="hidden" width="auto" type="multiple" space="$2">
-                {isEditingQAndA ?  
-                    <>
-                        <Input 
-                            placeholder="Edit question" 
-                            value={question}
-                            onChangeText={setQuestion}
-                            /> 
-                        <TextArea 
-                            placeholder="Edit answer" 
-                            value={answer}
-                            onChangeText={setAnswer}
+                    {isEditingQAndA ?
+                        <>
+                            <Input
+                                placeholder="Edit question"
+                                value={question}
+                                onChangeText={setQuestion}
+                            />
+                            <TextArea
+                                placeholder="Edit answer"
+                                value={answer}
+                                onChangeText={setAnswer}
                             />
                     </>
                             : 
@@ -209,24 +209,22 @@ export function Learnset({ navigation }) {
                         </Button>
                     </XStack>
                     :
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$15">
-                    Add Questions
-                </Button>
+                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$12" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
+                        Add Questions
+                    </Button>
                 }
-                
-            </ScrollView >
-            {isEditingQAndA ? null :
-            <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
-                {
-                    position: "absolute",
-                    bottom: 40,
-                    right: 0,
-                    left: 0,
-                    marginHorizontal: 10,
-                    
-                }}>Lernen</Button> 
-            }
-        </SaveAreaView>
+                </ScrollView >
+                {isEditingQAndA ? null :
+                <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
+                    {
+                        position: "absolute",
+                        bottom: 40,
+                        right: 0,
+                        left: 0,
+                        marginHorizontal: 10,
+                        
+                    }}>Lernen</Button> 
+                }
+        </SafeAreaView >
     )
-    // TODO: add learn button functionality
 }

@@ -7,14 +7,14 @@ export function TopicsCard({ ...props }: CardProps & TopicCardProps) { // extend
         bordered 
         animation="bouncy"
         size="$3"
-        width={340}
+        width="100%"
         height={100}
         padding="$4"
         justifyContent="center"
         {...props}
         >
             <H4>{props.headline}</H4>
-            <Paragraph theme="alt2">{props.numberOfLearncards} Karteikarten</Paragraph>
+            <Paragraph theme="alt2">{props.numberOfLearncards} Cards</Paragraph>
         </Card>
     );
 }

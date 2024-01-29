@@ -1,77 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="NONE" />
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="Fixed Error Handling">
+    <list default="true" id="7e2275c1-804a-4d2c-be38-03615ff1ea24" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/NavButtons.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Routes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/QuestionsAccordionItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/QuestionsAccordionItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/SafeAreaView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/SafeAreaView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/TabNavigator/TabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/TabNavigator/TabNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/TopicCards/TopicsCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/TopicCards/TopicsCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Configurator/Configurator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Configurator/Configurator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Features.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Features.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Learning/Learning.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learning/Learning.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Learnset/Learnset.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/StartScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/StartScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/TopicsOverview/TopicsOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/TopicsOverview/TopicsOverview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/apiCalls.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/apiCalls.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="2Y8EypQ9QQYaq6th6EvD3xK3vJ9" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "feature/lernset-edit-and-delete",
-    "last_opened_file_path": "C:/Users/laura/OneDrive - FH OOe/Dokumente/00_FH_WSemester_23_24/Semesterprojekt WS2324/Projekt/ChatGPT-Learning-App"
+    "git-widget-placeholder": "Merging feature/user-settings"
   }
 }]]></component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="e183af5e-9d8e-4f16-9b70-e3482748a97a" name="Changes" comment="" />
-      <created>1699899067438</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1699899067438</updated>
-    </task>
-    <task id="LOCAL-00001" summary="created Tab Navigator Component">
-      <created>1700504126637</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1700504126637</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Custom Header NavButtons">
-      <created>1701188526596</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1701188526596</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Fixed Error Handling">
-      <created>1701101946499</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1701101946499</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="created Tab Navigator Component" />
-    <MESSAGE value="Added /updateUser, /upload and /uploadFromDocs Routes" />
-    <MESSAGE value="Fixed Error Handling" />
-    <MESSAGE value="Custom Header NavButtons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Custom Header NavButtons" />
   </component>
 </project>

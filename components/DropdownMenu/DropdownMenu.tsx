@@ -1,17 +1,10 @@
 import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import { useEffect, useMemo, useState } from 'react'
-import {
-    Adapt,
-    Select,
-    SelectProps,
-    Sheet,
-    YStack,
-} from 'tamagui'
+import { Adapt, Select, SelectProps, Sheet, YStack } from 'tamagui'
 import { DropdownMenuItem } from './types'
 import { Atom, useAtom } from 'jotai'
 
 /* USAGE:
-* See pages/DropdownDemo.tsx
 * Items are passed in as an array of type DropdownMenuItem
 * label: is a string that will be displayed above the dropdown menu
 * atom: is an atom that will be used to manage the selected value
@@ -77,15 +70,16 @@ export function DropdownMenu({ ...props }: SelectProps & { items: DropdownMenuIt
                     // exitStyle={{ o: 0, y: 10 }}
                     minWidth={200}
                 >
+
                     <Select.Group>
                         <Select.Label>{props.label}</Select.Label>
-                        {/* for longer lists memoizing these is useful */}
+                        {/* for longer lists memoizing these is useful */}                        
                         {useMemo(
                             () =>
                                 props.items.map((item, i) => {
                                     return (
                                         <Select.Item
-                                            debug="verbose"
+                                            //debug="verbose"
                                             index={i}
                                             key={item.id}
                                             value={item.value}
@@ -98,8 +92,9 @@ export function DropdownMenu({ ...props }: SelectProps & { items: DropdownMenuIt
                                     )
                                 }),
                             [props.items]
-                        )}
+                            )}
                     </Select.Group>
+
                 </Select.Viewport>
                 <Select.ScrollDownButton
                     alignItems="center"

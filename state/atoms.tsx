@@ -1,4 +1,4 @@
-import { PrimitiveAtom, atom, useAtom } from 'jotai'
+import { atom } from 'jotai'
 import { atomsWithQuery } from 'jotai-tanstack-query'
 import { getEntriesWithTopic, getTopics } from '../api/api';
 import { TopicCardProps } from '../components/TopicCards/types';
@@ -8,11 +8,15 @@ import { UserProps } from './types'
 import { QuestionsAnswersData } from '../screens/Learning/types';
 
 const userStorage = createJSONStorage(() => AsyncStorage)
+
 const userContent: UserProps = {
     id: '',
     name: '',
     email: '',
 }
+
+export const themeColorAtom = atom<'blue'|'red'|'yellow'|'green'|'purple'>('blue');
+export const switchThemeAtom = atom<boolean>(false);
 
 export const userAtom = atomWithStorage('user', userContent, userStorage);
 
@@ -44,6 +48,7 @@ export const [topicCardAtom] = atomsWithQuery<TopicCardProps[]>((get) => ({
 export const dataLoadingAtom = atom(false);
 
 export const emailAtom = atomWithStorage<string>('email', '');
+
 export const passwordAtom = atomWithStorage<string>('password', '');
 
 export const topicAtom = atom<string>('');
