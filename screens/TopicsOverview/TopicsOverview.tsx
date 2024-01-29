@@ -13,7 +13,7 @@ import Profile from '../Profile';
 
 export const tabValueAtom = atom<'topicsOverview'|'profile'>('topicsOverview')
 
-export function TopicsOverview({ navigation }) {
+export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
   const [topicCards] = useAtom(topicCardAtom);
   const [currentTopic, setCurrentTopic] = useAtom(topicAtom);
   const tabValue = useAtomValue(tabValueAtom)
@@ -68,7 +68,7 @@ export function TopicsOverview({ navigation }) {
       )}
 
       <YStack style={styles.shadowProp} alignSelf="center" position="absolute" marginTop={useWindowDimensions().height - 100}>
-        <TabNavigator navigation={navigation} />
+        <TabNavigator />
       </YStack>
     </SafeAreaView >
   );

@@ -2,7 +2,7 @@ import config from './tamagui.config'
 import { useFonts } from 'expo-font'
 import { StatusBar, Text, LogBox } from 'react-native'
 import { TamaguiProvider, H1, Theme, ThemeName, useForceUpdate } from 'tamagui'
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { switchThemeAtom, themeColorAtom } from './state/atoms'
 import { createStackNavigator } from '@react-navigation/stack';
 import Routes from './Routes'
@@ -24,6 +24,7 @@ export function GlobalLoadingIndicator() {
 
 // Ignore all log notifications - for Test Mode only
 //LogBox.ignoreAllLogs();
+
 
 // creating Stack Navigator
 export const Stack = createStackNavigator();

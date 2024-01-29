@@ -9,9 +9,7 @@ import { Learnset } from './screens/Learnset/Learnset'
 import { Configurator } from './screens/Configurator/Configurator'
 import { TopicsOverview } from './screens/TopicsOverview/TopicsOverview'
 import Profile from './screens/Profile'
-
 import { NavButtonArrow, NavButtonX } from './components/NavButtons'
-import { X, ArrowLeft } from '@tamagui/lucide-icons'
 
 // for testing
 import ApiCalls from './screens/apiCalls'

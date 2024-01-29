@@ -13,13 +13,14 @@ type FormData = {
 };
 
 export default function Login({ navigation }) {
+
   const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
     mode: 'onBlur',
   });
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [user, setUser] = useAtom(userAtom);
 
-  const onSubmit = async (data: any) => {    
+  const onSubmit = async (data: any) => {
     const userData: LoginProps = {
       usernameOrEmail: data.usernameOrEmail,
       password: data.password,
