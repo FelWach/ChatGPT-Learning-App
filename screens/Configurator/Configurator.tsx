@@ -1,89 +1,55 @@
-import { Label, Button, Text, ScrollView, YStack, XStack, Input, ToggleGroup, Spinner } from "tamagui";
+import {
+  Button,
+  ScrollView,
+  YStack,
+  Spinner,
+} from "tamagui";
 import { DocumentSelect } from "../../components/DocumentSelect/DocumentSelect";
 import { atom, useAtom } from "jotai";
 import { endPageAtom, filesAtom, startPageAtom } from "../../components/DocumentSelect/atoms";
-import { creativityAtom, languageAtom, languageStyleAtom, questionAtom, difficultyAtom, topicAtom } from "./atoms";
+import {
+  languageAtom,
+  languageStyleAtom,
+  questionAtom,
+  difficultyAtom,
+  selectedValueAtom,
+} from "./atoms";
 import { SafeAreaView } from "../../components/SafeAreaView";
-import { GenerateProps, ConfigSettingsProps, GenerateFromDocsProps } from "../../api/types";
-import { generate, generateFromDocs, setConfiguration } from "../../api/api";
 import { ConfiguratorSettings } from "./ConfiguratorSettings";
-import { set } from "react-hook-form";
+import { TopicField } from "./TopicField";
 import { useQueryClient } from "@tanstack/react-query";
+import { topicAtom, userAtom } from "../../state/atoms";
+import { TopicUploadSwitcher } from "./TopicUploadSwitcher";
+import { addQuestionsFromPDF, addQuestionsFromTopic, configureSettings, generateFromPDF, generateFromTopic } from "./generateHelper";
 
-const selectedValueAtom = atom("Topic");
 const loadingAtom = atom(false);
 
-export function Configurator({ navigation }) {
-  const [question] = useAtom(questionAtom);
-  const [language] = useAtom(languageAtom);
-  const [languageStyle] = useAtom(languageStyleAtom);
-  const [creativity] = useAtom(creativityAtom);
-  const [difficulty] = useAtom(difficultyAtom);
+export function Configurator({ navigation, route }) {
+
+  const addQuestionsClicked = route.params.addQuestionsClicked; // this is how props can be passed to components using the React Native Navigator
+
+  const [loading, setLoading] = useAtom(loadingAtom);
+
+  const [question, setQuestions] = useAtom(questionAtom);
+  const [language, setLanguage] = useAtom(languageAtom);
+  const [languageStyle, setLanguageStyle] = useAtom(languageStyleAtom);
+  const [difficulty, setDifficulty] = useAtom(difficultyAtom);
   const [topic, setTopic] = useAtom(topicAtom);
   const [startPage, setStartPage] = useAtom(startPageAtom);
   const [endPage, setEndPage] = useAtom(endPageAtom);
-  const [loading, setLoading] = useAtom(loadingAtom);
-  const [files, setFiles] = useAtom(filesAtom);
   const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
+  const [, setFiles] = useAtom(filesAtom);
+  const [user] = useAtom(userAtom);
 
   const queryClient = useQueryClient()
 
-  const configureSettings = async () => {
-    const config: ConfigSettingsProps = {
-      language: language,
-      languageLevel: languageStyle,
-      temperature: creativity,
-      difficulty: difficulty,
-    };
-    //console.log("Config");
-    //console.log("Language: " + config.language);
-    //console.log("Language Level: " + config.languageLevel);
-    //console.log("Temperature: " + config.temperature);
-    //console.log("Difficulty: " + config.difficulty);
-
-    return await setConfiguration(config);
-  };
-
-  const generateFromTopic = async () => {
-    const generateConfig: GenerateProps = {
-      topic: topic,
-      nbQuestions: Number(question),
-    };
-    //console.log("Generate Config Topic: ");
-    //console.log("Topic: " + generateConfig.topic);
-    //console.log("Number of questions: " + generateConfig.nbQuestions);
-
-    return await generate(generateConfig)
-  };
-
-  const generateFromPDF = async () => {
-    const generateConfig: GenerateFromDocsProps = {
-      nbQuestions: Number(question),
-      pageStart: Number(startPage),
-      pageEnd: Number(endPage),
-    };
-
-    //console.log("Generate Config PDF");
-    //console.log("Number of questions: " + generateConfig.nbQuestions);
-    //console.log("Page Start: " + generateConfig.pageStart);
-    //console.log("Page End: " + generateConfig.pageEnd);
-
-    return generateFromDocs(generateConfig)
-  };
-
-  const resetAtoms = () => {
-    setTopic("");
-    setStartPage("1");
-    setEndPage("1");
-    setFiles([]);
-  }
-
   const configureAndGenerate = async () => {
     setLoading(true);
-    if (!validate()) return;
+    if (selectedValue === "PDF" && !validatePagesInput()) return;
+    if (selectedValue === "Topic" && !validateTopicInput()) return;
     let configureSuccess = false;
 
-    await configureSettings()
+    await configureSettings(language, languageStyle, difficulty)
       .then((res) => {
         console.log("Response from configure: " + res.message);
         configureSuccess = true;
@@ -94,68 +60,72 @@ export function Configurator({ navigation }) {
       });
 
     if (configureSuccess) {
-      if (selectedValue === "Topic") {
-        await generateFromTopic()
-          .then(async (res) => {
-            console.log("Response from Topic generate: " + res);
-            resetAtoms();
-            await queryClient.invalidateQueries({ queryKey: ['topics'] });
-            navigation.navigate("TopicsOverview");
+      try {
+        let res = null;
+        if (!addQuestionsClicked) {
+          if (selectedValue === "Topic") {
+            await generateFromTopic(topic, Number(question))
+          } else {
+            await generateFromPDF(Number(question), Number(startPage), Number(endPage));
           }
-          ).catch((error) => {
-            console.log(error);
-            alert("Could not generate questions, please try again");
-          }).finally(() => {
-            setLoading(false);
-          })
-      } else {
-        await generateFromPDF()
-          .then(async (res) => {
-            console.log("Response from PDF generate: " + res);
-            resetAtoms();
-            await queryClient.invalidateQueries({ queryKey: ['topics'] });
-            navigation.navigate("TopicsOverview");
+        } else {
+          if (selectedValue === "Topic") {
+            await addQuestionsFromTopic(topic, Number(question), user.id);
+          } else {
+            console.log("addQuestionsFromPDF !!!!!!!!!!!");
+            await addQuestionsFromPDF(topic, Number(endPage), Number(startPage), Number(question));
           }
-          ).catch((error) => {
-            console.log(error);
-            alert("Could not generate questions, please try again");
-          }).finally(() => {
-            setLoading(false);
-          })
-      };
+        }
+        console.log(`Response from ${selectedValue} generate: ` + res);
+        resetAtoms();
+        await queryClient.invalidateQueries({ queryKey: ['topics'] });
+        navigation.navigate("TopicsOverview");
+      } catch (error) {
+        console.log(error);
+        alert("Could not generate questions, please try again");
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
-  function validate(): boolean {
-    if (startPage > endPage) {
+  function validatePagesInput(): boolean {
+    if (Number(startPage) > Number(endPage)) {
       alert("Start page must be smaller than end page")
+      setLoading(false);
       return false;
     }
     return true;
   }
+
+  function validateTopicInput(): boolean {
+    if (topic.trim() === "") {
+      alert("Please enter a topic");
+      setLoading(false);
+      return false;
+    }
+    return true;
+  }
+
+  const resetAtoms = () => {
+    setTopic("");
+    setQuestions("10");
+    setFiles([]);
+    setLanguageStyle("normal");
+    setLanguage("en");
+    setDifficulty("normal");
+    setStartPage("1");
+    setEndPage("1");
+    setSelectedValue("Topic");
+  }
+
   return (
     <ScrollView>
       <SafeAreaView>
-        <XStack justifyContent="center">
-          <ToggleGroup
-            type="single"
-            value={selectedValue}
-            onValueChange={(val) => { val && setSelectedValue(val) }}
-          >
-            <ToggleGroup.Item value="Topic">
-              <Text>Choose Topic</Text>
-            </ToggleGroup.Item>
-            <ToggleGroup.Item value="Files">
-              <Text>Upload PDF</Text>
-            </ToggleGroup.Item>
-          </ToggleGroup>
-        </XStack>
+        <TopicUploadSwitcher />
         <YStack paddingTop={30} paddingBottom={20}>
           {selectedValue === "Topic" ? (
-            <>
-              <Label paddingBottom={10}>Topic</Label>
-              <Input size="$4" borderWidth={2} placeholder="e.g. Javascript" height={70} onChangeText={(text) => { setTopic(text) }} />
-            </>
+            <TopicField addQuestionsClicked={addQuestionsClicked} />
           ) : (
             <DocumentSelect />          
           )}

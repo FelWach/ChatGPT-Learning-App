@@ -21,10 +21,17 @@ export interface GenerateProps {
     nbQuestions: number;
 }
 
-export interface GenerateFromDocsProps {
+export interface AddQuestionsTopicProps {
+    topic: string;
     nbQuestions: number;
-    pageStart?: number;
-    pageEnd?: number;
+    userId: number;
+}
+
+export interface AddQuestionsPDFProps {
+    nbQuestions: number;
+    pageStart: number;
+    pageEnd: number;
+    learnsetName: string;
 }
 
 export interface GenerateFromDocsProps {
@@ -37,7 +44,6 @@ export interface ConfigSettingsProps {
     language: string;
     languageLevel: string;
     difficulty: string;
-    temperature: number;
 }
 
 export interface UploadProps {
@@ -45,9 +51,5 @@ export interface UploadProps {
     name: string;
     size: number;
 }
-export interface UploadProps {
-    uri: string,
-    name: string,
-    size: number,
-}
+
 

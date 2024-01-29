@@ -73,7 +73,7 @@ export function NumbersDropdownMenu({ ...props }: SelectProps & { maxNumber: num
                                     [...Array(props.maxNumber)].map((_, i) => {
                                         return (
                                             <Select.Item
-                                                debug="verbose"
+                                                //debug="verbose"
                                                 index={i+1}
                                                 key={String(i+1)}
                                                 value={String(i+1)}

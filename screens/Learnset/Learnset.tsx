@@ -1,12 +1,15 @@
 import { Button, H1, ScrollView, View, XStack, Accordion, Input, Paragraph, TextArea } from "tamagui";
-import { Trash, Edit, Plus, ArrowLeft, X } from '@tamagui/lucide-icons'
+import { Trash, Edit, Plus, } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
 import { useHydrateAtoms } from 'jotai/utils'
 import { SafeAreaView } from "../../components/SafeAreaView";
 import { QuestionsAnswersData } from "../Learning/types";
-import { questionsAnswersAtom, topicAtom } from "../../state/atoms";
+import { questionsAnswersAtom, topicAtom, userAtom } from "../../state/atoms";
+import { useQueryClient } from "@tanstack/react-query";
+import { deleteEntry, updateTopic, deleteTopic, updateAnswer, updateQuestion } from "../../api/api";
+import { useEffect } from "react";
 
 const isEditingQAndAAtom = atom<boolean>(false);
 
@@ -14,23 +17,34 @@ const isEditingQAndAAtom = atom<boolean>(false);
 const idAtom = atom<number>(0);
 const questionAtom = atom<string>('');
 const answerAtom = atom<string>('');
+const tempTopicAtom = atom<string>('');
+const isEditingTopicAtom = atom<boolean>(false);
 
 export function Learnset({ navigation }) {
 
+    const queryClient = useQueryClient();
+    
+    const [user, setUser] = useAtom(userAtom);
+    
     const [questions, setQuestions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
+    const [tempTopic, setTempTopic] = useAtom(tempTopicAtom);
 
     const [isEditingQAndA, setIsEditingQAndA] = useAtom(isEditingQAndAAtom);
+    const [isEditingTopic, setIsEditingTopic] = useAtom(isEditingTopicAtom);
 
     const [id, setId] = useAtom(idAtom);
     const [question, setQuestion] = useAtom(questionAtom);
     const [answer, setAnswer] = useAtom(answerAtom);
 
-    function deleteSet(): void {
-        // Display an alert to confirm the deletion
+    useEffect(() => {
+        setTempTopic(topic);
+    }, []);
+
+    function deleteQuestion(id : number): void {
         Alert.alert(
             'Confirm Deletion',
-            'Are you sure you want to delete this set?',
+            'Are you sure you want to delete this question?',
             [
                 {
                     text: 'Cancel',
@@ -39,8 +53,58 @@ export function Learnset({ navigation }) {
                 {
                     text: 'Delete',
                     onPress: () => {
-                        // TODO: implement delete operation
-                        
+                        console.log("delete: " + id)
+                        deleteEntry(id);
+                        queryClient.invalidateQueries({ queryKey: ['topics'] });
+                        navigation.navigate('TopicsOverview');
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
+    function updateQAndA(id: number, question: string, answer: string): void {
+        Alert.alert(
+            'Confirm Changes',
+            'Are you sure you want to change the question and answer?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Save',
+                    onPress: () => {
+                        setIsEditingQAndA(false);
+                        updateQuestion(id, question);
+                        updateAnswer(id, answer);
+                        queryClient.invalidateQueries({ queryKey: ['topics'] });
+                        navigation.navigate('TopicsOverview');
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
+
+    function deleteSet(): void {
+        // Display an alert to confirm the deletion
+        Alert.alert(
+            'Confirm Deletion',
+            'Are you sure you want to delete this Topic set?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => {
+                        deleteTopic(user.id, topic);
+                        queryClient.invalidateQueries({ queryKey: ['topics'] });
+                        navigation.navigate('TopicsOverview');
                     },
                 },
             ],
@@ -48,8 +112,16 @@ export function Learnset({ navigation }) {
         );
     }
 
-    function editSet(): void {
-       // TODO: implement edit operation
+    function updateTopicName(): void {
+        setIsEditingTopic(false);
+        updateTopic(user.id, topic, tempTopic);
+        queryClient.invalidateQueries({ queryKey: ['topics'] });
+        navigation.navigate('TopicsOverview');
+    }
+
+    function handleEditTopicName(): void {
+        isEditingTopic ? setIsEditingTopic(false) : setIsEditingTopic(true);
+        setTempTopic(topic);
     }
 
     const handleEditQAndA = (id?: number, answer?: any, question?: any): void => {
@@ -62,36 +134,53 @@ export function Learnset({ navigation }) {
             setIsEditingQAndA(false);
         }
     };
-    
-    const handleSaveQandA = (id: number): void => {
-        setIsEditingQAndA(!isEditingQAndA);
-        console.log("Saving Q and A with id: " + id);
-    };
-
 
     return (
         <SafeAreaView>
             <ScrollView>
-                <XStack display="flex" alignItems="center" justifyContent="space-between">
-                    <H1 size="$9" paddingBottom="$4">{topic}</H1>
-                    <XStack>
-                        <Button icon={Trash} size="$6" width="$4" height="$4" paddingBottom="$4" chromeless onPress={deleteSet}></Button>
-                        <Button icon={Edit} size="$6" width="$4" height="$4" paddingBottom="$4" chromeless onPress={editSet}></Button>
+                <XStack display="flex" alignItems="center" justifyContent="space-between">       
+                    {isEditingTopic ?
+                    <>
+                        <Input 
+                            width="$12"
+                            marginBottom="$4"
+                            marginTop="$4"
+                            placeholder="Edit the Name of the Topic"
+                            value={tempTopic}
+                            onChangeText={setTempTopic}
+                        />
+                    <XStack space>
+                        <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" onPress={handleEditTopicName}>
+                            Cancel
+                        </Button>
+                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" onPress={updateTopicName}>
+                            Save
+                        </Button>
                     </XStack>
+                    </>
+                    :
+                    <>
+                        <H1 size="$9" paddingVertical="$4">{topic}</H1>
+                        <XStack>
+                            <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
+                            <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={handleEditTopicName}></Button>
+                        </XStack>
+                    </>
+                    }
                 </XStack>
 
                 <Accordion overflow="hidden" width="auto" type="multiple" space="$2">
-                {isEditingQAndA ?  
-                    <>
-                        <Input 
-                            placeholder="Edit question" 
-                            value={question}
-                            onChangeText={setQuestion}
-                            /> 
-                        <TextArea 
-                            placeholder="Edit answer" 
-                            value={answer}
-                            onChangeText={setAnswer}
+                    {isEditingQAndA ?
+                        <>
+                            <Input
+                                placeholder="Edit question"
+                                value={question}
+                                onChangeText={setQuestion}
+                            />
+                            <TextArea
+                                placeholder="Edit answer"
+                                value={answer}
+                                onChangeText={setAnswer}
                             />
                     </>
                             : 
@@ -104,6 +193,7 @@ export function Learnset({ navigation }) {
                             answer={topic.A}
                             value={topic.id}
                             handleEditQAndA={handleEditQAndA}
+                            deleteQuestion={deleteQuestion}
                         />
                     ))}
                         
@@ -114,21 +204,27 @@ export function Learnset({ navigation }) {
                         <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" marginBottom="$15" onPress={handleEditQAndA}>
                             Cancel
                         </Button>
-                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" marginBottom="$15" onPress={() => handleSaveQandA(id)}>
+                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" marginBottom="$15" onPress={() => updateQAndA(id, question, answer)}>
                             Save
                         </Button>
                     </XStack>
                     :
-                <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" pressStyle={{borderWidth: 3}}>
-                    Add Questions
-                </Button>
-                }                
-            
-            {isEditingQAndA ? null :
-            <Button alignSelf="center" size="$5" width="75%" theme='active' marginBottom="$5" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
-            }
-            </ScrollView >
-        </SafeAreaView>
+                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$12" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
+                        Add Questions
+                    </Button>
+                }
+                </ScrollView >
+                {isEditingQAndA ? null :
+                <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
+                    {
+                        position: "absolute",
+                        bottom: 40,
+                        right: 0,
+                        left: 0,
+                        marginHorizontal: 10,
+                        
+                    }}>Lernen</Button> 
+                }
+        </SafeAreaView >
     )
-    // TODO: add learn button functionality
 }
