@@ -7,16 +7,14 @@ import { SafeAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
 import { useWindowDimensions } from 'react-native';
-import { GlobalLoadingIndicator } from '../../App';
-import { useWindowDimensions, StyleSheet } from 'react-native';
-import { useQueryClient } from '@tanstack/react-query';
 import Profile from '../Profile';
+import { StyleSheet } from 'react-native';
 
 export const tabValueAtom = atom<'topicsOverview'|'profile'>('topicsOverview')
 
 export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
-  const [currentTopic, setCurrentTopic] = useAtom(topicAtom);
+  const [, setCurrentTopic] = useAtom(topicAtom);
   const tabValue = useAtomValue(tabValueAtom)
 
   return (
@@ -41,7 +39,7 @@ export function TopicsOverview({ navigation }) {
                   ))}
                 </YStack>
               </YStack>
-              <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" marginBottom="$14" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator')}>
+              <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" marginBottom="$14" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator',  { addQuestionsClicked: false })}>
                 Add Learnset
               </Button>
             </ScrollView>
@@ -58,7 +56,7 @@ export function TopicsOverview({ navigation }) {
                   Have fun!
                 </Text>
               </YStack>
-              <Button icon={Plus} size="$5"  variant="outlined" marginVertical="$5" marginBottom="$10" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator')}>
+              <Button icon={Plus} size="$5"  variant="outlined" marginVertical="$5" marginBottom="$10" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: false }) }>
                 Add Learnset
               </Button>
             </>

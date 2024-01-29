@@ -1,5 +1,5 @@
 import { Button, H1, ScrollView, View, XStack, Accordion, Input, Paragraph, TextArea } from "tamagui";
-import { Trash, Edit, Plus, ArrowLeft, X } from '@tamagui/lucide-icons'
+import { Trash, Edit, Plus, } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";

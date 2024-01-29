@@ -37,7 +37,7 @@ export function Configurator({ navigation, route }) {
   const [topic, setTopic] = useAtom(topicAtom);
   const [startPage, setStartPage] = useAtom(startPageAtom);
   const [endPage, setEndPage] = useAtom(endPageAtom);
-  const [selectedValue] = useAtom(selectedValueAtom);
+  const [selectedValue, setSelectedValue] = useAtom(selectedValueAtom);
   const [, setFiles] = useAtom(filesAtom);
   const [user] = useAtom(userAtom);
 
@@ -116,6 +116,7 @@ export function Configurator({ navigation, route }) {
     setDifficulty("normal");
     setStartPage("1");
     setEndPage("1");
+    setSelectedValue("Topic");
   }
 
   return (
