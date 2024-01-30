@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, H2, Input, Text, View, YStack } from 'tamagui';
 import { SafeAreaView } from '../components/SafeAreaView';
 import { UserProps } from '../api/types';
 import { register } from '../api/api';
 import { useForm, Controller } from 'react-hook-form';
+
 
 type FormData = {
   name: string;
@@ -13,7 +14,6 @@ type FormData = {
 };
 
 export default function Register({ navigation }) {
-
   const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
     mode: 'onBlur',
   });

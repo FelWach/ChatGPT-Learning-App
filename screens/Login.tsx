@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { SafeAreaView } from '../components/SafeAreaView';
 import { useForm, Controller } from 'react-hook-form';
 
+
 type FormData = {
   usernameOrEmail: string;
   password: string;
@@ -19,6 +20,7 @@ export default function Login({ navigation }) {
   });
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [user, setUser] = useAtom(userAtom);
+
 
   const onSubmit = async (data: any) => {
     const userData: LoginProps = {

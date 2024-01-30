@@ -1,8 +1,8 @@
 import { Button, ScrollView, Text } from 'tamagui';
 import { H1, YStack } from 'tamagui';
 import { TopicsCard } from '../../components/TopicCards/TopicsCard';
-import { topicAtom, topicCardAtom} from '../../state/atoms';
-import { atom, useAtom, useAtomValue } from 'jotai';
+import { topicAtom, topicCardAtom } from '../../state/atoms';
+import { atom, useAtom } from 'jotai';
 import { SafeAreaView } from '../../components/SafeAreaView';
 import { Plus } from '@tamagui/lucide-icons';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
@@ -10,12 +10,12 @@ import { useWindowDimensions } from 'react-native';
 import Profile from '../Profile';
 import { StyleSheet } from 'react-native';
 
-export const tabValueAtom = atom<'topicsOverview'|'profile'>('topicsOverview')
+export const tabValueAtom = atom<'topicsOverview' | 'profile'>('topicsOverview')
 
 export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
   const [topicCards] = useAtom(topicCardAtom);
   const [, setCurrentTopic] = useAtom(topicAtom);
-  const tabValue = useAtomValue(tabValueAtom)
+  const [tabValue, setTabValue] = useAtom(tabValueAtom)
 
   return (
     <SafeAreaView>
@@ -39,7 +39,7 @@ export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
                   ))}
                 </YStack>
               </YStack>
-              <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" marginBottom="$14" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator',  { addQuestionsClicked: false })}>
+              <Button icon={Plus} size="$5" variant="outlined" marginTop="$5" marginBottom="$14" pressStyle={{ borderWidth: 3.5 }} onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: false })}>
                 Add Learnset
               </Button>
             </ScrollView>
@@ -56,7 +56,7 @@ export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
                   Have fun!
                 </Text>
               </YStack>
-              <Button icon={Plus} size="$5"  variant="outlined" marginVertical="$5" marginBottom="$10" pressStyle={{borderWidth: 3.5}} onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: false }) }>
+              <Button icon={Plus} size="$5" variant="outlined" marginVertical="$5" marginBottom="$10" pressStyle={{ borderWidth: 3.5 }} onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: false })}>
                 Add Learnset
               </Button>
             </>
@@ -76,7 +76,7 @@ export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
 const styles = StyleSheet.create({
   shadowProp: {
     shadowColor: '#171717',
-    shadowOffset: {width: 4, height: 4},
+    shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 3,
   }

@@ -41,6 +41,10 @@ export default function Profile({ navigation }) {
     setValue('username', user.name);
     setValue('email', user.email);
     setValue('oldPassword', '*');
+    setEditEmail(false);
+    setEditUsername(false);
+    setEditOldPassword(false);
+    setEditPasswordRepeat(false);
   }, [user]);
 
   const onSubmit = async (data: any) => {
