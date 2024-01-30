@@ -12,10 +12,10 @@ import { StyleSheet } from 'react-native';
 
 export const tabValueAtom = atom<'topicsOverview' | 'profile'>('topicsOverview')
 
-export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
+export function TopicsOverview({ navigation }) {
   const [topicCards] = useAtom(topicCardAtom);
   const [, setCurrentTopic] = useAtom(topicAtom);
-  const [tabValue, setTabValue] = useAtom(tabValueAtom)
+  const [tabValue] = useAtom(tabValueAtom)
 
   return (
     <SafeAreaView>

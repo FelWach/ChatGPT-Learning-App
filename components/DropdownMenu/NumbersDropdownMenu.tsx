@@ -17,7 +17,7 @@ export function NumbersDropdownMenu({ ...props }: SelectProps & { maxNumber: num
             {...props}
             
         >
-            <Select.Trigger iconAfter={ChevronDown} width={90}>
+            <Select.Trigger iconAfter={ChevronDown} width={70}>
                 <Select.Value placeholder="Something" />
             </Select.Trigger>
 

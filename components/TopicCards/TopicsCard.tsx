@@ -8,7 +8,6 @@ export function TopicsCard({ ...props }: CardProps & TopicCardProps) { // extend
         animation="bouncy"
         size="$3"
         width="100%"
-        height={100}
         padding="$4"
         justifyContent="center"
         {...props}
