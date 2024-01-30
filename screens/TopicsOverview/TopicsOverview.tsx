@@ -46,13 +46,13 @@ export function TopicsOverview({ navigation }: TopicsOverviewScreenProps) {
           ) : (
             <>
               <YStack space="$5" marginHorizontal="$3">
-                <H1 size="$9" color="#52A9FF">
+                <H1 size="$9">
                   You haven't generated any learning sets yet!
                 </H1>
-                <Text fontSize="$6" color="#52A9FF" lineHeight="$5">
+                <Text fontSize="$6" lineHeight="$5">
                   Get started and create your first learning set according to your preferences by clicking the 'Add Learnset' button
                 </Text>
-                <Text fontSize="$6" color="#52A9FF" fontWeight="bold">
+                <Text fontSize="$6" fontWeight="bold">
                   Have fun!
                 </Text>
               </YStack>

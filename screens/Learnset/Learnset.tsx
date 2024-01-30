@@ -23,9 +23,9 @@ const isEditingTopicAtom = atom<boolean>(false);
 export function Learnset({ navigation }) {
 
     const queryClient = useQueryClient();
-    
+
     const [user, setUser] = useAtom(userAtom);
-    
+
     const [questions, setQuestions] = useAtom(questionsAnswersAtom);
     const [topic] = useAtom(topicAtom);
     const [tempTopic, setTempTopic] = useAtom(tempTopicAtom);
@@ -41,7 +41,7 @@ export function Learnset({ navigation }) {
         setTempTopic(topic);
     }, []);
 
-    function deleteQuestion(id : number): void {
+    function deleteQuestion(id: number): void {
         Alert.alert(
             'Confirm Deletion',
             'Are you sure you want to delete this question?',
@@ -138,34 +138,34 @@ export function Learnset({ navigation }) {
     return (
         <SafeAreaView>
             <ScrollView>
-                <XStack display="flex" alignItems="center" justifyContent="space-between">       
+                <XStack display="flex" alignItems="center" justifyContent="space-between">
                     {isEditingTopic ?
-                    <>
-                        <Input 
-                            width="$12"
-                            marginBottom="$4"
-                            marginTop="$4"
-                            placeholder="Edit the Name of the Topic"
-                            value={tempTopic}
-                            onChangeText={setTempTopic}
-                        />
-                    <XStack space>
-                        <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" onPress={handleEditTopicName}>
-                            Cancel
-                        </Button>
-                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" onPress={updateTopicName}>
-                            Save
-                        </Button>
-                    </XStack>
-                    </>
-                    :
-                    <>
-                        <H1 size="$9" paddingVertical="$4">{topic}</H1>
-                        <XStack>
-                            <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
-                            <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={handleEditTopicName}></Button>
-                        </XStack>
-                    </>
+                        <>
+                            <Input
+                                width="$12"
+                                marginBottom="$4"
+                                marginTop="$4"
+                                placeholder="Edit the Name of the Topic"
+                                value={tempTopic}
+                                onChangeText={setTempTopic}
+                            />
+                            <XStack space>
+                                <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" onPress={handleEditTopicName}>
+                                    Cancel
+                                </Button>
+                                <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" onPress={updateTopicName}>
+                                    Save
+                                </Button>
+                            </XStack>
+                        </>
+                        :
+                        <>
+                            <H1 size="$9" paddingVertical="$4">{topic}</H1>
+                            <XStack>
+                                <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
+                                <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={handleEditTopicName}></Button>
+                            </XStack>
+                        </>
                     }
                 </XStack>
 
@@ -182,22 +182,22 @@ export function Learnset({ navigation }) {
                                 value={answer}
                                 onChangeText={setAnswer}
                             />
-                    </>
-                            : 
-                    <>
-                    {questions.map((topic, index) => (
-                        <QuestionsAccordionItem
-                            key={index}
-                            id={topic.id}
-                            question={topic.Q}
-                            answer={topic.A}
-                            value={topic.id}
-                            handleEditQAndA={handleEditQAndA}
-                            deleteQuestion={deleteQuestion}
-                        />
-                    ))}
-                        
-                    </>}
+                        </>
+                        :
+                        <>
+                            {questions.map((topic, index) => (
+                                <QuestionsAccordionItem
+                                    key={index}
+                                    id={topic.id}
+                                    question={topic.Q}
+                                    answer={topic.A}
+                                    value={topic.id}
+                                    handleEditQAndA={handleEditQAndA}
+                                    deleteQuestion={deleteQuestion}
+                                />
+                            ))}
+
+                        </>}
                 </Accordion>
                 {isEditingQAndA ?
                     <XStack justifyContent="space-between">
@@ -209,22 +209,14 @@ export function Learnset({ navigation }) {
                         </Button>
                     </XStack>
                     :
-                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" marginBottom="$12" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
+                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
                         Add Questions
                     </Button>
                 }
-                </ScrollView >
                 {isEditingQAndA ? null :
-                <Button size="$6" theme="active" onPress={() => navigation.navigate('Learning')} style={
-                    {
-                        position: "absolute",
-                        bottom: 40,
-                        right: 0,
-                        left: 0,
-                        marginHorizontal: 10,
-                        
-                    }}>Lernen</Button> 
+                    <Button size="$5" width="75%" theme='active' alignSelf="center" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
                 }
+            </ScrollView >
         </SafeAreaView >
     )
 }

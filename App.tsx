@@ -23,7 +23,7 @@ export function GlobalLoadingIndicator() {
 }
 
 // Ignore all log notifications - for Test Mode only
-//LogBox.ignoreAllLogs();
+LogBox.ignoreAllLogs();
 
 
 // creating Stack Navigator
