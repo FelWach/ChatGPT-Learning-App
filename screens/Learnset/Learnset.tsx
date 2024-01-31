@@ -209,12 +209,12 @@ export function Learnset({ navigation }) {
                         </Button>
                     </XStack>
                     :
-                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginVertical="$5" onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
+                    <Button alignSelf="center" icon={Plus} size="$4" variant="outlined" marginTop="$5" pressStyle={{ borderWidth: 3 }} onPress={() => navigation.navigate('Configurator', { addQuestionsClicked: true })}>
                         Add Questions
                     </Button>
                 }
                 {isEditingQAndA ? null :
-                    <Button size="$5" width="75%" theme='active' alignSelf="center" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
+                    <Button size="$5" width="75%" theme='active' alignSelf="center" marginVertical="$5" onPress={() => navigation.navigate('Learning')}>Lernen</Button>
                 }
             </ScrollView >
         </SafeAreaView >

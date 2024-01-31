@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { Progress, SizeTokens, YStack, Card, Text, View, XStack, Button } from 'tamagui';
+import { Progress, SizeTokens, YStack, Card, Text, View, XStack, Button, H2, H3 } from 'tamagui';
 import { useAtom, atom } from 'jotai';
 import { questionsAnswersAtom } from '../../state/atoms';
 import { Repeat } from '@tamagui/lucide-icons';
@@ -48,9 +48,9 @@ export default function Learning({ navigation }) {
     try {
       const updatedLearningCard = questionsAnswers;
       await setLearningCard([...questionsAnswers]);
-  
+
       const firstCard = updatedLearningCard[0];
-  
+
       if (firstCard) {
         setCurrID(Number(firstCard.id));
         setCurrQ(firstCard.Q);
@@ -97,7 +97,7 @@ export default function Learning({ navigation }) {
       }
     }
   }
-  
+
 
   const repeatAllQuestions = () => {
     loadQuestions();
@@ -183,12 +183,12 @@ export default function Learning({ navigation }) {
   return (
     <SafeAreaView>
       <View>
-        { isFinished ? null :
+        {isFinished ? null :
           <YStack alignItems="center">
             <XStack>
-            {numberQ > questionsAnswers.length &&
-              <Repeat size={15} color={"#D74C4C"} />
-            }
+              {numberQ > questionsAnswers.length &&
+                <Repeat size={15} color={"#D74C4C"} />
+              }
               <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
             </XStack>
             <XStack style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
@@ -197,11 +197,13 @@ export default function Learning({ navigation }) {
           </YStack>
         }
         <View>
-          { isFinished ?
-            <Text textAlign='center' margin='$3'>
-              You're done! {"\n"}
-              You answered {correctAnswers} out of {questionsAnswers.length} questions correctly!
-            </Text> :
+          {isFinished ?
+            <>
+              <H2 textAlign='center'>You're done!</H2>
+              <Text textAlign='center' marginVertical='$3'>
+                You answered {correctAnswers} out of {questionsAnswers.length} questions correctly!
+              </Text>
+            </> :
             <Swipeable
               ref={(ref) => (swipeableRef = ref)}
               renderLeftActions={leftSwipeActions}
@@ -217,27 +219,27 @@ export default function Learning({ navigation }) {
                 <Card.Background alignItems="center">
                   <View style={styles.card}>
                     <Text style={isFront ? styles.cardTextQ : styles.cardTextA}>
-                    {
-                      isFront ? currQ : currA
-                    }
+                      {
+                        isFront ? currQ : currA
+                      }
                     </Text>
                   </View>
                 </Card.Background>
               </Card>
             </Swipeable>
-            }
+          }
         </View>
 
         {!isFinished ?
-        <View> 
-          {isFront ?
-            <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
-            :
-            <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
-          }
-        </View> :
-          <Button margin='$3' onPress={() => repeatAllQuestions()}>
-            <Text>Fragen wiederholen</Text> 
+          <View>
+            {isFront ?
+              <Text textAlign='center' margin='$3'>Tap the Card to reveal the answer</Text>
+              :
+              <Text textAlign='center' margin='$3'>Swipe to complete the question</Text>
+            }
+          </View> :
+          <Button icon={Repeat} size="$5" variant="outlined" marginVertical="$5" pressStyle={{ borderWidth: 3.5 }} onPress={() => repeatAllQuestions()}>
+            <Text>Fragen wiederholen</Text>
           </Button>
         }
         <YStack height={60} alignItems="center" space>
