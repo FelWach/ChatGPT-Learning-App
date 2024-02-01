@@ -28,6 +28,7 @@ export interface AddQuestionsTopicProps {
 }
 
 export interface AddQuestionsPDFProps {
+    userId: number;
     nbQuestions: number;
     pageStart: number;
     pageEnd: number;

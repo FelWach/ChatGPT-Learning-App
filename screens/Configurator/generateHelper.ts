@@ -59,18 +59,20 @@ export const addQuestionsFromTopic = async (topic: string, nbQuestions: number, 
     return await addQuestionsTopic(generateConfig);
 };
 
-export const addQuestionsFromPDF = async (learnsetName: string, pageEnd: number, pageStart: number, nbQuestions: number) => {
+export const addQuestionsFromPDF = async (learnsetName: string, pageEnd: number, pageStart: number, nbQuestions: number, userId: number) => {
     const generateConfig: AddQuestionsPDFProps = {
         learnsetName: learnsetName,
         pageEnd: pageEnd,
         pageStart: pageStart,
-        nbQuestions: nbQuestions
+        nbQuestions: nbQuestions,
+        userId: userId
     };
     console.log("Config addQuestionsFromPDF");
     console.log("LearnsetName: " + generateConfig.learnsetName);
     console.log("Number of questions: " + generateConfig.nbQuestions);
     console.log("Page Start: " + generateConfig.pageStart);
     console.log("Page End: " + generateConfig.pageEnd);
+    console.log("User ID: " + generateConfig.userId);
 
     return await addQuestionsPDF(generateConfig);
 };

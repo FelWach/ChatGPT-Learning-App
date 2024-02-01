@@ -73,7 +73,7 @@ export function Configurator({ navigation, route }) {
             await addQuestionsFromTopic(topic, Number(question), user.id);
           } else {
             console.log("addQuestionsFromPDF !!!!!!!!!!!");
-            await addQuestionsFromPDF(topic, Number(endPage), Number(startPage), Number(question));
+            await addQuestionsFromPDF(topic, Number(endPage), Number(startPage), Number(question), user.id);
           }
         }
         console.log(`Response from ${selectedValue} generate: ` + res);
