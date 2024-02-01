@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, H2, Input, Text, View, YStack } from 'tamagui';
 import { SafeAreaView } from '../components/SafeAreaView';
+import { userAtom } from '../state/atoms'
+import { useAtom } from 'jotai'
 import { UserProps } from '../api/types';
 import { register } from '../api/api';
 import { useForm, Controller } from 'react-hook-form';
@@ -17,11 +19,10 @@ export default function Register({ navigation }) {
   const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
     mode: 'onBlur',
   });
-
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [user, setUser] = useAtom(userAtom);
 
   const onSubmit = async (data: any) => {
-
     const userData: UserProps = {
       name: data.name,
       email: data.email,
@@ -30,6 +31,12 @@ export default function Register({ navigation }) {
 
     try {
       const response = await register(userData);
+      setUser({
+        id: response.userId,
+        name: response.name,
+        email: response.email,
+      })
+      
       navigation.navigate('TopicsOverview');
     } catch (error: any) {
       if (error.message) {

@@ -14,7 +14,6 @@ type FormData = {
 };
 
 export default function Login({ navigation }) {
-
   const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
     mode: 'onBlur',
   });
