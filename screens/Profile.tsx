@@ -35,7 +35,7 @@ export default function Profile({ navigation }) {
   const [editOldPassword, setEditOldPassword] = useAtom(editOldPasswordAtom);
   const [editPasswordRepeat, setEditPasswordRepeat] = useAtom(editPasswordRepeatAtom);
   const [errorMessage, setErrorMessage] = useAtom(errorAtom);
-  const [tabValue, setTabValue] = useAtom(tabValueAtom);
+  const setTabValue = useSetAtom(tabValueAtom);
 
   useEffect(() => {
     setValue('username', user.name);
@@ -110,7 +110,7 @@ export default function Profile({ navigation }) {
     if (errors.password?.message) {
       setEditOldPassword(true);
     }
-    editOldPassword ? setEditOldPassword(false) : setEditOldPassword(true);
+    editOldPassword ? setEditOldPassword(false): setEditOldPassword(true);
     editUsername && setEditUsername(false);
     editEmail && setEditEmail(false);
   };
@@ -281,7 +281,7 @@ export default function Profile({ navigation }) {
         {errorMessage && <Text>{errorMessage}</Text>}
 
         <XStack marginTop='$3' justifyContent='space-between'>
-          <Button width='46%' disabled={!isValid} style={{ opacity: isValid ? 1 : 0.7 }} onPress={handleSubmit(onSubmit)}>Save</Button>
+          <Button width='46%' disabled={!isValid} style={{ opacity: isValid || !editOldPassword ? 1 : 0.45 }} onPress={handleSubmit(onSubmit)}>Save</Button>
           <Button width='46%' variant="outlined" pressStyle={{ borderWidth: 3 }} onPress={() => signOutUserAlert()}>Sign out</Button>
         </XStack>
       </YStack>
