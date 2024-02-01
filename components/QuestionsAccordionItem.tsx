@@ -1,5 +1,5 @@
 import { Accordion, Input, Paragraph, Square, TextArea, XStack } from "tamagui";
-import { Trash, Edit, ChevronDown } from '@tamagui/lucide-icons'
+import { Trash, SquarePen, ChevronDown } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItemProps } from "../screens/Learnset/types";
 import { Button } from "tamagui";
 
@@ -10,7 +10,7 @@ export function QuestionsAccordionItem(props: any) {
             <Accordion.Trigger flexDirection="row" justifyContent="space-between">
                 {({ open }) => (
                     <>
-                        <Paragraph>{props.question}</Paragraph>
+                        <Paragraph width={270}>{props.question}</Paragraph>
                         <Square animation="quick" rotate={open ? '180deg' : '0deg'}>
                             <ChevronDown size="$1" />
                         </Square>
@@ -24,7 +24,7 @@ export function QuestionsAccordionItem(props: any) {
                 <XStack justifyContent='space-evenly' space>
                     <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={() => props.deleteQuestion(props.id)}></Button>
                     <Button
-                        icon={Edit}
+                        icon={SquarePen}
                         size="$6"
                         width="$4"
                         height="$4"
