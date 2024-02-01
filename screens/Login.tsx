@@ -3,7 +3,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '../state/atoms'
 import { LoginProps } from '../api/types';
 import { login } from '../api/api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView } from '../components/SafeAreaView';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -14,12 +14,11 @@ type FormData = {
 };
 
 export default function Login({ navigation }) {
-  const { control, handleSubmit, getValues, formState: { errors, isValid } } = useForm<FormData>({
+  const { control, handleSubmit, getValues, reset, formState: { errors, isValid } } = useForm<FormData>({
     mode: 'onBlur',
   });
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [user, setUser] = useAtom(userAtom);
-
 
   const onSubmit = async (data: any) => {
     const userData: LoginProps = {
@@ -34,6 +33,9 @@ export default function Login({ navigation }) {
         name: response.name,
         email: response.email,
       })
+
+      reset();
+      
       console.log("User in Login: ");
       console.log(user);
 
