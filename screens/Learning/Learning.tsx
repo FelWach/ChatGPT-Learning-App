@@ -191,8 +191,9 @@ export default function Learning({ navigation }) {
               }
               <Text textAlign='center' margin='$3'>Question {numberQ} from {questionsAnswers.length}</Text>
             </XStack>
-            <XStack style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <XStack>
               <Text style={{ flex: 1, margin: 15 }} onPress={() => nextQuestion()}>Correct</Text>
+              <Text style={{ flex: 1, margin: 15, textAlign: 'right' }} onPress={() => nextQuestion()}>Wrong</Text>
             </XStack>
           </YStack>
         }
