@@ -1,5 +1,5 @@
 import { Button, H1, ScrollView, View, XStack, Accordion, Input, Paragraph, TextArea } from "tamagui";
-import { Trash, Edit, Plus, } from '@tamagui/lucide-icons'
+import { Trash, SquarePen, Plus, } from '@tamagui/lucide-icons'
 import { QuestionsAccordionItem } from "../../components/QuestionsAccordionItem";
 import { Alert, Dimensions } from "react-native";
 import { useAtom, atom } from "jotai";
@@ -140,32 +140,33 @@ export function Learnset({ navigation }) {
             <ScrollView>
                 <XStack display="flex" alignItems="center" justifyContent="space-between">
                     {isEditingTopic ?
-                        <>
-                            <Input
-                                width="$12"
-                                marginBottom="$4"
-                                marginTop="$4"
-                                placeholder="Edit the Name of the Topic"
-                                value={tempTopic}
-                                onChangeText={setTempTopic}
-                            />
-                            <XStack space>
-                                <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" onPress={handleEditTopicName}>
-                                    Cancel
-                                </Button>
-                                <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" onPress={updateTopicName}>
-                                    Save
-                                </Button>
-                            </XStack>
-                        </>
-                        :
-                        <>
-                            <H1 size="$9" paddingVertical="$4">{topic}</H1>
-                            <XStack>
-                                <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
-                                <Button icon={Edit} size="$6" width="$4" height="$4" chromeless onPress={handleEditTopicName}></Button>
-                            </XStack>
-                        </>
+                    <>
+                        <Input 
+                            width="$12"
+                            marginBottom="$4"
+                            marginTop="$4"
+                            placeholder="Edit the Name of the Topic"
+                            value={tempTopic}
+                            onChangeText={setTempTopic}
+                        />
+                    <XStack space>
+                        <Button alignSelf="center" size="$4" variant="outlined" marginVertical="$5" onPress={handleEditTopicName}>
+                            Cancel
+                        </Button>
+                        <Button alignSelf="center" size="$4" theme="active" marginVertical="$5" onPress={updateTopicName}>
+                            Save
+                        </Button>
+                    </XStack>
+                    </>
+                    :
+                    <>
+                        <H1 size="$9" paddingVertical="$4">{topic}</H1>
+                        <XStack>
+                            <Button icon={Trash} size="$6" width="$4" height="$4" chromeless onPress={deleteSet}></Button>
+                            <Button icon={SquarePen} size="$6" width="$4" height="$4" chromeless onPress={handleEditTopicName}></Button>
+                        </XStack>
+                    </>
+
                     }
                 </XStack>
 
