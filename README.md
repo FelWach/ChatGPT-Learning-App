@@ -1,5 +1,20 @@
 # ChatGPT-Learning-App
 
+## To run this app
+`install yarn` 
+
+open both frontend and backend
+
+install dependencies with `yarn`
+
+start backend with `yarn dev`
+
+start frontend with `yarn start` or `npx expo start`
+
+run the app either via QR Code and Expo GO app on your phone or via Android/IOs Simulator on your PC
+
+---
+
 ## Expo CLI Commands
 `npx expo start` for starting a Server on http://localhost:1900, that a client can use to interact with the bundler. The default bundler is Metro.
 
